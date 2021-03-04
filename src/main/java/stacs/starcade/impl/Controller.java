@@ -7,5 +7,12 @@ public class Controller {
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
+
+        // Here some words added
+        // Here some words added
+        // Here some words added
+        // Here some words added
+        // Here some words added
+        // Here some words added
     }
 }
