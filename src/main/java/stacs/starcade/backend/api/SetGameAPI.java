@@ -1,11 +1,11 @@
-package stacs.starcade.api;
+package stacs.starcade.backend.api;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import stacs.starcade.model.ICard;
-import stacs.starcade.model.ILeaderBoard;
+import stacs.starcade.backend.model.ICard;
+import stacs.starcade.backend.model.ILeaderBoard;
 
 /**
  * Spring Backend API for Set Game.
@@ -41,4 +41,6 @@ public class SetGameAPI implements ISetGameAPI{
   public List<ICard> getCards(int playerID) {
     return null;
   }
+
+
 }

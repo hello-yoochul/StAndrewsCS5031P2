@@ -1,4 +1,4 @@
-package stacs.starcade.model;
+package stacs.starcade.backend.model;
 
 import java.time.Duration;
 

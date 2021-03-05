@@ -1,4 +1,4 @@
-package stacs.starcade.impl;
+package stacs.starcade.backend.impl;
 
 public class Controller {
     private Model model;
