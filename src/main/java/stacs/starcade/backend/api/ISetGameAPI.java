@@ -1,9 +1,9 @@
-package stacs.starcade.api;
+package stacs.starcade.backend.api;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
-import stacs.starcade.model.ICard;
-import stacs.starcade.model.ILeaderBoard;
+import stacs.starcade.backend.model.ICard;
+import stacs.starcade.backend.model.ILeaderBoard;
 
 /**
  * Interface for Backend API for Set Game.
@@ -28,5 +28,7 @@ public interface ISetGameAPI {
    * @return the cards that the current player has
    */
   List<ICard> getCards(@PathVariable int playerID);
+
+
 
 }

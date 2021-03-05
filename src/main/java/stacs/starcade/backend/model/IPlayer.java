@@ -1,4 +1,4 @@
-package stacs.starcade.model;
+package stacs.starcade.backend.model;
 
 /**
  * Interface for the representation of a player.
