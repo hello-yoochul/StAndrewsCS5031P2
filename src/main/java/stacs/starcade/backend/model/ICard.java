@@ -48,4 +48,12 @@ public interface ICard {
      * @return integer representing a BLUE, GREEN or WHITE colour
      */
     int getColour();
+
+    void setColour(int i);
+
+    void setShape(int j);
+
+    void setNumber(int k);
+
+    void setLineStyle(int l);
 }
