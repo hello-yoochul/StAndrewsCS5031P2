@@ -7,7 +7,7 @@ public interface ICard {
     enum Colour {BLUE, GREEN, RED}
     enum Number {ONE, TWO, THREE}
     enum Shape {TRIANGLE, SQUARE, CIRCLE}
-    enum lineType {DOTTED, DASHED, SOLID}
+    enum LineType {DOTTED, DASHED, SOLID}
 
     int TRIANGLE = 0;
     int SQUARE = 1;
