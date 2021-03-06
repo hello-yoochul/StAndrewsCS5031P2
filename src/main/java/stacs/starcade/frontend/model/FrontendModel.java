@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class FrontendModel extends Observable implements IFrontendModel {
     private IFrontendModel.GameStatus status;
-    private List<ICard> cardsOnDeck;
+    private List<ICard> cardsOnBoard;
     private List<ICard> chosenCards;
     private int playerId;
 
@@ -16,7 +16,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
      * Construct FrontendModel.
      */
     public FrontendModel() {
-        cardsOnDeck = new ArrayList<>();
+        cardsOnBoard = new ArrayList<>();
         chosenCards = new ArrayList<>();
     }
 
@@ -36,7 +36,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
      */
     @Override
     public void setUpCard(List<ICard> cards) {
-        this.cardsOnDeck = cards;
+        this.cardsOnBoard = cards;
     }
 
     /**
@@ -46,7 +46,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
      */
     @Override
     public List<ICard> getCards() {
-        return null;
+        return cardsOnBoard;
     }
 
     /**
@@ -86,16 +86,32 @@ public class FrontendModel extends Observable implements IFrontendModel {
      */
     @Override
     public Integer getPlayerId() {
-        return null;
+        return playerId;
     }
 
+
+    public static void main(String[] args) {
+//        Random random = new Random();
+//        for (int i = 0; i < 10; i++) {
+//            System.out.println(random.nextInt(10));
+//        }
+
+        List<String> s= new ArrayList<>();
+        s.add("Dfd");
+
+        System.out.println(s.get(0));
+    }
     /**
-     * Select Card among the cards on board.
+     * Select card among the cards on board.
      *
      * @param card selected Card among the cards on board
      */
     @Override
     public void selectCard(ICard card) {
+        if(!cardsOnBoard.contains(card)){
+            throw new IllegalArgumentException("card does not exsit on the board");
+        }
+        cardsOnBoard.remove(card);
         chosenCards.add(card);
     }
 
@@ -106,6 +122,6 @@ public class FrontendModel extends Observable implements IFrontendModel {
      */
     @Override
     public List<ICard> getChosenCards() {
-        return null;
+        return chosenCards;
     }
 }

@@ -39,11 +39,9 @@ public class ControllerTests {
     @Test
     void mustResume() {
         controller.startGame();
-
         assertEquals(IFrontendModel.GameStatus.RUNNING, model.getStatus());
 
         controller.pauseGame();
-
         assertEquals(IFrontendModel.GameStatus.PAUSED, model.getStatus());
 
         controller.resumeGame();
@@ -52,6 +50,7 @@ public class ControllerTests {
 
     @Test
     void mustSetPlayerId() {
+        controller.startGame();
         controller.setPlayerId();
         assertNotNull(model.getPlayerId());
     }
@@ -74,6 +73,7 @@ public class ControllerTests {
 
     @Test
     void mustCheckIfItIsSet() {
+        controller.startGame();
         // when it is not set
         // TODO: choose three cards which are not set
         assertFalse(controller.isSet());
