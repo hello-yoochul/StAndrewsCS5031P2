@@ -53,7 +53,7 @@ public interface IFrontendModel {
     Integer getPlayerId();
 
     /**
-     * Select Card among the cards on board.
+     * Select card among the cards on board.
      *
      * @param card selected Card among the cards on board
      */
