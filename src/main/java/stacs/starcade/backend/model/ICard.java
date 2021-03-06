@@ -35,29 +35,25 @@ public interface ICard {
 
     /**
      * Getter for the card number of the current card.
-     *
-     * @return integer between 1 and 3
+     * @return enum representing ONE, TWO or THREE
      */
-    int getNumber();
+    Number getNumber();
 
     /**
-     * Gets the symbol on the card.
-     *
-     * @return integer representing a TRIANGLE, SQUARE or CIRCLE shape
+     * Gets the shape on the card.
+     * @return enum representing a TRIANGLE, SQUARE or CIRCLE shape
      */
     int getShape();
 
     /**
      * Gets the shading of the card.
-     *
-     * @return integer representing a DOTTED, DASHED or SOLID shading
+     * @return enum representing a DOTTED, DASHED or SOLID shading
      */
     int getLineStyle();
 
     /**
      * Gets the colour of the card.
-     *
-     * @return integer representing a BLUE, GREEN or WHITE colour
+     * @return enum representing a BLUE, GREEN or WHITE colour
      */
     int getColour();
 }

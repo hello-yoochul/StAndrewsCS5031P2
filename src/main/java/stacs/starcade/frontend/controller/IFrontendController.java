@@ -35,5 +35,10 @@ public interface IFrontendController {
      *
      * @param card a card to check if chosen cards are set
      */
-    void chooseCard(ICard card);
+    void selectCard(ICard card);
+
+    /**
+     * Set the current unique player id.
+     */
+    void setPlayerId();
 }
