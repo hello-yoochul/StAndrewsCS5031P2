@@ -3,6 +3,7 @@ package stacs.starcade.backend.api;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import stacs.starcade.backend.model.ICard;
 import stacs.starcade.backend.model.ILeaderBoard;
 
@@ -42,6 +43,6 @@ public interface ISetGameAPI {
      * @param thirdCard  the first card properties
      * @return true if it is set
      */
-    boolean isSet(@PathVariable int firstCard, @PathVariable int secondCard, @PathVariable int thirdCard);
+    boolean isSet(@RequestParam int firstCard, @RequestParam int secondCard, @RequestParam int thirdCard);
 
 }

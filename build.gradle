@@ -85,6 +85,8 @@ dependencies { // https://docs.gradle.org/current/userguide/declaring_dependenci
 	testImplementation "org.junit.platform:junit-platform-suite-api:${junit_platform_version}"
 	testImplementation "org.junit.platform:junit-platform-engine:${junit_platform_version}"
 	testImplementation "org.mockito:mockito-core:3.+"
+
+	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
 }
 
 javafx {

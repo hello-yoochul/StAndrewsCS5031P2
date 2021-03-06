@@ -9,6 +9,11 @@ public interface IFrontendController {
     void startGame();
 
     /**
+     * Set up the 12 cards.
+     */
+    void setUpCards();
+
+    /**
      * Check if the three cards are set.
      *
      * @return true if it is set
@@ -24,11 +29,6 @@ public interface IFrontendController {
      * Resume the game.
      */
     void resumeGame();
-
-    /**
-     * Set up the 12 cards.
-     */
-    void setUpCards();
 
     /**
      * Select a card. Player will invoke this method 3 times to choose three cards.

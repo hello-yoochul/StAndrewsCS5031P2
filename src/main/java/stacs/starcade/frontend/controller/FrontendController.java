@@ -1,24 +1,36 @@
 package stacs.starcade.frontend.controller;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.HttpClient;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.HttpClientBuilder;
 import stacs.starcade.frontend.model.ICard;
 import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+
+import static stacs.starcade.frontend.model.IFrontendModel.*;
 
 
 /**
  *
  */
 public class FrontendController implements IFrontendController {
+    String basicServerAddress = "http://localhost:8080/";
+
     private FrontendModel model;
     private HttpClient client;
+
+    HttpPost postRequest;
+    HttpResponse response;
 
 //    String serverBasicAddress = "https://localhost:8080/";
 //    final static String startGame = "startGame";
@@ -30,7 +42,7 @@ public class FrontendController implements IFrontendController {
      */
     public FrontendController(FrontendModel model) {
         this.model = model;
-        client = HttpClient.newBuilder().build();
+        client = HttpClientBuilder.create().build();
     }
 
     /**
@@ -38,23 +50,63 @@ public class FrontendController implements IFrontendController {
      */
     @Override
     public void startGame() {
-        // TODO: check if the game is already running.
+        // Ignore the button event if the game has already started
+        if (model.getStatus() != GameStatus.RUNNING) {
+            model.setGameStatus(GameStatus.RUNNING);
 
-        model.setGameStatus(IFrontendModel.GameStatus.RUNNING);
-
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://localhost:8080/startGame")).build();
-
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("error", e);
+            // get the unique player id from the server and store it to Model variable
+            postRequest = new HttpPost(basicServerAddress + "/startGame");
+            postRequest.setHeader("Accept", "application/json");
+            postRequest.setHeader("Connection", "keep-alive");
+            postRequest.setHeader("Content-Type", "application/json");
+            try {
+                response = client.execute(postRequest);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    ResponseHandler<String> handler = new BasicResponseHandler();
+                    String body = handler.handleResponse(response);
+                    model.setPlayerId(Integer.parseInt(body));
+                    setUpCards();
+                } else {
+                    System.out.println("response is error : " + response.getStatusLine().getStatusCode());
+                }
+            } catch (IOException e) {
+                throw new RuntimeException("error", e);
+            }
         }
+    }
 
-        // TODO: get the id of current player from the request and store it by using model.setPlayerId("the id")
+    /**
+     * Set up the 12 cards.
+     */
+    @Override
+    public void setUpCards() {
+        List<ICard> cards = new ArrayList<>();
 
-        setUpCards();
+        // Get the 12 cards from server and Paint it.
+        postRequest = new HttpPost(basicServerAddress + "/startGame");
+        postRequest.setHeader("Accept", "application/json");
+        postRequest.setHeader("Connection", "keep-alive");
+        postRequest.setHeader("Content-Type", "application/json");
 
-        System.out.println();
+        // TODO: Get the 12 card from server and paint it on the Swing View
+
+//        HttpResponse response = null;
+//        try {
+//            response = client.execute(postRequest);
+//
+//            if (response.getStatusLine().getStatusCode() == 200) {
+////                ResponseHandler<String> handler = new BasicResponseHandler();
+////                List<ICard> body = handler.handleResponse(response);
+////                model.setPlayerId(Integer.parseInt(body));
+//                setUpCards();
+//            } else {
+//                System.out.println("response is error : " + response.getStatusLine().getStatusCode());
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        model.setUpCard(cards);
     }
 
     /**
@@ -64,19 +116,19 @@ public class FrontendController implements IFrontendController {
      */
     @Override
     public boolean isSet() {
-        // TODO: 1 check if three cards are choosen
+        // TODO: 1 check if three cards are chosen
         // TODO: 2 get the chosen card from model
         // TODO: 3 and send them to server, e.g., http://localhost:8080/game/isSet?firstCard=1111&secondCard=1221&thirdCard=3113
 
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://localhost:8080/isSet")).build();
 
-        try {
-            // TODO: 4 From the request above, check if the server sends the info on it is set
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.body());
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("error", e);
-        }
+//        try {
+//            // TODO: 4 From the request above, check if the server sends the info on it is set
+//            java.net.http.HttpResponse<String> response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
+//            System.out.println(response.body());
+//        } catch (IOException | InterruptedException e) {
+//            throw new RuntimeException("error", e);
+//        }
 
         // TODO: 5 if it is set remove the cards on the board and repaint, if not, show dialog message "not set"
 
@@ -92,25 +144,6 @@ public class FrontendController implements IFrontendController {
 
     @Override
     public void resumeGame() {
-    }
-
-    /**
-     * Set up the 12 cards.
-     */
-    @Override
-    public void setUpCards() {
-        List<ICard> cards = new ArrayList<>();
-
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://localhost:8080/getCards")).build();
-
-        try {
-            // TODO: Get the 12 cards from server and Paint it.
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("error", e);
-        }
-
-        model.setUpCard(cards);
     }
 
     /**
