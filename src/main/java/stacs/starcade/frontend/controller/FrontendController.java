@@ -49,7 +49,7 @@ public class FrontendController {
         // TODO: get the id of current player from the request and store it by using model.setPlayerId("the id")
 
         setUpCards();
-
+        
         System.out.println();
     }
 

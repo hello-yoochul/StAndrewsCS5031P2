@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import stacs.starcade.backend.impl.Model;
 import stacs.starcade.backend.model.ICard;
 import stacs.starcade.backend.model.ILeaderBoard;
+import stacs.starcade.backend.model.IModel;
 
 /**
  * Spring Backend API for Set Game.
@@ -19,7 +20,7 @@ public class SetGameAPI implements ISetGameAPI {
     // in-memory representation of the game data, will be replaced with
     // storage in a database at another time
     private int gameId = 0;
-    private Map<Integer, Model> games = new HashMap<>();
+    private Map<Integer, IModel> games = new HashMap<>();
 
     /**
      * Get method for leaderboard.
@@ -38,7 +39,9 @@ public class SetGameAPI implements ISetGameAPI {
      */
     @PostMapping("/startGame")
     public Integer startGame() {
-        return null;
+        IModel model = new Model();
+        games.put(++gameId, model);
+        return gameId;
     }
 
     /**

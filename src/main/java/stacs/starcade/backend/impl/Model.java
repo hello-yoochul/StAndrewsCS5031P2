@@ -1,11 +1,11 @@
 package stacs.starcade.backend.impl;
 
-import stacs.starcade.backend.model.Card;
 import stacs.starcade.backend.model.ICard;
+import stacs.starcade.backend.model.IModel;
 
 import java.util.ArrayList;
 
-public class Model {
+public class Model implements IModel {
 
     private ICard[] cards;
 
@@ -17,7 +17,7 @@ public class Model {
      * Generates an array list of 81 card objects with unique attribute-expression combinations.
      * @return the array list
      */
-    private void setCards() {
+    public void setCards() {
         ArrayList<ICard> allCards = new ArrayList<>();
 
         for (int i = 0; i < ICard.Colour.values().length; i++) {
