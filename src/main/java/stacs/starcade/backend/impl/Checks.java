@@ -14,6 +14,7 @@ public class Checks {
      */
     public static boolean isSet(ICard[] threeCards) {
         boolean isSet = false;
+
         if (coloursValid(threeCards) && shapesValid(threeCards) && numbersValid(threeCards) && lineStylesValid(threeCards)) {
             isSet = true;
         }
@@ -27,7 +28,11 @@ public class Checks {
      */
     private static boolean coloursValid(ICard[] threeCards) {
         boolean coloursValid = false;
-        int [] colours = {threeCards[0].getColour(), threeCards[1].getColour(), threeCards[2].getColour()};
+
+        // ordinal: colours need to be parsed into int values
+        int[] colours = {threeCards[0].getColour().ordinal(), threeCards[1].getColour().ordinal(),
+                threeCards[2].getColour().ordinal()};
+
         if (allExpressionsEqual(colours) || allExpressionsDifferent(colours)) {
             coloursValid = true;
         }
@@ -41,7 +46,11 @@ public class Checks {
      */
     private static boolean shapesValid(ICard[] threeCards) {
         boolean shapesValid = false;
-        int [] shapes = {threeCards[0].getShape(), threeCards[1].getShape(), threeCards[2].getShape()};
+
+        // ordinal: shapes need to be parsed into int values
+        int[] shapes = {threeCards[0].getShape().ordinal(), threeCards[1].getShape().ordinal(),
+                threeCards[2].getShape().ordinal()};
+
         if (allExpressionsEqual(shapes) || allExpressionsDifferent(shapes)) {
             shapesValid = true;
         }
@@ -55,7 +64,11 @@ public class Checks {
      */
     private static boolean numbersValid(ICard[] threeCards) {
         boolean coloursValid = false;
-        int [] colours = {threeCards[0].getNumber(), threeCards[1].getNumber(), threeCards[2].getNumber()};
+
+        // ordinal: numbers need to be parsed into int values
+        int[] colours = {threeCards[0].getNumber().ordinal(), threeCards[1].getNumber().ordinal(),
+                threeCards[2].getNumber().ordinal()};
+
         if (allExpressionsEqual(colours) || allExpressionsDifferent(colours)) {
             coloursValid = true;
         }
@@ -68,12 +81,14 @@ public class Checks {
      * @return true if condition true.
      */
     private static boolean lineStylesValid(ICard[] threeCards) {
-        boolean coloursValid = false;
-        int [] colours = {threeCards[0].getLineStyle(), threeCards[1].getLineStyle(), threeCards[2].getLineStyle()};
-        if (allExpressionsEqual(colours) || allExpressionsDifferent(colours)) {
-            coloursValid = true;
+        boolean lineStyleValid = false;
+        // ordinal: line_styles need to be parsed into int values
+        int[] lineStyles = {threeCards[0].getLineStyle().ordinal(), threeCards[1].getLineStyle().ordinal(),
+                threeCards[2].getLineStyle().ordinal()};
+        if (allExpressionsEqual(lineStyles) || allExpressionsDifferent(lineStyles)) {
+            lineStyleValid = true;
         }
-        return coloursValid;
+        return lineStyleValid;
     }
 
     /**
