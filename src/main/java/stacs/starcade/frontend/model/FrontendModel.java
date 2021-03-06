@@ -40,6 +40,16 @@ public class FrontendModel extends Observable implements IFrontendModel {
     }
 
     /**
+     * Get the cards on the current board.
+     *
+     * @return the cards on the board
+     */
+    @Override
+    public List<ICard> getCards() {
+        return null;
+    }
+
+    /**
      * Set game status: RUNNING or PAUSED.
      *
      * @param status one of the {@link GameStatus}
@@ -70,6 +80,16 @@ public class FrontendModel extends Observable implements IFrontendModel {
     }
 
     /**
+     * Get the unique player id.
+     *
+     * @return the unique player id.
+     */
+    @Override
+    public Integer getPlayerId() {
+        return null;
+    }
+
+    /**
      * Select Card among the cards on board.
      *
      * @param card selected Card among the cards on board
@@ -77,5 +97,15 @@ public class FrontendModel extends Observable implements IFrontendModel {
     @Override
     public void selectCard(ICard card) {
         chosenCards.add(card);
+    }
+
+    /**
+     * Get the chosen cards.
+     *
+     * @return the chosen cards
+     */
+    @Override
+    public List<ICard> getChosenCards() {
+        return null;
     }
 }
