@@ -1,7 +1,8 @@
 package stacs.starcade.frontend.controller;
 
-import stacs.starcade.frontend.model.Card;
+import stacs.starcade.frontend.model.ICard;
 import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.frontend.model.IFrontendModel;
 
 import java.io.IOException;
 import java.net.URI;
@@ -13,13 +14,9 @@ import java.util.List;
 
 
 /**
- * This CanvasController controls a model to be specified in constructor.
- * Mainly, it commands model to draw shapes and has the function of save and import
- * vectors from specified file.
  *
- * @author 200012756
  */
-public class FrontendController {
+public class FrontendController implements IFrontendController {
     private FrontendModel model;
     private HttpClient client;
 
@@ -28,15 +25,22 @@ public class FrontendController {
 //    final static String getLeaderboard = "getLeaderboard";
 //    final static String getCards = "getCards";
 
+    /**
+     * FrontendController constructor.
+     */
     public FrontendController(FrontendModel model) {
         this.model = model;
         client = HttpClient.newBuilder().build();
     }
 
+    /**
+     * Start a game.
+     */
+    @Override
     public void startGame() {
         // TODO: check if the game is already running.
 
-        model.setGameStatus(FrontendModel.GameStatus.RUNNING);
+        model.setGameStatus(IFrontendModel.GameStatus.RUNNING);
 
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://localhost:8080/startGame")).build();
 
@@ -49,11 +53,17 @@ public class FrontendController {
         // TODO: get the id of current player from the request and store it by using model.setPlayerId("the id")
 
         setUpCards();
-        
+
         System.out.println();
     }
 
-    public void isSet() {
+    /**
+     * Check if the three cards are set.
+     *
+     * @return true if it is set
+     */
+    @Override
+    public boolean isSet() {
         // TODO: 1 check if three cards are choosen
         // TODO: 2 send http://localhost:8080/game/isSet wih the three cards properties, e.g., "2143"
 
@@ -68,13 +78,27 @@ public class FrontendController {
         }
 
         // TODO: 4 if it is set remove the card by repainting, else show dialog message "not set"
+
+        return false;
     }
 
+    /**
+     * Pause the game.
+     */
+    @Override
     public void pauseGame() {
     }
 
+    @Override
+    public void resumeGame() {
+    }
+
+    /**
+     * Set up the 12 cards.
+     */
+    @Override
     public void setUpCards() {
-        List<Card> cards = new ArrayList<>();
+        List<ICard> cards = new ArrayList<>();
 
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://localhost:8080/getCards")).build();
 
@@ -88,7 +112,13 @@ public class FrontendController {
         model.setUpCard(cards);
     }
 
-    public void chooseCard(Card card){
-        model.chooseCard(card);
+    /**
+     * Select a card. Player will invoke this method 3 times to choose three cards.
+     *
+     * @param card a card to check if chosen cards are set
+     */
+    @Override
+    public void chooseCard(ICard card) {
+        model.selectCard(card);
     }
 }

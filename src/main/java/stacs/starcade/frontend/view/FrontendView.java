@@ -11,11 +11,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * This MainView create swing window with two panels: top panel and
- * canvas panel. Top panel includes buttons and text fields, and canvas
- * panel is for drawing and clicking event.
  *
- * @author 200012756
  */
 public class FrontendView extends JFrame implements Observer {
     private final FrontendController controller;
