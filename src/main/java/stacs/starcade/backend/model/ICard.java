@@ -21,6 +21,18 @@ public interface ICard {
     int DASHED = 1;
     int SOLID = 2;
 
+    void setOwner(IPlayer owner);
+
+    void setColour(int i);
+
+    void setShape(int j);
+
+    void setNumber(int k);
+
+    void setLineStyle(int l);
+
+    IPlayer getOwner();
+
     /**
      * Getter for the card number of the current card.
      *
@@ -33,14 +45,14 @@ public interface ICard {
      *
      * @return integer representing a TRIANGLE, SQUARE or CIRCLE shape
      */
-    int getSymbol();
+    int getShape();
 
     /**
      * Gets the shading of the card.
      *
      * @return integer representing a DOTTED, DASHED or SOLID shading
      */
-    int getShading();
+    int getLineStyle();
 
     /**
      * Gets the colour of the card.
@@ -48,12 +60,4 @@ public interface ICard {
      * @return integer representing a BLUE, GREEN or WHITE colour
      */
     int getColour();
-
-    void setColour(int i);
-
-    void setShape(int j);
-
-    void setNumber(int k);
-
-    void setLineStyle(int l);
 }

@@ -9,5 +9,10 @@ public interface IModel {
      */
     void setCards();
 
+    /**
+     * @return an array that accounts for all 81 individual card objects possibly used in SetGame.
+     */
     ICard[] getCards();
+
+    void logSet(ICard[] threeCards);
 }

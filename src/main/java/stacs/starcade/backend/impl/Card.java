@@ -1,26 +1,15 @@
 package stacs.starcade.backend.impl;
 
 import stacs.starcade.backend.model.ICard;
+import stacs.starcade.backend.model.IPlayer;
 
 public class Card implements ICard {
-    @Override
-    public int getNumber() {
-        return 0;
-    }
+
+    private IPlayer owner;
 
     @Override
-    public int getSymbol() {
-        return 0;
-    }
-
-    @Override
-    public int getShading() {
-        return 0;
-    }
-
-    @Override
-    public int getColour() {
-        return 0;
+    public void setOwner(IPlayer owner) {
+        this.owner = owner;
     }
 
     @Override
@@ -41,5 +30,30 @@ public class Card implements ICard {
     @Override
     public void setLineStyle(int l) {
 
+    }
+
+    @Override
+    public IPlayer getOwner() {
+        return this.owner;
+    }
+
+    @Override
+    public int getNumber() {
+        return 0;
+    }
+
+    @Override
+    public int getShape() {
+        return 0;
+    }
+
+    @Override
+    public int getLineStyle() {
+        return 0;
+    }
+
+    @Override
+    public int getColour() {
+        return 0;
     }
 }
