@@ -1,4 +1,6 @@
-package stacs.starcade.backend.model;
+package stacs.starcade.backend.impl;
+
+import stacs.starcade.backend.model.ICard;
 
 public class Card implements ICard {
     @Override
