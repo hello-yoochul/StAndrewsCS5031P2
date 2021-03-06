@@ -5,9 +5,9 @@ package stacs.starcade.backend.model;
  */
 public interface ICard {
     enum Colour {BLUE, GREEN, RED}
-    enum Number {ONE, TWO, THREE}
+    enum Number {NULL, ONE, TWO}
     enum Shape {TRIANGLE, SQUARE, CIRCLE}
-    enum LineType {DOTTED, DASHED, SOLID}
+    enum LineStyle {DOTTED, DASHED, SOLID}
 
     int TRIANGLE = 0;
     int SQUARE = 1;
@@ -21,15 +21,20 @@ public interface ICard {
     int DASHED = 1;
     int SOLID = 2;
 
+    int NULL = 0;
+    int ONE = 1;
+    int TWO = 2;
+
+
     void setOwner(IPlayer owner);
 
-    void setColour(int i);
+    void setColour(Colour colour);
 
-    void setShape(int j);
+    void setShape(Shape shape);
 
-    void setNumber(int k);
+    void setNumber(Number number);
 
-    void setLineStyle(int l);
+    void setLineStyle(LineStyle lineStyle);
 
     IPlayer getOwner();
 
@@ -43,17 +48,17 @@ public interface ICard {
      * Gets the shape on the card.
      * @return enum representing a TRIANGLE, SQUARE or CIRCLE shape
      */
-    int getShape();
+    Shape getShape();
 
     /**
      * Gets the shading of the card.
      * @return enum representing a DOTTED, DASHED or SOLID shading
      */
-    int getLineStyle();
+    LineStyle getLineStyle();
 
     /**
      * Gets the colour of the card.
      * @return enum representing a BLUE, GREEN or WHITE colour
      */
-    int getColour();
+    Colour getColour();
 }

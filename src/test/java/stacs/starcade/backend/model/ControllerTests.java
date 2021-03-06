@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static stacs.starcade.backend.impl.Checks.isSameOwner;
 import static stacs.starcade.backend.impl.Checks.isSet;
+import static stacs.starcade.backend.model.ICard.*;
 
 public class ControllerTests {
 
@@ -40,20 +41,20 @@ public class ControllerTests {
         // Define card properties
         // Colours and shapes are all the same
         // Numbers and LineStyles are all different
-        card1.setColour(0);
-        card1.setShape(0);
-        card1.setNumber(1);
-        card1.setLineStyle(2);
+        card1.setColour(Colour.BLUE);
+        card1.setShape(Shape.TRIANGLE);
+        card1.setNumber(ICard.Number.NULL);
+        card1.setLineStyle(LineStyle.DASHED);
 
-        card2.setColour(1);
-        card2.setShape(1);
-        card2.setNumber(1);
-        card2.setLineStyle(2);
+        card2.setColour(Colour.GREEN);
+        card2.setShape(Shape.CIRCLE);
+        card2.setNumber(ICard.Number.NULL);
+        card2.setLineStyle(LineStyle.DASHED);
 
-        card3.setColour(2);
-        card3.setShape(2);
-        card3.setNumber(1);
-        card3.setLineStyle(2);
+        card3.setColour(Colour.RED);
+        card3.setShape(Shape.TRIANGLE);
+        card3.setNumber(ICard.Number.NULL);
+        card3.setLineStyle(LineStyle.DASHED);
 
         assertTrue(isSet(threeCards));
     }
@@ -62,20 +63,20 @@ public class ControllerTests {
     void testRecogniseThatGivenCardsDoNotMakeASet() throws IllegalArgumentException {
         // Define card properties
         // No property satisfies the conditions for the three cards making up a set
-        card1.setColour(0);
-        card1.setShape(0);
-        card1.setNumber(1);
-        card1.setLineStyle(2);
+        card1.setColour(Colour.BLUE);
+        card1.setShape(Shape.TRIANGLE);
+        card1.setNumber(ICard.Number.NULL);
+        card1.setLineStyle(LineStyle.DASHED);
 
-        card2.setColour(1);
-        card2.setShape(1);
-        card2.setNumber(1);
-        card2.setLineStyle(1);
+        card2.setColour(Colour.GREEN);
+        card2.setShape(Shape.CIRCLE);
+        card2.setNumber(ICard.Number.NULL);
+        card2.setLineStyle(LineStyle.DASHED);
 
-        card3.setColour(1);
-        card3.setShape(1);
-        card3.setNumber(1);
-        card3.setLineStyle(1);
+        card3.setColour(Colour.RED);
+        card3.setShape(Shape.TRIANGLE);
+        card3.setNumber(ICard.Number.ONE);
+        card3.setLineStyle(LineStyle.DOTTED);
 
         assertFalse(isSet(threeCards));
     }
@@ -85,22 +86,22 @@ public class ControllerTests {
         // Define card properties and assign same owner for each player
         // Colours and shapes are all the same
         // Numbers and LineStyles are all different
-        card1.setColour(0);
-        card1.setShape(0);
-        card1.setNumber(1);
-        card1.setLineStyle(2);
+        card1.setColour(Colour.BLUE);
+        card1.setShape(Shape.TRIANGLE);
+        card1.setNumber(ICard.Number.NULL);
+        card1.setLineStyle(LineStyle.DASHED);
         card1.setOwner(mockPlayer1);
 
-        card2.setColour(1);
-        card2.setShape(1);
-        card2.setNumber(1);
-        card2.setLineStyle(2);
+        card2.setColour(Colour.GREEN);
+        card2.setShape(Shape.CIRCLE);
+        card2.setNumber(ICard.Number.NULL);
+        card2.setLineStyle(LineStyle.DASHED);
         card2.setOwner(mockPlayer1);
 
-        card3.setColour(2);
-        card3.setShape(2);
-        card3.setNumber(1);
-        card3.setLineStyle(2);
+        card3.setColour(Colour.RED);
+        card3.setShape(Shape.TRIANGLE);
+        card3.setNumber(ICard.Number.NULL);
+        card3.setLineStyle(LineStyle.DASHED);
         card3.setOwner(mockPlayer1);
 
         // Triggers logging set for set owner mockPlayer1
