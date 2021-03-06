@@ -2,11 +2,13 @@ package stacs.starcade.backend.impl;
 
 import stacs.starcade.backend.model.ICard;
 import stacs.starcade.backend.model.IModel;
+import stacs.starcade.backend.model.IPlayer;
 
 import java.util.ArrayList;
 
 public class Model implements IModel {
 
+    private ArrayList<IPlayer> players;
     private ICard[] cards;
 
     public Model() {
@@ -41,4 +43,9 @@ public class Model implements IModel {
 
     public ICard[] getCards() { return this.cards; }
 
+    @Override
+    public void logSet(ICard[] threeCards) {
+        IPlayer cardsOwner = threeCards[0].getOwner();
+        cardsOwner.setSetsLog(threeCards);
+    }
 }
