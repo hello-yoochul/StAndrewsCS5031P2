@@ -1,16 +1,15 @@
 package stacs.starcade.backend.impl;
 
 import stacs.starcade.backend.model.ICard;
+import stacs.starcade.backend.model.IPlayer;
 
 public class Card implements ICard {
 
-    /**
-     * Getter for the card number of the current card.
-     * @return enum representing ONE, TWO or THREE
-     */
+    private IPlayer owner;
+
     @Override
-    public Number getNumber() {
-        return null;
+    public void setOwner(IPlayer owner) {
+        this.owner = owner;
     }
 
     /**
@@ -18,8 +17,8 @@ public class Card implements ICard {
      * @return enum representing a TRIANGLE, SQUARE or CIRCLE shape
      */
     @Override
-    public Shape getShape() {
-        return null;
+    public void setColour(int i) {
+
     }
 
     /**
@@ -27,8 +26,8 @@ public class Card implements ICard {
      * @return enum representing a DOTTED, DASHED or SOLID shading
      */
     @Override
-    public LineType getLineType() {
-        return null;
+    public void setShape(int j) {
+
     }
 
     /**
@@ -36,8 +35,8 @@ public class Card implements ICard {
      * @return enum representing a BLUE, GREEN or WHITE colour
      */
     @Override
-    public Colour getColour() {
-        return null;
+    public void setNumber(int k) {
+
     }
 
     /**
@@ -45,7 +44,7 @@ public class Card implements ICard {
      * @param colour enum of either BLUE, GREEN or WHITE
      */
     @Override
-    public void setColour(Colour colour) {
+    public void setLineStyle(int l) {
 
     }
 
@@ -54,8 +53,8 @@ public class Card implements ICard {
      * @param shape enum of either TRIANGLE, SQUARE or CIRCLE
      */
     @Override
-    public void setShape(Shape shape) {
-
+    public IPlayer getOwner() {
+        return this.owner;
     }
 
     /**
@@ -63,8 +62,13 @@ public class Card implements ICard {
      * @param number enum of either ONE, TWO or THREE
      */
     @Override
-    public void setNumber(Number number) {
+    public int getNumber() {
+        return 0;
+    }
 
+    @Override
+    public int getShape() {
+        return 0;
     }
 
     /**
@@ -72,7 +76,12 @@ public class Card implements ICard {
      * @param lineType enum of either DOTTED, DASHED or SOLID
      */
     @Override
-    public void setLineType(LineType lineType) {
+    public int getLineStyle() {
+        return 0;
+    }
 
+    @Override
+    public int getColour() {
+        return 0;
     }
 }

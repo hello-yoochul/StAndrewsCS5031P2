@@ -9,6 +9,30 @@ public interface ICard {
     enum Shape {TRIANGLE, SQUARE, CIRCLE}
     enum LineType {DOTTED, DASHED, SOLID}
 
+    int TRIANGLE = 0;
+    int SQUARE = 1;
+    int CIRCLE = 2;
+
+    int BLUE = 0;
+    int GREEN = 1;
+    int RED = 2;
+
+    int DOTTED = 0;
+    int DASHED = 1;
+    int SOLID = 2;
+
+    void setOwner(IPlayer owner);
+
+    void setColour(int i);
+
+    void setShape(int j);
+
+    void setNumber(int k);
+
+    void setLineStyle(int l);
+
+    IPlayer getOwner();
+
     /**
      * Getter for the card number of the current card.
      * @return enum representing ONE, TWO or THREE
@@ -19,41 +43,17 @@ public interface ICard {
      * Gets the shape on the card.
      * @return enum representing a TRIANGLE, SQUARE or CIRCLE shape
      */
-    Shape getShape();
+    int getShape();
 
     /**
      * Gets the shading of the card.
      * @return enum representing a DOTTED, DASHED or SOLID shading
      */
-    LineType getLineType();
+    int getLineStyle();
 
     /**
      * Gets the colour of the card.
      * @return enum representing a BLUE, GREEN or WHITE colour
      */
-    Colour getColour();
-
-    /**
-     * Sets the colour of the card.
-     * @param colour enum of either BLUE, GREEN or WHITE
-     */
-    void setColour(Colour colour);
-
-    /**
-     * Sets the shape on the card.
-     * @param shape enum of either TRIANGLE, SQUARE or CIRCLE
-     */
-    void setShape(Shape shape);
-
-    /**
-     * Sets the card number of the current card.
-     * @param number enum of either ONE, TWO or THREE
-     */
-    void setNumber(Number number);
-
-    /**
-     * Sets the Line Type of the card.
-     * @param lineType enum of either DOTTED, DASHED or SOLID
-     */
-    void setLineType(LineType lineType);
+    int getColour();
 }
