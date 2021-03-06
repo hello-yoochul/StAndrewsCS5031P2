@@ -16,7 +16,7 @@ public class CardPanel extends JPanel {
     }
 
     /**
-     * When model has a change, it will be invoked to redraw with the added shape.
+     * When model has a change, it will be invoked to redraw
      */
     @Override
     protected void paintComponent(Graphics g) {

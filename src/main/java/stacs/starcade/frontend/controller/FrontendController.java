@@ -14,11 +14,7 @@ import java.util.List;
 
 
 /**
- * This CanvasController controls a model to be specified in constructor.
- * Mainly, it commands model to draw shapes and has the function of save and import
- * vectors from specified file.
  *
- * @author 200012756
  */
 public class FrontendController implements IFrontendController {
     private FrontendModel model;
@@ -28,7 +24,6 @@ public class FrontendController implements IFrontendController {
 //    final static String startGame = "startGame";
 //    final static String getLeaderboard = "getLeaderboard";
 //    final static String getCards = "getCards";
-
 
     /**
      * FrontendController constructor.

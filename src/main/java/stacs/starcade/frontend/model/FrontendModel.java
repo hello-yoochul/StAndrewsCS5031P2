@@ -4,10 +4,7 @@ package stacs.starcade.frontend.model;
 import java.util.*;
 
 /**
- * This class is one part of panels on main swing frame and
- * it extends Observable to notify the observer(the view).
  *
- * @author 200012756
  */
 public class FrontendModel extends Observable implements IFrontendModel {
     private IFrontendModel.GameStatus status;
