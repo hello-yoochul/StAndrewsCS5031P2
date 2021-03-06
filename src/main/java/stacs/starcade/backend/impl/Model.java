@@ -19,12 +19,11 @@ public class Model {
      */
     private void setCards() {
         ArrayList<ICard> allCards = new ArrayList<>();
-        int numExpressions = 3;
 
-        for (int i = 0; i < numExpressions; i++) { // Colour
-            for (int j = 0; j < numExpressions; j++) { // Shape
-                for (int k = 0; k < numExpressions; k++) { // Number
-                    for (int l = 0; l < numExpressions; l++) { // Line Style
+        for (int i = 0; i < ICard.Colour.values().length; i++) {
+            for (int j = 0; j < ICard.Shape.values().length; j++) {
+                for (int k = 0; k < ICard.Number.values().length; k++) {
+                    for (int l = 0; l < ICard.LineType.values().length; l++) {
 
                         ICard card = new Card();
                         card.setColour(i);

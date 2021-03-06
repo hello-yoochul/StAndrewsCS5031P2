@@ -29,7 +29,7 @@ public class SetGameAPITests {
 
     @Test
     public void mustReturnNotFoundForNonExistingGame() {
-        client.get().uri("/game/100").accept(MediaType.APPLICATION_JSON)
+        client.get().uri("/game/1000").accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -37,7 +37,10 @@ public class SetGameAPITests {
     @Test
     void mustGetLeaderBoard() {
         client.get().uri("/getLeaderboard").accept(MediaType.APPLICATION_JSON).exchange();
-
     }
 
+    @Test
+    void mustReturnThePlayersCards() {
+        client.post().uri("/getLeaderboard").accept(MediaType.APPLICATION_JSON).exchange();
+    }
 }

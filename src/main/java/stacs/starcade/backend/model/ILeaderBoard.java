@@ -25,5 +25,4 @@ public interface ILeaderBoard {
      */
     Duration getPlayerTime();
 
-
 }
