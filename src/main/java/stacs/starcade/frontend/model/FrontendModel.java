@@ -89,18 +89,6 @@ public class FrontendModel extends Observable implements IFrontendModel {
         return playerId;
     }
 
-
-    public static void main(String[] args) {
-//        Random random = new Random();
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println(random.nextInt(10));
-//        }
-
-        List<String> s= new ArrayList<>();
-        s.add("Dfd");
-
-        System.out.println(s.get(0));
-    }
     /**
      * Select card among the cards on board.
      *

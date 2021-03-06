@@ -15,7 +15,7 @@ public class ModelTests {
 
     @Test
     void testCardsSetup() {
-        assertEquals(81,model.getCards().length);
+        assertEquals(81,model.getCards().size());
     }
 
 }
