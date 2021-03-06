@@ -15,21 +15,20 @@ public class Model implements IModel {
 
     /**
      * Generates an array list of 81 card objects with unique attribute-expression combinations.
-     * @return the array list
      */
     public void setCards() {
         ArrayList<ICard> allCards = new ArrayList<>();
 
-        for (int i = 0; i < ICard.Colour.values().length; i++) {
-            for (int j = 0; j < ICard.Shape.values().length; j++) {
-                for (int k = 0; k < ICard.Number.values().length; k++) {
-                    for (int l = 0; l < ICard.LineType.values().length; l++) {
+        for (ICard.Colour i : ICard.Colour.values()) {
+            for (ICard.Shape j : ICard.Shape.values()) {
+                for (ICard.Number k : ICard.Number.values()) {
+                    for (ICard.LineType l : ICard.LineType.values()) {
 
                         ICard card = new Card();
                         card.setColour(i);
                         card.setShape(j);
                         card.setNumber(k);
-                        card.setLineStyle(l);
+                        card.setLineType(l);
                         allCards.add(card);
 
                     }
