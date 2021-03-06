@@ -65,19 +65,20 @@ public class FrontendController implements IFrontendController {
     @Override
     public boolean isSet() {
         // TODO: 1 check if three cards are choosen
-        // TODO: 2 send http://localhost:8080/game/isSet wih the three cards properties, e.g., "2143"
+        // TODO: 2 get the chosen card from model
+        // TODO: 3 and send them to server, e.g., http://localhost:8080/game/isSet?firstCard=1111&secondCard=1221&thirdCard=3113
 
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://localhost:8080/isSet")).build();
 
         try {
-            // TODO: 3 From the request above, check if the server sends the info on it is set
+            // TODO: 4 From the request above, check if the server sends the info on it is set
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println(response.body());
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("error", e);
         }
 
-        // TODO: 4 if it is set remove the card by repainting, else show dialog message "not set"
+        // TODO: 5 if it is set remove the cards on the board and repaint, if not, show dialog message "not set"
 
         return false;
     }
@@ -118,7 +119,15 @@ public class FrontendController implements IFrontendController {
      * @param card a card to check if chosen cards are set
      */
     @Override
-    public void chooseCard(ICard card) {
+    public void selectCard(ICard card) {
         model.selectCard(card);
+    }
+
+    /**
+     * Set the current unique player id.
+     */
+    @Override
+    public void setPlayerId() {
+        // TODO: Get player ID from Server and store it the Model, FrontendModel
     }
 }

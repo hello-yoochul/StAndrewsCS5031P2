@@ -11,11 +11,18 @@ public interface IFrontendModel {
     void update();
 
     /**
-     * set up card when client start the game or 3 set card are spotted.
+     * Set up card when client start the game or 3 set card are spotted.
      *
      * @param cards the initial 12 cards
      */
     void setUpCard(List<ICard> cards);
+
+    /**
+     * Get the cards on the current board.
+     *
+     * @return the cards on the board
+     */
+    List<ICard> getCards();
 
     /**
      * Set game status: RUNNING or PAUSED.
@@ -39,9 +46,23 @@ public interface IFrontendModel {
     void setPlayerId(int playerId);
 
     /**
+     * Get the unique player id.
+     *
+     * @return the unique player id.
+     */
+    Integer getPlayerId();
+
+    /**
      * Select Card among the cards on board.
      *
      * @param card selected Card among the cards on board
      */
     void selectCard(ICard card);
+
+    /**
+     * Get the chosen cards.
+     *
+     * @return the chosen cards
+     */
+    List<ICard> getChosenCards();
 }
