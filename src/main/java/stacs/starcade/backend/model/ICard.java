@@ -25,21 +25,44 @@ public interface ICard {
     int ONE = 1;
     int TWO = 2;
 
-
+    /**
+     * Sets the owner of a card.
+     * @param owner player object
+     */
     void setOwner(IPlayer owner);
 
+    /**
+     * Sets the colour on the cards.
+     * @param colour
+     */
     void setColour(Colour colour);
 
+    /**
+     * Sets the shape on the cards.
+     * @param shape
+     */
     void setShape(Shape shape);
 
+    /**
+     * Sets the number on the cards.
+     * @param number
+     */
     void setNumber(Number number);
 
+    /**
+     * Sets the line_style on the cards.
+     * @param lineStyle
+     */
     void setLineStyle(LineStyle lineStyle);
 
+    /**
+     * Gets the player who is owning the card.
+     * @return the player object
+     */
     IPlayer getOwner();
 
     /**
-     * Getter for the card number of the current card.
+     * Gets the number on the card.
      * @return enum representing ONE, TWO or THREE
      */
     Number getNumber();
