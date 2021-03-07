@@ -1,8 +1,8 @@
 package stacs.starcade.frontend.controller;
 
-import stacs.starcade.frontend.model.ICard;
+import stacs.starcade.shared.ICard;
 
-public interface IFrontendController {
+public interface IController {
     /**
      * Start a game.
      */
@@ -13,12 +13,12 @@ public interface IFrontendController {
      */
     void setUpCards();
 
-    /**
-     * Check if the three cards are set.
-     *
-     * @return true if it is set
-     */
-    boolean isSet();
+//    /**
+//     * Check if the three cards are set.
+//     *
+//     * @return true if it is set
+//     */
+//    boolean isSet();
 
     /**
      * Pause the game.
@@ -41,4 +41,6 @@ public interface IFrontendController {
      * Set the current unique player id.
      */
     void setPlayerId();
+
+    void validateCards(ICard[] threeCards);
 }

@@ -1,21 +1,26 @@
-package stacs.starcade.backend.model;
+package stacs.starcade.frontend;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import stacs.starcade.backend.impl.Card;
-import stacs.starcade.backend.impl.Controller;
-import stacs.starcade.backend.impl.Model;
+import stacs.starcade.backend.model.IModel;
+import stacs.starcade.backend.model.IPlayer;
+import stacs.starcade.frontend.controller.Controller;
+import stacs.starcade.frontend.controller.IController;
+import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.shared.Card;
+import stacs.starcade.backend.impl.Player;
+import stacs.starcade.shared.ICard;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static stacs.starcade.backend.impl.Checks.isSet;
-import static stacs.starcade.backend.model.ICard.Colour.*;
-import static stacs.starcade.backend.model.ICard.LineStyle.*;
-import static stacs.starcade.backend.model.ICard.Number.*;
-import static stacs.starcade.backend.model.ICard.Shape.*;
+import static stacs.starcade.shared.Checks.isSet;
+import static stacs.starcade.shared.ICard.Colour.*;
+import static stacs.starcade.shared.ICard.LineStyle.*;
+import static stacs.starcade.shared.ICard.Number.*;
+import static stacs.starcade.shared.ICard.Shape.*;
 
-public class ControllerTests {
+public class ControllerTests2 {
 
     private IController c;
     private IModel mockModel;
@@ -28,9 +33,9 @@ public class ControllerTests {
 
     @BeforeEach
     public void setup() {
-        c = new Controller(new Model());
+        c = new Controller(new FrontendModel());
         mockModel = mock(IModel.class);
-        mockPlayer1 = mock(IPlayer.class);
+        mockPlayer1 = new Player();
         mockPlayer2 = mock(IPlayer.class);
         card1 = new Card();
         card2 = new Card();
@@ -54,7 +59,7 @@ public class ControllerTests {
         card2.setLineStyle(DASHED);
 
         card3.setColour(RED);
-        card3.setShape(TRIANGLE);
+        card3.setShape(SQUARE);
         card3.setNumber(NULL);
         card3.setLineStyle(DASHED);
 
@@ -76,40 +81,11 @@ public class ControllerTests {
         card2.setLineStyle(DASHED);
 
         card3.setColour(RED);
-        card3.setShape(TRIANGLE);
+        card3.setShape(SQUARE);
         card3.setNumber(ONE);
         card3.setLineStyle(DOTTED);
 
         assertFalse(isSet(threeCards));
-    }
-
-    @Test
-    void testIfValidSetHasBeenSuccessfullyStoredWithOwner() {
-        // Define card properties and assign same owner for each player
-        // Colours and shapes are all the same
-        // Numbers and LineStyles are all different
-        card1.setColour(BLUE);
-        card1.setShape(TRIANGLE);
-        card1.setNumber(NULL);
-        card1.setLineStyle(DASHED);
-        card1.setOwner(mockPlayer1);
-
-        card2.setColour(GREEN);
-        card2.setShape(CIRCLE);
-        card2.setNumber(NULL);
-        card2.setLineStyle(DASHED);
-        card2.setOwner(mockPlayer1);
-
-        card3.setColour(RED);
-        card3.setShape(TRIANGLE);
-        card3.setNumber(NULL);
-        card3.setLineStyle(DASHED);
-        card3.setOwner(mockPlayer1);
-
-        // Triggers logging set for set owner mockPlayer1
-        this.c.validateCards(threeCards);
-
-        assertTrue(threeCards.equals(mockPlayer1.getSetsLog().get(0)));
     }
 
     @Test
@@ -120,22 +96,6 @@ public class ControllerTests {
         IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
             // Logging an invalid score (7) for Twos should cause an exception
             this.c.validateCards(twoCards);
-        });
-        String actualMessage = iae.getMessage();
-
-        assertEquals(expectedMessage, actualMessage);
-    }
-
-    @Test
-    void testSuccessfulDenialWhenTryingToValidateCardsFromDifferentOwners() {
-        String expectedMessage = "Given cards do not belong to the same player.";
-
-        card1.setOwner(mockPlayer1);
-        card2.setOwner(mockPlayer1);
-        card3.setOwner(mockPlayer2);
-
-        IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
-            this.c.validateCards(threeCards);
         });
         String actualMessage = iae.getMessage();
 
