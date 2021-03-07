@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import stacs.starcade.shared.ICard;
-import stacs.starcade.backend.model.ILeaderBoard;
+import stacs.starcade.backend.impl.ILeaderBoard;
 
 /**
  * Interface for Backend API for Set Game.

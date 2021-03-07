@@ -1,7 +1,5 @@
 package stacs.starcade.shared;
 
-import stacs.starcade.backend.model.IPlayer;
-
 /**
  * Interface for the representation of a single card.
  */

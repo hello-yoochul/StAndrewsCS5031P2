@@ -13,6 +13,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     private List<ICard> cardsOnBoard;
     private List<ICard> chosenCards;
     private int playerId;
+    private ArrayList<ICard[]> setsLog;
 
     /**
      * Construct FrontendModel.
@@ -20,7 +21,10 @@ public class FrontendModel extends Observable implements IFrontendModel {
     public FrontendModel() {
         cardsOnBoard = new ArrayList<>();
         chosenCards = new ArrayList<>();
+        setsLog = new ArrayList<>();
     }
+
+
 
     /**
      * Notify observers.
@@ -113,5 +117,25 @@ public class FrontendModel extends Observable implements IFrontendModel {
     @Override
     public List<ICard> getChosenCards() {
         return chosenCards;
+    }
+
+    /**
+     * Adds a valid set to the setsLog of current round
+     *
+     * @param threeCards
+     */
+    @Override
+    public void setSetsLog(ICard[] threeCards) {
+        setsLog.add(threeCards);
+    }
+
+    /**
+     * Gets log of sets that have been logged in current round.
+     *
+     * @return setsLog object
+     */
+    @Override
+    public ArrayList<ICard[]> getSetsLog() {
+        return this.setsLog;
     }
 }

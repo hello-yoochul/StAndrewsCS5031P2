@@ -7,8 +7,8 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.*;
 import stacs.starcade.backend.impl.Model;
 import stacs.starcade.shared.ICard;
-import stacs.starcade.backend.model.ILeaderBoard;
-import stacs.starcade.backend.model.IModel;
+import stacs.starcade.backend.impl.ILeaderBoard;
+import stacs.starcade.backend.impl.IModel;
 
 /**
  * Spring Backend API for Set Game.

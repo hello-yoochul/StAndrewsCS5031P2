@@ -1,7 +1,6 @@
 package stacs.starcade.shared;
 
-import stacs.starcade.shared.ICard;
-import stacs.starcade.backend.model.IPlayer;
+import stacs.starcade.backend.impl.IPlayer;
 
 public class Checks {
     /**

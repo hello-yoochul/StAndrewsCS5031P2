@@ -2,8 +2,8 @@ package stacs.starcade.frontend;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import stacs.starcade.backend.model.IModel;
-import stacs.starcade.backend.model.IPlayer;
+import stacs.starcade.backend.impl.IModel;
+import stacs.starcade.backend.impl.IPlayer;
 import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.FrontendModel;

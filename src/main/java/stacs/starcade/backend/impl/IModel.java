@@ -1,4 +1,4 @@
-package stacs.starcade.backend.model;
+package stacs.starcade.backend.impl;
 
 import stacs.starcade.shared.ICard;
 
@@ -11,6 +11,4 @@ public interface IModel {
     void setCards();
 
     ArrayList<ICard> getCards();
-
-    void logSet(ICard[] threeCards);
 }
