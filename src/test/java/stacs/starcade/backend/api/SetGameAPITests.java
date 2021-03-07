@@ -4,6 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import stacs.starcade.backend.impl.LeaderBoard;
+import stacs.starcade.shared.Card;
+import stacs.starcade.shared.ICard;
+
+import java.util.List;
 
 /**
  * Tests for the {@link SetGameAPI} class.
@@ -36,11 +41,18 @@ public class SetGameAPITests {
 
     @Test
     void mustGetLeaderBoard() {
-        client.get().uri("/getLeaderboard").accept(MediaType.APPLICATION_JSON).exchange();
+        client.get().uri("/getLeaderboard").accept(MediaType.APPLICATION_JSON)
+                .exchange().expectStatus().isOk().expectBody(LeaderBoard.class);
     }
 
     @Test
-    void mustReturnThePlayersCards() {
-        client.post().uri("/getLeaderboard").accept(MediaType.APPLICATION_JSON).exchange();
+    void mustReturnCards() {
+        client.post().uri("/startGame")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange();
+
+        client.post().uri("/getCards/1").accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk().expectBodyList(Card.class);
     }
 }

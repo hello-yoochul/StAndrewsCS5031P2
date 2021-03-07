@@ -1,11 +1,13 @@
 package stacs.starcade.backend.api;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.*;
 import stacs.starcade.backend.impl.Model;
+import stacs.starcade.shared.Card;
 import stacs.starcade.shared.ICard;
 import stacs.starcade.backend.impl.ILeaderBoard;
 import stacs.starcade.backend.impl.IModel;
@@ -27,6 +29,8 @@ public class SetGameAPI implements ISetGameAPI {
      */
     @GetMapping("/getLeaderboard")
     public List<ILeaderBoard> getLeaderBoard() {
+
+
         return null;
     }
 

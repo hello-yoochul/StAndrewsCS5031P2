@@ -43,7 +43,7 @@ public class FrontendView extends JFrame implements Observer {
     }
 
     private void setUpComponents() {
-
+        // obtained from https://stackoverflow.com/questions/33576358/how-to-use-java-swing-layout-manager-to-make-this-gui
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
