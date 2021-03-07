@@ -9,22 +9,6 @@ public interface ICard {
     enum Shape {TRIANGLE, SQUARE, CIRCLE}
     enum LineStyle {DOTTED, DASHED, SOLID}
 
-    int TRIANGLE = 0;
-    int SQUARE = 1;
-    int CIRCLE = 2;
-
-    int BLUE = 0;
-    int GREEN = 1;
-    int RED = 2;
-
-    int DOTTED = 0;
-    int DASHED = 1;
-    int SOLID = 2;
-
-    int NULL = 0;
-    int ONE = 1;
-    int TWO = 2;
-
     /**
      * Sets the owner of a card.
      * @param owner player object
