@@ -9,7 +9,8 @@ public class Player implements IPlayer {
 
     private ArrayList<ICard[]> setsLog;
 
-    public Player() { setsLog = new ArrayList<>();
+    public Player() {
+        setsLog = new ArrayList<>();
     }
 
     @Override
