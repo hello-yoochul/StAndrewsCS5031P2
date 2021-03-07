@@ -73,4 +73,24 @@ public class Card implements ICard {
      */
     @Override
     public Colour getColour() { return this.colour; }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Card)) {
+            return false;
+        }
+
+        if (o == this) {
+            return true;
+        }
+
+        Card c = (Card) o;
+
+        return c.colour.equals(this.colour)
+            && c.lineStyle.equals(this.lineStyle)
+            && c.number.equals(this.number)
+            && c.shape.equals(this.shape);
+
+    }
 }
