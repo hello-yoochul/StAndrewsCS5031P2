@@ -1,4 +1,4 @@
-package stacs.starcade.frontend.model;
+package stacs.starcade.shared;
 
 import java.time.Duration;
 import java.time.Instant;

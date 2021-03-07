@@ -10,83 +10,84 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.server.ResponseStatusException;
 import stacs.starcade.backend.impl.IPlayer;
-import stacs.starcade.backend.impl.Model;
-import stacs.starcade.backend.impl.Player;
+import stacs.starcade.backend.impl.*;
 import stacs.starcade.shared.Card;
+import stacs.starcade.backend.impl.Player;
 import stacs.starcade.shared.ICard;
-import stacs.starcade.backend.impl.ILeaderBoard;
-import stacs.starcade.backend.impl.IModel;
 
 /**
  * Spring Backend API for Set Game.
  */
 @RestController
 public class SetGameAPI implements ISetGameAPI {
-    private ArrayList<IPlayer> players = new ArrayList<>();
-    private Map<IPlayer, IModel> games = new HashMap<>();
+
+    private IModel model = new Model();
 
     /**
-     * Get method for leaderboard.
+     * Gets the leaderboard containing player objects.
      *
      * @return a list of individual leaderboard entries
      */
     @GetMapping("/getLeaderboard")
-    public List<ILeaderBoard> getLeaderBoard() {
-        return null;
+    public List<IPlayer> getLeaderBoard() {
+        return model.getLeaderboard().getPlayersList();
     }
 
-//    /**
-//     * Post method to start a new game.
-//     *
-//     * @return an int representing the unique player ID
-//     */
-//    @GetMapping("/startGame")
-//    public Integer startGame() {
-//        int newPID;
-//
-//        if (players.isEmpty()){
-//           newPID = 1;
-//        } else {
-//            newPID = players.get(players.size() - 1).getPlayerId() + 1;
-//        }
-//
-//        IPlayer newPlayer = new Player(newPID);
-//        players.add(newPlayer);
-//        IModel model = new Model();
-//        games.put(newPlayer, model);
-//        return newPlayer.getPlayerId();
-//    }
 
     /**
-     * Post method to start a new game.
+     * Registers a new player with a given playerName and generates a unique player ID.
      *
-     * @return an int representing the unique player ID
+     * Creates a player instance and passes it to the model, from where it is added to the leaderboard.
+     *
+     * @return newly generated player ID.
      */
-    @GetMapping("/startGame")
-    public Integer startGame() {
-        int newPlayerID = ;
-        // Get next available playerID
-        // Create player instance using generated pID and given pName
-        // Call Model method to add player to game
-        // return player ID
+    @GetMapping("/registerPlayer")
+    public Integer registerPlayer(@PathVariable String playerName) {
+        int newPID = model.getPlayerID();
+        IPlayer newP = new Player(playerName, newPID);
+
+        model.addPlayer(newP);
+
+        return newPID;
     }
 
     /**
-     * Post method to get current player's cards.
+     * Triggers the start of a new round for player with ID playerID.
      *
-     * @param playerID the unique player ID
-     * @return the cards that the current player has
+     * @return returns an array with twelve cards that will be used for the new round.
      */
-    @GetMapping("/getCards/{playerID}")
-    public List<ICard> getCards(@PathVariable int playerID) {
-        for (IPlayer p : players){
+    @GetMapping("/nextRound")
+    public ArrayList<ICard> startNextRound(@PathVariable int playerID) {
+
+        ILeaderBoard lB = model.getLeaderboard();
+        for (IPlayer p : lB.getPlayersList()) {
             if (p.getPlayerId() == playerID) {
-                return games.get(p).getTwelveCards();
+                ArrayList<ICard> twelveCards = model.getTwelveCards();
+                p.startRound(twelveCards);
+                return twelveCards;
             }
         }
 
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player not found");
-
     }
-    
+
+    /**
+     * Ends round player with ID playerID is currently playing.
+     *
+     * This will stop the timer for the current round.
+     *
+     * @param playerID
+     */
+    // TODO: Pass in sets and verify them
+    @PostMapping("/endRound")
+    public void endRound(@PathVariable int playerID) {
+
+        ILeaderBoard lB = model.getLeaderboard();
+        for (IPlayer p : lB.getPlayersList()) {
+            if (p.getPlayerId() == playerID) {
+                p.endRound();
+                break;
+            }
+        }
+    }
 }

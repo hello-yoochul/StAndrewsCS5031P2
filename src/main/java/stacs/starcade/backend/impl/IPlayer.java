@@ -38,4 +38,8 @@ public interface IPlayer {
      * @return average round duration
      */
     Duration getAvgTime();
+
+    void endRound();
+
+    void startRound(ArrayList<ICard> twelveCards);
 }

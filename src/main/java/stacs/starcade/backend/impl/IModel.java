@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public interface IModel {
 
+    int getPlayerID();
+
     /**
      * Generates a unique player ID.
      * @return player ID as int
@@ -24,4 +26,6 @@ public interface IModel {
      * @return ArrayList of twelve cards
      */
     ArrayList<ICard> getTwelveCards();
+
+    void addPlayer(IPlayer newP);
 }

@@ -1,6 +1,9 @@
 package stacs.starcade.backend.impl;
 
+import stacs.starcade.shared.ICard;
+
 import java.time.Duration;
+import java.util.ArrayList;
 
 public class Player implements IPlayer {
 
@@ -9,12 +12,14 @@ public class Player implements IPlayer {
     private Integer round;
     private Duration totalTime;
     private Duration averageTime;
+    private ArrayList<ICard> twelveCards;
 
     public Player(String name, Integer id) {
         this.name = name;
         this.id = id;
         this.totalTime = Duration.ZERO;
         this.averageTime = Duration.ZERO;
+        this.twelveCards = new ArrayList<>();
     }
 
 
@@ -74,5 +79,15 @@ public class Player implements IPlayer {
     @Override
     public Duration getAvgTime() {
         return this.averageTime;
+    }
+
+    @Override
+    public void endRound() {
+        // Stop timer
+    }
+
+    @Override
+    public void startRound(ArrayList<ICard> twelveCards) {
+        this.twelveCards = twelveCards;
     }
 }
