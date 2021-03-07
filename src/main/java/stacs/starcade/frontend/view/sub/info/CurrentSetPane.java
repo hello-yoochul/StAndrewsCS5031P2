@@ -5,6 +5,9 @@ import stacs.starcade.frontend.model.FrontendModel;
 
 import javax.swing.*;
 
+/**
+ * Panel for Set cards chosen by the player.
+ */
 public class CurrentSetPane extends JPanel {
 
     FrontendModel model;

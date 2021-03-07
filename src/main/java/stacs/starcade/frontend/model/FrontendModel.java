@@ -1,12 +1,15 @@
 package stacs.starcade.frontend.model;
 
 
+import stacs.starcade.frontend.view.main.FrontendView;
 import stacs.starcade.shared.ICard;
 
 import java.util.*;
 
 /**
- *
+ * All the data is stored here such as client choice of cards.
+ * Once the data is updated, the {@link FrontendView} will be
+ * invoked to repaint the panel.
  */
 public class FrontendModel extends Observable implements IFrontendModel {
     private IFrontendModel.GameStatus status;
@@ -23,8 +26,6 @@ public class FrontendModel extends Observable implements IFrontendModel {
         chosenCards = new ArrayList<>();
         setsLog = new ArrayList<>();
     }
-
-
 
     /**
      * Notify observers.
@@ -43,6 +44,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     @Override
     public void setUpCard(List<ICard> cards) {
         this.cardsOnBoard = cards;
+        update();
     }
 
     /**
@@ -121,8 +123,6 @@ public class FrontendModel extends Observable implements IFrontendModel {
 
     /**
      * Adds a valid set to the setsLog of current round
-     *
-     * @param threeCards
      */
     @Override
     public void setSetsLog(ICard[] threeCards) {

@@ -1,16 +1,22 @@
 package stacs.starcade.frontend.model;
 
+import stacs.starcade.frontend.view.main.FrontendView;
 import stacs.starcade.shared.ICard;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * All the data is stored here such as client choice of cards.
+ * Once the data is updated, the {@link FrontendView} will be
+ * invoked to repaint the panel.
+ */
 public interface IFrontendModel {
+    /**
+     * Status of game.
+     */
+    enum GameStatus {RUNNING, PAUSED}
 
-
-
-
-    enum GameStatus {RUNNING, PAUSED;}
     /**
      * Notify observers.
      */
@@ -74,12 +80,14 @@ public interface IFrontendModel {
 
     /**
      * Adds a valid set to the setsLog of current round
-     * @param threeCards
+     *
+     * @param threeCards may be a valid set
      */
     void setSetsLog(ICard[] threeCards);
 
     /**
      * Gets log of sets that have been logged in current round.
+     *
      * @return setsLog object
      */
     ArrayList<ICard[]> getSetsLog();

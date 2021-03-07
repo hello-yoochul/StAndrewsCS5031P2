@@ -12,7 +12,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- *
+ * This is Main view of frontend.
+ * It creates 3 sub parts view: controlPane (button for request to server), cardPane (12 cards view),
+ * and infoPane(current sets and leaderBoard).
  */
 public class FrontendView extends JFrame implements Observer {
     private final Controller controller;
@@ -42,6 +44,10 @@ public class FrontendView extends JFrame implements Observer {
 //        setMinimumSize(getPreferredSize());
     }
 
+    /**
+     * Creates 3 sub parts view: controlPane (button for request to server), cardPane (12 cards view),
+     * and infoPane(current sets and leaderBoard).
+     */
     private void setUpComponents() {
         // obtained from https://stackoverflow.com/questions/33576358/how-to-use-java-swing-layout-manager-to-make-this-gui
         setLayout(new GridBagLayout());
@@ -69,7 +75,7 @@ public class FrontendView extends JFrame implements Observer {
     }
 
     /**
-     * If the model updates, it will be invoked (observer notification)).
+     * If the {@link FrontendModel} is updated, it will be invoked (observer notification)).
      *
      * @param arg0 the observable object.
      * @param arg1 an argument passed to the {@code notifyObservers} method.
