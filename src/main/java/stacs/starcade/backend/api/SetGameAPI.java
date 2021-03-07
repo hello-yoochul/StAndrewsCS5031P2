@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.*;
 import stacs.starcade.backend.impl.Model;
-import stacs.starcade.backend.model.ICard;
-import stacs.starcade.backend.model.ILeaderBoard;
-import stacs.starcade.backend.model.IModel;
+import stacs.starcade.shared.ICard;
+import stacs.starcade.backend.impl.ILeaderBoard;
+import stacs.starcade.backend.impl.IModel;
 
 /**
  * Spring Backend API for Set Game.
@@ -53,16 +53,16 @@ public class SetGameAPI implements ISetGameAPI {
         return null;
     }
 
-    /**
-     * Check if the three cards are Set.
-     *
-     * @param firstCard  the first card properties
-     * @param secondCard the first card properties
-     * @param thirdCard  the first card properties
-     * @return true if it is set
-     */
-    @PostMapping("/isSet")
-    public boolean isSet(@RequestParam int firstCard, @RequestParam int secondCard, @RequestParam int thirdCard) {
-        return false;
-    }
+//    /**
+//     * Check if the three cards are Set.
+//     *
+//     * @param firstCard  the first card properties
+//     * @param secondCard the first card properties
+//     * @param thirdCard  the first card properties
+//     * @return true if it is set
+//     */
+//    @PostMapping("/isSet")
+//    public boolean isSet(@RequestParam int firstCard, @RequestParam int secondCard, @RequestParam int thirdCard) {
+//        return false;
+//    }
 }

@@ -1,4 +1,6 @@
-package stacs.starcade.backend.model;
+package stacs.starcade.backend.impl;
+
+import stacs.starcade.shared.ICard;
 
 import java.util.ArrayList;
 
@@ -9,6 +11,4 @@ public interface IModel {
     void setCards();
 
     ArrayList<ICard> getCards();
-
-    void logSet(ICard[] threeCards);
 }

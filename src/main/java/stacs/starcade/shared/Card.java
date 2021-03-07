@@ -1,7 +1,6 @@
-package stacs.starcade.backend.impl;
+package stacs.starcade.shared;
 
-import stacs.starcade.backend.model.ICard;
-import stacs.starcade.backend.model.IPlayer;
+import stacs.starcade.backend.impl.IPlayer;
 
 public class Card implements ICard {
 
@@ -10,13 +9,6 @@ public class Card implements ICard {
     private Shape shape;
     private LineStyle lineStyle;
     private Number number;
-
-    /**
-     * Sets the owner of a card.
-     * @param owner player object
-     */
-    @Override
-    public void setOwner(IPlayer owner) { this.owner = owner; }
 
     /**
      * Sets the colour on the cards.
@@ -49,14 +41,6 @@ public class Card implements ICard {
      */
     @Override
     public void setLineStyle(LineStyle lineStyle) { this.lineStyle = lineStyle; }
-
-    /**
-     * Gets the player who is owning the card.
-     *
-     * @return the player object
-     */
-    @Override
-    public IPlayer getOwner() { return this.owner; }
 
     /**
      * Gets the number on the card.

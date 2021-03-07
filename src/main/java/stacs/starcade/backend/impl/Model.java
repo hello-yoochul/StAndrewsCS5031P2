@@ -1,8 +1,7 @@
 package stacs.starcade.backend.impl;
 
-import stacs.starcade.backend.model.ICard;
-import stacs.starcade.backend.model.IModel;
-import stacs.starcade.backend.model.IPlayer;
+import stacs.starcade.shared.Card;
+import stacs.starcade.shared.ICard;
 
 import java.util.ArrayList;
 
@@ -41,9 +40,5 @@ public class Model implements IModel {
         return allCards;
     }
 
-    @Override
-    public void logSet(ICard[] threeCards) {
-        IPlayer cardsOwner = threeCards[0].getOwner();
-        cardsOwner.setSetsLog(threeCards);
-    }
+
 }

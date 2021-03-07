@@ -1,10 +1,16 @@
 package stacs.starcade.frontend.model;
 
+import stacs.starcade.shared.ICard;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IFrontendModel {
-    enum GameStatus {RUNNING, PAUSED}
 
+
+
+
+    enum GameStatus {RUNNING, PAUSED;}
     /**
      * Notify observers.
      */
@@ -65,4 +71,16 @@ public interface IFrontendModel {
      * @return the chosen cards
      */
     List<ICard> getChosenCards();
+
+    /**
+     * Adds a valid set to the setsLog of current round
+     * @param threeCards
+     */
+    void setSetsLog(ICard[] threeCards);
+
+    /**
+     * Gets log of sets that have been logged in current round.
+     * @return setsLog object
+     */
+    ArrayList<ICard[]> getSetsLog();
 }

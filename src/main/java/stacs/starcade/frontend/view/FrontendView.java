@@ -1,6 +1,6 @@
 package stacs.starcade.frontend.view;
 
-import stacs.starcade.frontend.controller.FrontendController;
+import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.view.sub.CardPanel;
 import stacs.starcade.frontend.view.sub.ControlPanel;
@@ -14,7 +14,7 @@ import java.util.Observer;
  *
  */
 public class FrontendView extends JFrame implements Observer {
-    private final FrontendController controller;
+    private final Controller controller;
     private final FrontendModel model;
 
     ControlPanel controlPanel;
@@ -23,7 +23,7 @@ public class FrontendView extends JFrame implements Observer {
     private static final int DEFAULT_FRAME_WIDTH = 1600;
     private static final int DEFAULT_FRAME_HEIGHT = 900;
 
-    public FrontendView(FrontendModel model, FrontendController controller) {
+    public FrontendView(FrontendModel model, Controller controller) {
         super("Set Game");
         this.model = model;
         this.controller = controller;

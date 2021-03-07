@@ -1,13 +1,13 @@
 package stacs.starcade.frontend.view.sub;
 
-import stacs.starcade.frontend.controller.FrontendController;
+import stacs.starcade.frontend.controller.Controller;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ControlPanel extends JPanel {
-    FrontendController controller;
+    Controller controller;
 
     private JButton startGameButton;
     private JButton checkSetButton;
@@ -20,7 +20,7 @@ public class ControlPanel extends JPanel {
     public static final String PAUSE = "PAUSE";
     public static final String UNPAUSE = "UNPAUSE";
 
-    public ControlPanel(FrontendController controller) {
+    public ControlPanel(Controller controller) {
         this.controller = controller;
         generateButtons();
         generateButtonListener();
@@ -62,7 +62,7 @@ public class ControlPanel extends JPanel {
             }
 
             if (evt == checkSetButton) {
-                controller.isSet();
+//                controller.isSet();
             }
 
             if (evt == pauseGameToggleButton) {

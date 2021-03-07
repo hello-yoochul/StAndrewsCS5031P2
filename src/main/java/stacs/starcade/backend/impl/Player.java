@@ -1,7 +1,6 @@
 package stacs.starcade.backend.impl;
 
-import stacs.starcade.backend.model.ICard;
-import stacs.starcade.backend.model.IPlayer;
+import stacs.starcade.shared.ICard;
 
 import java.util.ArrayList;
 
