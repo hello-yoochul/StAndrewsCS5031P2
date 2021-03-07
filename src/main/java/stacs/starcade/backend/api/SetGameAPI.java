@@ -12,6 +12,12 @@ import stacs.starcade.shared.ICard;
 import stacs.starcade.backend.impl.ILeaderBoard;
 import stacs.starcade.backend.impl.IModel;
 
+import static stacs.starcade.shared.ICard.Colour.*;
+import static stacs.starcade.shared.ICard.Number.*;
+import static stacs.starcade.shared.ICard.LineStyle.*;
+import static stacs.starcade.shared.ICard.Shape.*;
+
+
 /**
  * Spring Backend API for Set Game.
  */
@@ -54,7 +60,18 @@ public class SetGameAPI implements ISetGameAPI {
      */
     @PostMapping("/getCards/{playerID}")
     public List<ICard> getCards(@PathVariable int playerID) {
-        return null;
+        List<ICard> cards = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            ICard card = new Card();
+            card.setNumber(ONE);
+            card.setColour(RED);
+            card.setLineStyle(DOTTED);
+            card.setShape(TRIANGLE);
+            cards.add(card);
+        }
+
+        return cards;
     }
 
 //    /**

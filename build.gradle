@@ -27,7 +27,6 @@ plugins {
 
     // https://plugins.gradle.org/plugin/org.openjfx.javafxplugin
     id 'org.openjfx.javafxplugin' version '0.0.9'
-
 }
 
 group = 'stacs.starcade'
@@ -42,7 +41,7 @@ java { // https://docs.gradle.org/current/userguide/java_plugin.html#sec:java-ex
 	sourceCompatibility = JavaVersion.VERSION_11
 	targetCompatibility = JavaVersion.VERSION_11
 	withJavadocJar()
-	withSourcesJar()	
+	withSourcesJar()
 }
 
 repositories { // https://docs.gradle.org/current/userguide/declaring_repositories.html
@@ -87,6 +86,11 @@ dependencies { // https://docs.gradle.org/current/userguide/declaring_dependenci
 	testImplementation "org.mockito:mockito-core:3.+"
 
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+
+	implementation group: 'org.json', name: 'json', version: '20201115'
+
+//	compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+
 }
 
 javafx {
@@ -106,6 +110,7 @@ jacoco {
 	toolVersion = "0.8.6"
 }
 
+
 // https://docs.gradle.org/current/userguide/jacoco_plugin.html#sec:jacoco_report_configuration
 jacocoTestReport {
 	reports {
@@ -118,6 +123,7 @@ checkstyle {
 	toolVersion "8.40"
 	configFile file("config/checkstyle/google_checks_modified.xml")
 }
+
 
 pmd {
     ignoreFailures = true

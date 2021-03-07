@@ -6,6 +6,9 @@ import stacs.starcade.frontend.model.FrontendModel;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel for {@link CurrentSetPane} and {@link LeaderBoardPane}.
+ */
 public class InfoPane extends JPanel {
     FrontendModel model;
     Controller controller;
@@ -31,6 +34,6 @@ public class InfoPane extends JPanel {
      */
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+//        super.paintComponent(g);
     }
 }
