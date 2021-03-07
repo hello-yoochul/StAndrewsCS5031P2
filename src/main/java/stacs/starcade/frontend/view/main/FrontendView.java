@@ -1,9 +1,10 @@
-package stacs.starcade.frontend.view;
+package stacs.starcade.frontend.view.main;
 
 import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.model.FrontendModel;
-import stacs.starcade.frontend.view.sub.CardPanel;
-import stacs.starcade.frontend.view.sub.ControlPanel;
+import stacs.starcade.frontend.view.sub.card.CardPane;
+import stacs.starcade.frontend.view.sub.control.ControlPane;
+import stacs.starcade.frontend.view.sub.info.InfoPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,8 +18,9 @@ public class FrontendView extends JFrame implements Observer {
     private final Controller controller;
     private final FrontendModel model;
 
-    ControlPanel controlPanel;
-    CardPanel cardPanel;
+    ControlPane controlPanel;
+    CardPane cardPanel;
+    InfoPane infoPanel;
 
     private static final int DEFAULT_FRAME_WIDTH = 1600;
     private static final int DEFAULT_FRAME_HEIGHT = 900;
@@ -35,14 +37,35 @@ public class FrontendView extends JFrame implements Observer {
         ((Observable) model).addObserver(this);
         setUpComponents();
         setVisible(true);
+
+//        pack();
+//        setMinimumSize(getPreferredSize());
     }
 
     private void setUpComponents() {
-        controlPanel = new ControlPanel(controller);
-        cardPanel = new CardPanel(controller, model);
 
-        add(controlPanel, BorderLayout.NORTH);
-        add(cardPanel, BorderLayout.CENTER);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 0.05;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(4, 4, 4, 4);
+
+        add((controlPanel = new ControlPane(this.model,this.controller)), gbc);
+        gbc.weighty = 1;
+        gbc.gridy++;
+        add((cardPanel = new CardPane(this.model, this.controller)), gbc);
+
+        gbc.gridy = 0;
+        gbc.gridx++;
+        gbc.gridheight = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.weighty = 1;
+        gbc.weightx = 0.5;
+        add((infoPanel = new InfoPane(this.model, this.controller)), gbc);
     }
 
     /**
