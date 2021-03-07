@@ -1,5 +1,7 @@
 package stacs.starcade.backend.model;
 
+import java.util.ArrayList;
+
 /**
  * Interface for the representation of a player.
  */
@@ -16,4 +18,8 @@ public interface IPlayer {
      * @return a String representing the player name
      */
     String getPlayerName();
+
+    void setSetsLog(ICard[] threeCards);
+
+    ArrayList<ICard[]> getSetsLog();
 }

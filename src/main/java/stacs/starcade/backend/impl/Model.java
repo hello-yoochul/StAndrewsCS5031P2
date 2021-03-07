@@ -2,6 +2,7 @@ package stacs.starcade.backend.impl;
 
 import stacs.starcade.backend.model.ICard;
 import stacs.starcade.backend.model.IModel;
+import stacs.starcade.backend.model.IPlayer;
 
 import java.util.ArrayList;
 
@@ -22,12 +23,12 @@ public class Model implements IModel {
         for (ICard.Colour i : ICard.Colour.values()) {
             for (ICard.Shape j : ICard.Shape.values()) {
                 for (ICard.Number k : ICard.Number.values()) {
-                    for (ICard.LineType l : ICard.LineType.values()) {
+                    for (ICard.LineStyle l : ICard.LineStyle.values()) {
                         ICard card = new Card();
                         card.setColour(i);
                         card.setShape(j);
                         card.setNumber(k);
-                        card.setLineType(l);
+                        card.setLineStyle(l);
                         allCards.add(card);
                     }
                 }
@@ -40,4 +41,9 @@ public class Model implements IModel {
         return allCards;
     }
 
+    @Override
+    public void logSet(ICard[] threeCards) {
+        IPlayer cardsOwner = threeCards[0].getOwner();
+        cardsOwner.setSetsLog(threeCards);
+    }
 }

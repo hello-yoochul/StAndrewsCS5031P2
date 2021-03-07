@@ -9,4 +9,6 @@ public interface IModel {
     void setCards();
 
     ArrayList<ICard> getCards();
+
+    void logSet(ICard[] threeCards);
 }
