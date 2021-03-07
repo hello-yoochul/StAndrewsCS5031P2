@@ -2,11 +2,12 @@ package stacs.starcade.frontend;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import stacs.starcade.backend.model.IModel;
-import stacs.starcade.backend.model.IPlayer;
+import stacs.starcade.backend.impl.IModel;
+import stacs.starcade.backend.impl.IPlayer;
 import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.Card;
 import stacs.starcade.backend.impl.Player;
 import stacs.starcade.shared.ICard;
@@ -23,9 +24,7 @@ import static stacs.starcade.shared.ICard.Shape.*;
 public class ControllerTests2 {
 
     private IController c;
-    private IModel mockModel;
-    private IPlayer mockPlayer1;
-    private IPlayer mockPlayer2;
+    private IFrontendModel model;
     private ICard card1;
     private ICard card2;
     private ICard card3;
@@ -33,10 +32,9 @@ public class ControllerTests2 {
 
     @BeforeEach
     public void setup() {
-        c = new Controller(new FrontendModel());
-        mockModel = mock(IModel.class);
-        mockPlayer1 = new Player();
-        mockPlayer2 = mock(IPlayer.class);
+        model = new FrontendModel();
+        c = new Controller(model);
+
         card1 = new Card();
         card2 = new Card();
         card3 = new Card();
@@ -96,6 +94,22 @@ public class ControllerTests2 {
         IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
             // Logging an invalid score (7) for Twos should cause an exception
             this.c.validateCards(twoCards);
+        });
+        String actualMessage = iae.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    void testSuccessfulDenialWhenTryingToLogASetThatHasAlreadyBeenLogged() {
+        ICard[] newSet = {card1, card3, card2};
+        String expectedMessage = "Selected set has already been logged.";
+
+        model.setSetsLog(threeCards); // Log cards
+
+        IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> {
+            // This should throw an exception as same combination of cards has already been logged
+            this.c.validateCards(newSet);
         });
         String actualMessage = iae.getMessage();
 

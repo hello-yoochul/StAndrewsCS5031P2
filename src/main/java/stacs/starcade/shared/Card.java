@@ -1,6 +1,6 @@
 package stacs.starcade.shared;
 
-import stacs.starcade.backend.model.IPlayer;
+import stacs.starcade.backend.impl.IPlayer;
 
 public class Card implements ICard {
 

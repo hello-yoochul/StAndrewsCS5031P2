@@ -1,7 +1,5 @@
 package stacs.starcade.backend.impl;
 
-import stacs.starcade.backend.model.ILeaderBoard;
-
 import java.time.Duration;
 
 public class LeaderBoard implements ILeaderBoard {

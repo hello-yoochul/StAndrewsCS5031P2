@@ -6,7 +6,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
+import stacs.starcade.backend.impl.IPlayer;
 import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
 
@@ -24,7 +26,7 @@ import static stacs.starcade.frontend.model.IFrontendModel.*;
 public class Controller implements IController {
     String basicServerAddress = "http://localhost:8080/";
 
-    private FrontendModel model;
+    private IFrontendModel model;
     private HttpClient client;
 
     HttpPost postRequest;
@@ -38,7 +40,7 @@ public class Controller implements IController {
     /**
      * FrontendController constructor.
      */
-    public Controller(FrontendModel model) {
+    public Controller(IFrontendModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
     }
@@ -164,17 +166,67 @@ public class Controller implements IController {
 
     @Override
     public void validateCards(ICard[] threeCards) throws IllegalArgumentException {
+        int logSize = model.getSetsLog().size(); // Get size of current setsLog
+
         // Validate input
         if (threeCards.length != 3) {
             throw new IllegalArgumentException("A set can only consist of exactly three cards!");
+        } else if(logSize > 0 && alreadyLogged(threeCards)) {
+            throw new IllegalArgumentException("Selected set has already been logged.");
         }
 
         if (Checks.isSet(threeCards)) {
             // Check whether owner (player) of card objects has already logged this set of cards
-            // Trigger model to log set for owner of cards
-//            model.logSet(threeCards);
+            model.setSetsLog(threeCards); // Trigger model to log valid set of cards
         } else {
             // Trigger Error Message that three given cards do not make a set
         }
+    }
+
+    /**
+     * Checks whether a set that has been selected in the UI has already been logged.
+     * @param threeCards in the UI selected set,
+     * @return true if given set has already been logged.
+     */
+    private boolean alreadyLogged(ICard[] threeCards) {
+        boolean alreadyLogged = false;
+        ArrayList<ICard[]> sL = model.getSetsLog();
+
+        // Change alreadyLogged to true, if same combination of cards can be found in setsLog of Model
+        for (int i = 0; i < sL.size(); i++) {
+            ICard[] currentSet = sL.get(i);
+            if (setsEqual(threeCards, currentSet)) {
+                alreadyLogged = true;
+                break;
+            }
+        }
+
+        return alreadyLogged;
+    }
+
+    /**
+     * Checks whether two given sets of three cards equal.
+     * @param set1 first given set of three cards
+     * @param set2 second given set of three cards
+     * @return true if sets contain the same card objects
+     */
+    private boolean setsEqual(ICard[] set1, ICard[] set2) {
+        boolean setsEqual = false;
+        int counter = 0;
+        int successCondition = 3;
+        // For each ICard in set1 check, if it can be found in set2
+        for (int i = 0; i < set1.length; i++) {
+            for (int j = 0; j < set2.length; j++) {
+                if (set1[i].equals(set2[j])) {
+                    counter ++; // Increment if ICard from set1 could be found in set2
+                    break;
+                }
+            }
+        }
+        // If each ICard from set1 could also be found in set2, counter equals 3
+        if (counter == successCondition) {
+            setsEqual = true;
+        }
+        return setsEqual;
     }
 }
