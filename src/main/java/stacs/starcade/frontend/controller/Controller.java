@@ -136,17 +136,6 @@ public class Controller implements IController {
 //    }
 
     /**
-     * Pause the game.
-     */
-    @Override
-    public void pauseGame() {
-    }
-
-    @Override
-    public void resumeGame() {
-    }
-
-    /**
      * Select a card. Player will invoke this method 3 times to choose three cards.
      *
      * @param card a card to check if chosen cards are set

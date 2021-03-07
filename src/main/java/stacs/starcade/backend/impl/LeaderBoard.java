@@ -31,7 +31,7 @@ public class LeaderBoard implements ILeaderBoard {
      * Sorts the players list based on their average times needed to complete a round.
      * Players with lowest average time first.
      */
-    private void sortList() {
+    public void sortList() {
         players.sort(new Comparator<IPlayer>() {
             @Override
             public int compare(IPlayer p1, IPlayer p2) {

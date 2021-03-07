@@ -33,15 +33,4 @@ public interface ISetGameAPI {
      */
     List<ICard> getCards(@PathVariable int playerID);
 
-
-//    /**
-//     * Check if the three cards are Set.
-//     *
-//     * @param firstCard  the first card properties
-//     * @param secondCard the first card properties
-//     * @param thirdCard  the first card properties
-//     * @return true if it is set
-//     */
-//    boolean isSet(@RequestParam int firstCard, @RequestParam int secondCard, @RequestParam int thirdCard);
-
 }

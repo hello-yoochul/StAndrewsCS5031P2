@@ -7,6 +7,12 @@ import java.util.ArrayList;
 public interface IModel {
 
     /**
+     * Generates a unique player ID.
+     * @return player ID as int
+     */
+    int generatePlayerID();
+
+    /**
      * Gets the leaderboard of all players on the server.
      * @return a ILeaderBoard object
      */

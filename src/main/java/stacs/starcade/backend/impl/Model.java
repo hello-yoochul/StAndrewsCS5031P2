@@ -11,6 +11,7 @@ public class Model implements IModel {
     ArrayList<ICard> allCards;
     ArrayList<ICard> twelveCards;
     ILeaderBoard leaderBoard;
+    private int newPlayerID = 0;
 
     private final static int NUM_TWELVE = 12;
     private final static int NUM_SETS = 5;
@@ -20,6 +21,8 @@ public class Model implements IModel {
         twelveCards = new ArrayList<>();
         leaderBoard = new LeaderBoard();
     }
+
+
 
     /**
      * Generates an array list of 81 card objects with unique attribute-expression combinations.
@@ -42,6 +45,16 @@ public class Model implements IModel {
             }
         }
 
+    }
+
+    /**
+     * Generates a unique player ID.
+     *
+     * @return player ID as int
+     */
+    @Override
+    public int generatePlayerID() {
+        return ++this.newPlayerID;
     }
 
     /**

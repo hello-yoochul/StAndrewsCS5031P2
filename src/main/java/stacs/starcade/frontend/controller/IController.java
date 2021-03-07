@@ -13,23 +13,6 @@ public interface IController {
      */
     void setUpCards();
 
-//    /**
-//     * Check if the three cards are set.
-//     *
-//     * @return true if it is set
-//     */
-//    boolean isSet();
-
-    /**
-     * Pause the game.
-     */
-    void pauseGame();
-
-    /**
-     * Resume the game.
-     */
-    void resumeGame();
-
     /**
      * Select a card. Player will invoke this method 3 times to choose three cards.
      *
