@@ -6,51 +6,51 @@ public interface ICard {
     enum Shape {TRIANGLE, SQUARE, CIRCLE}
     enum LineType {DOTTED, DASHED, SOLID}
 
-    int TRIANGLE = 0;
-    int SQUARE = 1;
-    int CIRCLE = 2;
-
-    int BLUE = 0;
-    int GREEN = 1;
-    int RED = 2;
-
-    int DOTTED = 0;
-    int DASHED = 1;
-    int SOLID = 2;
-
     /**
      * Getter for the card number of the current card.
-     *
-     * @return integer between 1 and 3
+     * @return enum representing ONE, TWO or THREE
      */
-    int getNumber();
+    Number getNumber();
 
     /**
-     * Gets the symbol on the card.
-     *
-     * @return integer representing a TRIANGLE, SQUARE or CIRCLE shape
+     * Gets the shape on the card.
+     * @return enum representing a TRIANGLE, SQUARE or CIRCLE shape
      */
-    int getSymbol();
+    Shape getShape();
 
     /**
      * Gets the shading of the card.
-     *
-     * @return integer representing a DOTTED, DASHED or SOLID shading
+     * @return enum representing a DOTTED, DASHED or SOLID shading
      */
-    int getShading();
+    LineType getLineType();
 
     /**
      * Gets the colour of the card.
-     *
-     * @return integer representing a BLUE, GREEN or WHITE colour
+     * @return enum representing a BLUE, GREEN or WHITE colour
      */
-    int getColour();
+    Colour getColour();
 
-    void setColour(int i);
+    /**
+     * Sets the colour of the card.
+     * @param colour enum of either BLUE, GREEN or WHITE
+     */
+    void setColour(Colour colour);
 
-    void setShape(int j);
+    /**
+     * Sets the shape on the card.
+     * @param shape enum of either TRIANGLE, SQUARE or CIRCLE
+     */
+    void setShape(Shape shape);
 
-    void setNumber(int k);
+    /**
+     * Sets the card number of the current card.
+     * @param number enum of either ONE, TWO or THREE
+     */
+    void setNumber(Number number);
 
-    void setLineStyle(int l);
+    /**
+     * Sets the Line Type of the card.
+     * @param lineType enum of either DOTTED, DASHED or SOLID
+     */
+    void setLineType(LineType lineType);
 }
