@@ -16,6 +16,7 @@ public class Model implements IModel {
 
     public Model() {
         setCards();
+        twelveCards = new ArrayList<>();
     }
 
     /**
@@ -46,13 +47,13 @@ public class Model implements IModel {
     }
 
     public ArrayList<ICard> getTwelveCards() {
-        if (allCards.isEmpty()) {
+        if (twelveCards.isEmpty()) {
             while (true) {
                 int numSets = 0;
-                allCards = new ArrayList<>();
+                twelveCards = new ArrayList<>();
 
                 for (int i = 0; i < NUM_TWELVE; i++) {
-                    allCards.add(getRandomCardNotInList(twelveCards));
+                    twelveCards.add(getRandomCardNotInList(twelveCards));
                 }
 
                 for (int i = 0; i < twelveCards.size() - 2; i++) {
@@ -99,6 +100,7 @@ public class Model implements IModel {
             for (ICard card : list) {
                 if (c.equals(card)) {
                     unique = false;
+                    break;
                 }
             }
 
