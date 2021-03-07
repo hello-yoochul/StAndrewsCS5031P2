@@ -2,6 +2,7 @@ package stacs.starcade.backend.impl;
 
 import stacs.starcade.shared.ICard;
 
+import java.time.Duration;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +22,20 @@ public interface IPlayer {
      */
     String getPlayerName();
 
-    void setSetsLog(ICard[] threeCards);
+    /**
+     * Increments round when called.
+     */
+    void setRound(Duration timeLastRound);
 
-    ArrayList<ICard[]> getSetsLog();
+    /**
+     * Gets number of rounds player has played so far.
+     * @return num of rounds as integer
+     */
+    Integer getRound();
+
+    /**
+     * Gets duration player has needed for previously played rounds on avergade.
+     * @return average round duration
+     */
+    Duration getAvgTime();
 }

@@ -10,6 +10,7 @@ public class Model implements IModel {
 
     ArrayList<ICard> allCards;
     ArrayList<ICard> twelveCards;
+    ILeaderBoard leaderBoard;
 
     private final static int NUM_TWELVE = 12;
     private final static int NUM_SETS = 5;
@@ -17,6 +18,7 @@ public class Model implements IModel {
     public Model() {
         setCards();
         twelveCards = new ArrayList<>();
+        leaderBoard = new LeaderBoard();
     }
 
     /**
@@ -42,8 +44,14 @@ public class Model implements IModel {
 
     }
 
-    public ArrayList<ICard> getAllCards() {
-        return allCards;
+    /**
+     * Gets the leaderboard of all players on the server.
+     *
+     * @return a ILeaderBoard object
+     */
+    @Override
+    public ILeaderBoard getLeaderboard() {
+        return this.leaderBoard;
     }
 
     public ArrayList<ICard> getTwelveCards() {

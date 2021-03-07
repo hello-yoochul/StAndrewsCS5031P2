@@ -6,7 +6,11 @@ import java.util.ArrayList;
 
 public interface IModel {
 
-    ArrayList<ICard> getAllCards();
+    /**
+     * Gets the leaderboard of all players on the server.
+     * @return a ILeaderBoard object
+     */
+    ILeaderBoard getLeaderboard();
 
     /**
      * Gets twelve cards with 5 sets.

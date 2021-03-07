@@ -3,6 +3,7 @@ package stacs.starcade.frontend;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import stacs.starcade.frontend.controller.Controller;
+import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.Card;
@@ -15,8 +16,8 @@ import static org.mockito.Mockito.mock;
  * Tests for the {@link Controller} class.
  */
 public class ControllerTests {
-    Controller controller;
-    FrontendModel model;
+    IController controller;
+    IFrontendModel model;
 
     @BeforeEach
     void setup() {
