@@ -119,19 +119,4 @@ public class Checks {
         }
         return expDifferent;
     }
-
-    /**
-     * Checks whether three given cards have the same owner
-     * @return true if condition true
-     */
-    public static boolean isSameOwner(ICard[] threeCards) {
-        boolean isSameOwner = false;
-        IPlayer ownerC0 = threeCards[0].getOwner();
-        IPlayer ownerC1 = threeCards[1].getOwner();
-        IPlayer ownerC2 = threeCards[2].getOwner();
-        if (ownerC0.equals(ownerC1) && ownerC1.equals(ownerC2)) {
-            isSameOwner = true;
-        }
-        return isSameOwner;
-    }
 }
