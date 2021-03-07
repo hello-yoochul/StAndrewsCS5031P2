@@ -1,5 +1,7 @@
 package stacs.starcade.backend.impl;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 
 public class Model implements IModel {
     private int nextPlayerID = 0;
+    private ILeaderBoard leaderBoard;
 
     ArrayList<ICard> allCards;
 
@@ -16,6 +19,7 @@ public class Model implements IModel {
 
     public Model() {
         setCards();
+        leaderBoard = new LeaderBoard();
     }
 
     /**
@@ -47,6 +51,22 @@ public class Model implements IModel {
     }
 
     /**
+     * Gets player with given playerID.
+     *
+     * @param playerID given ID
+     * @return IPlayer object that has ID playerID
+     */
+    @Override
+    public IPlayer getPlayer(int playerID) throws IllegalArgumentException {
+        for (IPlayer p : this.getLeaderboard().getPlayersList()) {
+            if (p.getPlayerId() == playerID) {
+                return p;
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player not found");
+    }
+
+    /**
      * Generates a unique player ID.
      *
      * @return player ID as int
@@ -63,7 +83,7 @@ public class Model implements IModel {
      */
     @Override
     public ILeaderBoard getLeaderboard() {
-        return null;
+        return this.leaderBoard;
     }
 
     public ArrayList<ICard> getTwelveCards() {
@@ -109,6 +129,11 @@ public class Model implements IModel {
     @Override
     public void addPlayer(IPlayer newP) {
         this.getLeaderboard().addPlayer(newP);
+    }
+
+    @Override
+    public void disconnectPlayer(IPlayer removedPlayer) {
+        getLeaderboard().removePlayer(removedPlayer);
     }
 
     private ICard getRandomCard(){

@@ -13,22 +13,42 @@ import stacs.starcade.backend.impl.ILeaderBoard;
  */
 public interface ISetGameAPI {
 
+
     /**
-     * Get method for leaderboard.
+     * Registers a new player with a given playerName and generates a unique player ID.
+     *
+     * Creates a player instance and passes it to the model, from where it is added to the leaderboard.
+     *
+     * @return newly generated player ID.
+     */
+    Integer registerPlayer(@PathVariable String playerName);
+    /**
+     * Triggers the start of a new round for player with ID playerID.
+     *
+     * @return returns an array with twelve cards that will be used for the new round.
+     */
+    ArrayList<ICard> startNextRound(@PathVariable int playerID);
+
+    /**
+     * Ends round player with ID playerID is currently playing.
+     *
+     * This will stop the timer for the current round.
+     *
+     * @param playerID
+     */
+    void endRound(@PathVariable int playerID);
+
+    /**
+     * Removes player from leaderboard.
+     * @param playerID ID of player that is removed
+     */
+    void disconnect(int playerID);
+
+    /**
+     * Gets the leaderboard containing player objects.
      *
      * @return a list of individual leaderboard entries
      */
-    List<IPlayer> getLeaderBoard();
-
-    /**
-     * Post method to start a new game.
-     *
-     * @return an int representing the unique player ID
-     */
-    Integer registerPlayer(@PathVariable String playerName);
-
-    ArrayList<ICard> startNextRound(@PathVariable int playerID);
-
-    void endRound(@PathVariable int playerID);
+    ArrayList<IPlayer> getLeaderBoard();
 
 }

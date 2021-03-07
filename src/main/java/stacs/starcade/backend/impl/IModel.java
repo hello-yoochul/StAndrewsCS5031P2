@@ -9,6 +9,13 @@ public interface IModel {
     int getPlayerID();
 
     /**
+     * Gets player with given playerID.
+     * @param playerID given ID
+     * @return IPlayer object that has ID playerID
+     */
+    IPlayer getPlayer(int playerID);
+
+    /**
      * Generates a unique player ID.
      * @return player ID as int
      */
@@ -28,4 +35,6 @@ public interface IModel {
     ArrayList<ICard> getTwelveCards();
 
     void addPlayer(IPlayer newP);
+
+    void disconnectPlayer(IPlayer removedPlayer);
 }

@@ -2,14 +2,24 @@ package stacs.starcade.backend.impl;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 public class LeaderBoard implements ILeaderBoard {
 
-    List<IPlayer> players;
+    ArrayList<IPlayer> players;
 
     public LeaderBoard() {
         players = new ArrayList<>();
+    }
+
+    /**
+     * Gets list of players that are currently playing.
+     * Player objects contain information on individual performance: num of rounds played and average time per round.
+     *
+     * @return
+     */
+    @Override
+    public ArrayList<IPlayer> getPlayersList() {
+        return this.players;
     }
 
     /**
@@ -24,6 +34,18 @@ public class LeaderBoard implements ILeaderBoard {
         } else {
             throw new IllegalArgumentException("This player has already been registered.");
         }
+        sortList();
+    }
+
+    /**
+     * Removes player from leaderboard once player has disconnected.
+     *
+     * @param removedPlayer player that shall be removed from leaderboard
+     */
+    @Override
+    public void removePlayer(IPlayer removedPlayer) {
+        // get player object with given playerID
+        players.remove(removedPlayer);
         sortList();
     }
 
@@ -44,34 +66,5 @@ public class LeaderBoard implements ILeaderBoard {
                 }
             }
         });
-    }
-
-    /**
-     * Removes player from leaderboard once player has disconnected.
-     *
-     * @param playerID id of player that shall be removed
-     */
-    @Override
-    public void removePlayer(int playerID) {
-        // get player object with given playerID
-        for (int i = 0; i < players.size(); i++) {
-            int ID = players.get(i).getPlayerId();
-            if (ID == playerID) {
-                players.remove(i);
-                break;
-            }
-        }
-        sortList();
-    }
-
-    /**
-     * Gets list of players that are currently playing.
-     * Player objects contain information on individual performance: num of rounds played and average time per round.
-     *
-     * @return
-     */
-    @Override
-    public List<IPlayer> getPlayersList() {
-        return this.players;
     }
 }

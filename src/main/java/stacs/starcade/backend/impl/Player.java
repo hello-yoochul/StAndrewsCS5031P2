@@ -1,6 +1,8 @@
 package stacs.starcade.backend.impl;
 
 import stacs.starcade.shared.ICard;
+import stacs.starcade.shared.ITimer;
+import stacs.starcade.shared.Timer;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ public class Player implements IPlayer {
     private String name;
     private Integer id;
     private Integer round;
+
+    private ITimer timer;
     private Duration totalTime;
     private Duration averageTime;
     private ArrayList<ICard> twelveCards;
@@ -20,11 +24,11 @@ public class Player implements IPlayer {
         this.totalTime = Duration.ZERO;
         this.averageTime = Duration.ZERO;
         this.twelveCards = new ArrayList<>();
+        this.timer = new Timer();
     }
 
-
     /**
-     * Gets playerID.
+     * Getter for the playerID.
      *
      * @return a unique ID representing a player
      */
@@ -34,7 +38,7 @@ public class Player implements IPlayer {
     }
 
     /**
-     * Gets player name.
+     * Getter for the player name.
      *
      * @return a String representing the player name
      */
@@ -44,32 +48,11 @@ public class Player implements IPlayer {
     }
 
     /**
-     * Increments round when called.
+     * Gets duration player has needed for previously played rounds on avergade.
      *
-     * @param timeLastRound
+     * @return average round duration
      */
-    @Override
-    public void setRound(Duration timeLastRound) {
-        this.round++;
-        this.totalTime.plus(timeLastRound);
-        setAvgTime();
-    }
-
-    /**
-     * Gets number of rounds player has played so far.
-     *
-     * @return num of rounds as integer
-     */
-    @Override
-    public Integer getRound() {
-        return this.round;
-    }
-
-
-    /**
-     * Updates average time a player has needed to play x rounds.
-     */
-    private void setAvgTime() { averageTime = totalTime.dividedBy(this.round); }
+    private void setAvgTime() { this.averageTime = this.totalTime.dividedBy(this.round); }
 
     /**
      * Gets duration player has needed for previously played rounds on avergade.
@@ -81,13 +64,36 @@ public class Player implements IPlayer {
         return this.averageTime;
     }
 
-    @Override
-    public void endRound() {
-        // Stop timer
-    }
-
+    /**
+     * Starts a new round and the timer for this round.
+     *
+     * @param twelveCards the cards the round shall be played with
+     */
     @Override
     public void startRound(ArrayList<ICard> twelveCards) {
+
+        // Increment round
+        // Set cards for this round
+        // start Timer
+
+
+        if (this.round > 0) {
+
+        }
+        this.round++;
+        this.totalTime.plus(totalTime);
         this.twelveCards = twelveCards;
+    }
+
+    /**
+     * End the current round, stopping the timer.
+     */
+    @Override
+    public void endRound() {
+        this.totalTime.plus(timer.getTime());
+        timer.reset();
+        setAvgTime();
+
+        // TODO: Notify leaderboard to update list
     }
 }

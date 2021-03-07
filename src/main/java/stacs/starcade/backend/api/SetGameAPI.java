@@ -24,17 +24,6 @@ public class SetGameAPI implements ISetGameAPI {
     private IModel model = new Model();
 
     /**
-     * Gets the leaderboard containing player objects.
-     *
-     * @return a list of individual leaderboard entries
-     */
-    @GetMapping("/getLeaderboard")
-    public List<IPlayer> getLeaderBoard() {
-        return model.getLeaderboard().getPlayersList();
-    }
-
-
-    /**
      * Registers a new player with a given playerName and generates a unique player ID.
      *
      * Creates a player instance and passes it to the model, from where it is added to the leaderboard.
@@ -57,18 +46,11 @@ public class SetGameAPI implements ISetGameAPI {
      * @return returns an array with twelve cards that will be used for the new round.
      */
     @GetMapping("/nextRound")
-    public ArrayList<ICard> startNextRound(@PathVariable int playerID) {
+    public ArrayList<ICard> startNextRound(@PathVariable int playerID) throws ResponseStatusException {
 
-        ILeaderBoard lB = model.getLeaderboard();
-        for (IPlayer p : lB.getPlayersList()) {
-            if (p.getPlayerId() == playerID) {
-                ArrayList<ICard> twelveCards = model.getTwelveCards();
-                p.startRound(twelveCards);
-                return twelveCards;
-            }
-        }
-
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Player not found");
+        ArrayList<ICard> twelveCards = model.getTwelveCards();
+        model.getPlayer(playerID).startRound(twelveCards);
+        return twelveCards;
     }
 
     /**
@@ -80,14 +62,27 @@ public class SetGameAPI implements ISetGameAPI {
      */
     // TODO: Pass in sets and verify them
     @PostMapping("/endRound")
-    public void endRound(@PathVariable int playerID) {
+    public void endRound(@PathVariable int playerID) throws ResponseStatusException {
+        model.getPlayer(playerID).endRound();
+    }
 
-        ILeaderBoard lB = model.getLeaderboard();
-        for (IPlayer p : lB.getPlayersList()) {
-            if (p.getPlayerId() == playerID) {
-                p.endRound();
-                break;
-            }
-        }
+    /**
+     * Removes player from leaderboard.
+     * @param playerID ID of player that is removed
+     */
+    @PostMapping("/disconnect")
+    public void disconnect(@PathVariable int playerID) {
+        IPlayer removedPlayer = model.getPlayer(playerID);
+        model.disconnectPlayer(removedPlayer);
+    }
+
+    /**
+     * Gets the leaderboard containing player objects.
+     *
+     * @return a list of individual leaderboard entries
+     */
+    @GetMapping("/getLeaderboard")
+    public ArrayList<IPlayer> getLeaderBoard() {
+        return model.getLeaderboard().getPlayersList();
     }
 }
