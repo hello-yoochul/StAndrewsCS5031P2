@@ -1,12 +1,15 @@
-package stacs.starcade.frontend.view.sub;
+package stacs.starcade.frontend.view.sub.control;
 
 import stacs.starcade.frontend.controller.Controller;
+import stacs.starcade.frontend.model.FrontendModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ControlPanel extends JPanel {
+public class ControlPane extends JPanel {
+    FrontendModel model;
     Controller controller;
 
     private JButton startGameButton;
@@ -20,8 +23,12 @@ public class ControlPanel extends JPanel {
     public static final String PAUSE = "PAUSE";
     public static final String UNPAUSE = "UNPAUSE";
 
-    public ControlPanel(Controller controller) {
+    public ControlPane(FrontendModel model,Controller controller) {
+        this.model = model;
         this.controller = controller;
+
+        setBackground(Color.gray);
+
         generateButtons();
         generateButtonListener();
         addButtons();
@@ -47,7 +54,7 @@ public class ControlPanel extends JPanel {
         add(checkSetButton);
         add(pauseGameToggleButton);
     }
-    
+
     class MyButtonListener implements ActionListener {
         /**
          * When an event occurs, it will be executed.
