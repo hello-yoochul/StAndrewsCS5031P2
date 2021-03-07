@@ -29,8 +29,6 @@ public class SetGameAPI implements ISetGameAPI {
      */
     @GetMapping("/getLeaderboard")
     public List<ILeaderBoard> getLeaderBoard() {
-
-
         return null;
     }
 
