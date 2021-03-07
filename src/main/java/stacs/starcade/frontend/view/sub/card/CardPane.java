@@ -2,7 +2,7 @@ package stacs.starcade.frontend.view.sub.card;
 
 import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.model.FrontendModel;
-import stacs.starcade.shared.Card;
+import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +11,9 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+/**
+ * The panel for 12 cards.
+ */
 public class CardPane extends JPanel {
     static final String BASIC_IMAGE_PATH = "src/main/resources/cardImages/";
     static final int INITIAL_NUMBER_OF_CARDS = 12;
@@ -23,42 +26,20 @@ public class CardPane extends JPanel {
     private final FrontendModel model;
 
     private Toolkit toolkit;
-    private Image testImg;
+//    private Image testImg;
 
-    private ArrayList<Card> cardsOnBoard;
-    private MyMouseListener myMouseListener;
-    private ArrayList<JButton> buttonList;
-
-    private BufferedImage testImage;
+    private ArrayList<CardImageButton> cardImageButtonList;
 
     public CardPane(FrontendModel model, Controller controller) {
         this.controller = controller;
         this.model = model;
 
         toolkit = Toolkit.getDefaultToolkit(); // to get image from resource folder
-        testImg = toolkit.getImage(BASIC_IMAGE_PATH + "/BLUE-ONE-CIRCLE-OPEN.png").getScaledInstance(IMAGE_WIDTH, IMAGE_HEIGHT, Image.SCALE_DEFAULT);
+//        testImg = toolkit.getImage(BASIC_IMAGE_PATH + "/BLUE-ONE-CIRCLE-OPEN.png").getScaledInstance(IMAGE_WIDTH, IMAGE_HEIGHT, Image.SCALE_DEFAULT);
 
-        cardsOnBoard = new ArrayList<>();
-        buttonList = new ArrayList<>();
-        myMouseListener = new MyMouseListener();
-
-//        add(new JButton("test"));
-
-//        setBackground(Color.BLUE);
+        cardImageButtonList = new ArrayList<>();
 
         this.setLayout(new GridLayout(3, 4));
-        generateButtons();
-    }
-
-    private void generateButtons() {
-        for (int i = 0; i < INITIAL_NUMBER_OF_CARDS; i++) {
-            JButton button = new JButton();
-//            button.setSize(BUTTON_SIZE);
-            button.setIcon(new ImageIcon(testImg)); // test img
-            buttonList.add(button);
-            button.addMouseListener(myMouseListener);
-            this.add(button);
-        }
     }
 
     /**
@@ -66,46 +47,14 @@ public class CardPane extends JPanel {
      */
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-//        g.drawImage(testImage, 100, 100, this);
-        /*Graphics2D graphics2D = (Graphics2D) g;
-        Stack<AbstractShape> shapeList = model.getShapeList();
-
-        if (shapeList != null && shapeList.size() != 0) {
-            for (AbstractShape shape : model.getShapeList()) {
-                if (shape.isFillNeeded()) {
-                    graphics2D.setColor(shape.getColor());
-                    graphics2D.fill(shape.getShape());
-                } else {
-                    graphics2D.setColor(shape.getColor());
-                    graphics2D.draw(shape.getShape());
-                }
+        ArrayList<ICard> cards = (ArrayList) model.getCards();
+        int cardsSize = cards.size();
+        if (cardsSize != 0) {
+            for (int i = 1; i < cardsSize; i++) {
+                CardImageButton cardImageButton = new CardImageButton(cards.get(i));
+                cardImageButtonList.add(cardImageButton);
+                add(cardImageButton);
             }
-        }*/
-    }
-}
-
-class MyMouseListener extends MouseAdapter {
-    public void mouseClicked(MouseEvent e) {
-        JButton clickedButton = (JButton) e.getSource();
-        clickedButton.setBackground(Color.BLACK);
-
-//        ImageIcon test = (ImageIcon) clickedButton.getIcon();
-//        System.out.println("--------------------------------------------------------");
-//        System.out.println(test.getDescription().toString());
-//        System.out.println(test.toString().toString());
-//        System.out.println(test.getImage().getSource().toString());
-//        System.out.println(test.getImage().toString());
-
-
-
-        System.out.println("--------------------------------------------------------");
-//        System.out.println(clickedButton.getIcon().getClass().getSimpleName());
-//        System.out.println(clickedButton.getIcon().getClass().getName());
-//        System.out.println(clickedButton.getIcon().getClass().getCanonicalName());
-//        System.out.println(clickedButton.getName());
-        System.out.println(clickedButton.getIcon());
-
+        }
     }
 }

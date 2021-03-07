@@ -5,6 +5,9 @@ import stacs.starcade.frontend.model.FrontendModel;
 
 import javax.swing.*;
 
+/**
+ * Panel for the leader board.
+ */
 public class LeaderBoardPane extends JPanel {
     FrontendModel model;
     Controller controller;

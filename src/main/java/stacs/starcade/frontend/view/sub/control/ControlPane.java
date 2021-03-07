@@ -8,6 +8,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Panel for Buttons controller.
+ */
 public class ControlPane extends JPanel {
     FrontendModel model;
     Controller controller;
@@ -55,6 +58,9 @@ public class ControlPane extends JPanel {
         add(pauseGameToggleButton);
     }
 
+    /**
+     * Mouse click event listener,
+     */
     class MyButtonListener implements ActionListener {
         /**
          * When an event occurs, it will be executed.
@@ -64,7 +70,6 @@ public class ControlPane extends JPanel {
             Object evt = actionEvent.getSource();
 
             if (evt == startGameButton) {
-                // send http://localhost:8080/game
                 controller.startGame();
             }
 
