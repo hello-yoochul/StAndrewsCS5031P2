@@ -7,9 +7,7 @@ public class LeaderBoard implements ILeaderBoard {
 
     ArrayList<IPlayer> players;
 
-    public LeaderBoard() {
-        players = new ArrayList<>();
-    }
+    public LeaderBoard() { players = new ArrayList<>(); }
 
     /**
      * Gets list of players that are currently playing.
@@ -18,9 +16,7 @@ public class LeaderBoard implements ILeaderBoard {
      * @return
      */
     @Override
-    public ArrayList<IPlayer> getPlayersList() {
-        return this.players;
-    }
+    public ArrayList<IPlayer> getPlayersList() { return this.players; }
 
     /**
      * Adds player to leaderboard.
@@ -54,17 +50,19 @@ public class LeaderBoard implements ILeaderBoard {
      * Players with lowest average time first.
      */
     public void sortList() {
-        players.sort(new Comparator<IPlayer>() {
-            @Override
-            public int compare(IPlayer p1, IPlayer p2) {
-                if (p1.getAvgTime().compareTo(p2.getAvgTime()) == 0) {
-                    return 0;
-                } else if (p1.getAvgTime().compareTo(p2.getAvgTime()) < 0) {
-                    return 1;
-                } else {
-                    return -1;
+        if (players.size() > 1) {
+            players.sort(new Comparator<IPlayer>() {
+                @Override
+                public int compare(IPlayer p1, IPlayer p2) {
+                    if (p1.getAvgTime().compareTo(p2.getAvgTime()) == 0) {
+                        return 0;
+                    } else if (p1.getAvgTime().compareTo(p2.getAvgTime()) < 0) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }

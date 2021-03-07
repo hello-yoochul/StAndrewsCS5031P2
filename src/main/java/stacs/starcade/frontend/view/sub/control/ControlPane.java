@@ -78,7 +78,7 @@ public class ControlPane extends JPanel {
             }
 
             if (evt == pauseGameToggleButton) {
-                controller.pauseGame();
+                //controller.pauseGame();
             }
         }
     }
