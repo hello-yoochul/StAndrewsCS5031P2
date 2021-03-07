@@ -6,7 +6,19 @@ import java.util.ArrayList;
 
 public interface IModel {
 
-    ArrayList<ICard> getAllCards();
+    int getPlayerID();
+
+    /**
+     * Generates a unique player ID.
+     * @return player ID as int
+     */
+    int generatePlayerID();
+
+    /**
+     * Gets the leaderboard of all players on the server.
+     * @return a ILeaderBoard object
+     */
+    ILeaderBoard getLeaderboard();
 
     /**
      * Gets twelve cards with 5 sets.
@@ -14,4 +26,6 @@ public interface IModel {
      * @return ArrayList of twelve cards
      */
     ArrayList<ICard> getTwelveCards();
+
+    void addPlayer(IPlayer newP);
 }

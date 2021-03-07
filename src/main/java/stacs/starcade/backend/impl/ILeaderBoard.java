@@ -1,6 +1,7 @@
 package stacs.starcade.backend.impl;
 
 import java.time.Duration;
+import java.util.List;
 
 /**
  * Interface for the representation of an entry in the player leaderboard.
@@ -8,21 +9,23 @@ import java.time.Duration;
 public interface ILeaderBoard {
 
     /**
-     * Getter for the playerID.
-     * @return a unique ID representing a player
+     * Adds player to leaderboard.
+     *
+     * @param player player object that shall be added
      */
-    int getPlayerId();
+    void addPlayer(IPlayer player);
 
     /**
-     * Getter for the player name.
-     * @return a String representing the player name
+     * Removes player from leaderboard once player has disconnected.
+     *
+     * @param playerID id of player that shall be removed
      */
-    String getPlayerName();
+    void removePlayer(int playerID);
 
     /**
-     * Getter for the player's play time.
-     * @return a duration that represents the time it took to solve the problem
+     * Gets list of players that are currently playing.
+     * Player objects contain information on individual performance: num of rounds played and average time per round.
+     * @return
      */
-    Duration getPlayerTime();
-
+    List<IPlayer> getPlayersList();
 }

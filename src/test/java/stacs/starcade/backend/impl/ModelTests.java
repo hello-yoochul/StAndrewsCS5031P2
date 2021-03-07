@@ -21,11 +21,6 @@ public class ModelTests {
     }
 
     @Test
-    void testCardsSetup() {
-        assertEquals(81,model.getAllCards().size());
-    }
-
-    @Test
     void checkTwelveCards() {
         List<ICard> cards = model.getTwelveCards();
         assertEquals(12, cards.size());

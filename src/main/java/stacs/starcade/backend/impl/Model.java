@@ -7,16 +7,15 @@ import stacs.starcade.shared.ICard;
 import java.util.ArrayList;
 
 public class Model implements IModel {
+    private int nextPlayerID = 0;
 
     ArrayList<ICard> allCards;
-    ArrayList<ICard> twelveCards;
 
     private final static int NUM_TWELVE = 12;
     private final static int NUM_SETS = 5;
 
     public Model() {
         setCards();
-        twelveCards = new ArrayList<>();
     }
 
     /**
@@ -42,51 +41,74 @@ public class Model implements IModel {
 
     }
 
-    public ArrayList<ICard> getAllCards() {
-        return allCards;
+    @Override
+    public int getPlayerID() {
+        return ++this.nextPlayerID;
+    }
+
+    /**
+     * Generates a unique player ID.
+     *
+     * @return player ID as int
+     */
+    @Override
+    public int generatePlayerID() {
+        return ++this.nextPlayerID;
+    }
+
+    /**
+     * Gets the leaderboard of all players on the server.
+     *
+     * @return a ILeaderBoard object
+     */
+    @Override
+    public ILeaderBoard getLeaderboard() {
+        return null;
     }
 
     public ArrayList<ICard> getTwelveCards() {
-        if (twelveCards.isEmpty()) {
-            while (true) {
-                int numSets = 0;
-                twelveCards = new ArrayList<>();
+        ArrayList<ICard> twelveCards;
 
-                for (int i = 0; i < NUM_TWELVE; i++) {
-                    twelveCards.add(getRandomCardNotInList(twelveCards));
-                }
+        while (true) {
+            int numSets = 0;
+            twelveCards = new ArrayList<>();
 
-                for (int i = 0; i < twelveCards.size() - 2; i++) {
-                    for (int j = i; j < twelveCards.size() - 1; j++){
-                        if (j == i){
+            for (int i = 0; i < NUM_TWELVE; i++) {
+                twelveCards.add(getRandomCardNotInList(twelveCards));
+            }
+
+            for (int i = 0; i < twelveCards.size() - 2; i++) {
+                for (int j = i; j < twelveCards.size() - 1; j++){
+                    if (j == i){
+                        continue;
+                    }
+
+                    for (int k = j; k < twelveCards.size(); k++){
+                        if (k == j){
                             continue;
                         }
 
-                        for (int k = j; k < twelveCards.size(); k++){
-                            if (k == j){
-                                continue;
-                            }
-
-                            if (Checks.isSet(new ICard[]{
-                              twelveCards.get(i),
-                              twelveCards.get(j),
-                              twelveCards.get(k)
-                            })) {
-                                numSets ++;
-                            }
+                        if (Checks.isSet(new ICard[]{
+                                twelveCards.get(i),
+                                twelveCards.get(j),
+                                twelveCards.get(k)
+                        })) {
+                            numSets ++;
                         }
                     }
                 }
+            }
 
-                if (numSets == NUM_SETS) {
-                    return twelveCards;
-                }
-
+            if (numSets == NUM_SETS) {
+                return twelveCards;
             }
 
         }
+    }
 
-        return twelveCards;
+    @Override
+    public void addPlayer(IPlayer newP) {
+        this.getLeaderboard().addPlayer(newP);
     }
 
     private ICard getRandomCard(){

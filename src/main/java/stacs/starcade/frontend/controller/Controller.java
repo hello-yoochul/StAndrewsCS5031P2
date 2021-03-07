@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -60,6 +61,14 @@ public class Controller implements IController {
     public Controller(IFrontendModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
+        register();
+    }
+
+    private void register() {
+        int playerID = 0;
+        HttpGet clientID = new HttpGet(basicServerAddress + "/register");
+        // Read playerID from request
+        this.model.setPlayerId(playerID);
     }
 
     /**
@@ -173,17 +182,6 @@ public class Controller implements IController {
 //
 //        return false;
 //    }
-
-    /**
-     * Pause the game.
-     */
-    @Override
-    public void pauseGame() {
-    }
-
-    @Override
-    public void resumeGame() {
-    }
 
     /**
      * Select a card. Player will invoke this method 3 times to choose three cards.
