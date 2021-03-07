@@ -1,27 +1,27 @@
 package stacs.starcade.frontend;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import stacs.starcade.frontend.model.ICard;
-import stacs.starcade.frontend.controller.FrontendController;
+import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.shared.Card;
+import stacs.starcade.shared.ICard;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 /**
- * Tests for the {@link FrontendController} class.
+ * Tests for the {@link Controller} class.
  */
 public class ControllerTests {
-    FrontendController controller;
+    Controller controller;
     FrontendModel model;
 
     @BeforeEach
     void setup() {
         model = new FrontendModel();
-        controller = new FrontendController(model);
+        controller = new Controller(model);
     }
 
     @Test
@@ -64,22 +64,22 @@ public class ControllerTests {
 
     @Test
     void mustSelectCard() {
-        ICard mockCard = mock(ICard.class);
+        ICard mockCard = mock(Card.class);
         controller.selectCard(mockCard);
         assertTrue(model.getCards().size() != 0);
     }
 
-    // TODO: check if three cards are Set
+    // TODO: We are already checking this in ControllerTests2
 
-    @Test
-    void mustCheckIfItIsSet() {
-        controller.startGame();
-        // when it is not set
-        // TODO: choose three cards which are not set
-        assertFalse(controller.isSet());
-
-        // when it is set
-        // TODO: choose three cards which are set
-        assertTrue(controller.isSet());
-    }
+//    @Test
+//    void mustCheckIfItIsSet() {
+//        controller.startGame();
+//        // when it is not set
+//        // TODO: choose three cards which are not set
+//        assertFalse(controller.isSet());
+//
+//        // when it is set
+//        // TODO: choose three cards which are set
+//        assertTrue(controller.isSet());
+//    }
 }

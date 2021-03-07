@@ -1,5 +1,7 @@
 package stacs.starcade.backend.model;
 
+import stacs.starcade.shared.ICard;
+
 import java.util.ArrayList;
 
 /**

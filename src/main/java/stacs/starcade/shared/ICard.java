@@ -1,4 +1,6 @@
-package stacs.starcade.backend.model;
+package stacs.starcade.shared;
+
+import stacs.starcade.backend.model.IPlayer;
 
 /**
  * Interface for the representation of a single card.
@@ -8,12 +10,6 @@ public interface ICard {
     enum Number {NULL, ONE, TWO}
     enum Shape {TRIANGLE, SQUARE, CIRCLE}
     enum LineStyle {DOTTED, DASHED, SOLID}
-
-    /**
-     * Sets the owner of a card.
-     * @param owner player object
-     */
-    void setOwner(IPlayer owner);
 
     /**
      * Sets the colour on the cards.
@@ -38,12 +34,6 @@ public interface ICard {
      * @param lineStyle
      */
     void setLineStyle(LineStyle lineStyle);
-
-    /**
-     * Gets the player who is owning the card.
-     * @return the player object
-     */
-    IPlayer getOwner();
 
     /**
      * Gets the number on the card.

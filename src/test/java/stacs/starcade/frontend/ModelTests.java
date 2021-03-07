@@ -2,9 +2,9 @@ package stacs.starcade.frontend;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import stacs.starcade.frontend.model.Card;
 import stacs.starcade.frontend.model.FrontendModel;
-import stacs.starcade.frontend.model.ICard;
+import stacs.starcade.shared.Card;
+import stacs.starcade.shared.ICard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class ModelTests {
 
     @Test
     void mustThrowIllegalArgumentExceptionWhenClientSelectInvalidCard() {
-        Card invalidCard = new Card();
+        ICard invalidCard = new Card();
         assertFalse(model.getChosenCards().contains(invalidCard));
 
         assertThrows(IllegalArgumentException.class, () -> {

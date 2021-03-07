@@ -1,16 +1,16 @@
 package stacs.starcade.frontend.view.sub;
 
-import stacs.starcade.frontend.controller.FrontendController;
+import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.model.FrontendModel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class CardPanel extends JPanel {
-    private final FrontendController controller;
+    private final Controller controller;
     private final FrontendModel model;
 
-    public CardPanel(FrontendController controller, FrontendModel model) {
+    public CardPanel(Controller controller, FrontendModel model) {
         this.controller = controller;
         this.model = model;
     }
