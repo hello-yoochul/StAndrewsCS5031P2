@@ -1,7 +1,11 @@
 package stacs.starcade.backend.api;
 
+import java.time.Duration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import stacs.starcade.backend.impl.LeaderBoard;
@@ -13,9 +17,12 @@ import java.util.List;
 /**
  * Tests for the {@link SetGameAPI} class.
  */
+
+@AutoConfigureWebTestClient(timeout = "10000")
+@SpringBootTest
 public class SetGameAPITests {
 
-    WebTestClient client;
+    private WebTestClient client;
 
     @BeforeEach
     void setup() {
@@ -25,7 +32,7 @@ public class SetGameAPITests {
     @Test
     void createGame() {
         // success
-        client.post().uri("/startGame")
+        client.get().uri("/startGame")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -33,26 +40,40 @@ public class SetGameAPITests {
     }
 
     @Test
-    public void mustReturnNotFoundForNonExistingGame() {
-        client.get().uri("/game/1000").accept(MediaType.APPLICATION_JSON)
+    void mustReturnNotFoundForNonExistingGame() {
+        client.get().uri("/game/1000")
                 .exchange()
                 .expectStatus().isNotFound();
     }
 
     @Test
     void mustGetLeaderBoard() {
-        client.get().uri("/getLeaderboard").accept(MediaType.APPLICATION_JSON)
+        client.get().uri("/getLeaderboard")
                 .exchange().expectStatus().isOk().expectBody(LeaderBoard.class);
     }
 
     @Test
     void mustReturnCards() {
-        client.post().uri("/startGame")
-                .accept(MediaType.APPLICATION_JSON)
+        client.get().uri("/startGame")
                 .exchange();
 
-        client.post().uri("/getCards/1").accept(MediaType.APPLICATION_JSON)
+        client.get().uri("/getCards/1")
                 .exchange()
                 .expectStatus().isOk().expectBodyList(Card.class);
+    }
+
+    @Test
+    void gettingNonExistentGame() {
+        client.get().uri("/getCards/1")
+          .exchange()
+          .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void getNewPlayer() {
+        client.get().uri("/startGame")
+          .exchange()
+          .expectBody().json("1");
+
     }
 }

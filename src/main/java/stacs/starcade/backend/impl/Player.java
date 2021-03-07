@@ -1,20 +1,24 @@
 package stacs.starcade.backend.impl;
 
+import java.util.HashMap;
 import stacs.starcade.shared.ICard;
 
 import java.util.ArrayList;
 
 public class Player implements IPlayer {
+    private int playerId;
+    private int playerName;
 
     private ArrayList<ICard[]> setsLog;
 
-    public Player() {
+    public Player(int playerId) {
         setsLog = new ArrayList<>();
+        this.playerId = playerId;
     }
 
     @Override
     public Integer getPlayerId() {
-        return null;
+        return playerId;
     }
 
     @Override
