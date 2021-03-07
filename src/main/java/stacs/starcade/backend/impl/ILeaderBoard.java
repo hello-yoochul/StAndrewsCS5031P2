@@ -1,12 +1,20 @@
 package stacs.starcade.backend.impl;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Interface for the representation of an entry in the player leaderboard.
  */
 public interface ILeaderBoard {
+
+    /**
+     * Gets list of players that are currently playing.
+     * Player objects contain information on individual performance: num of rounds played and average time per round.
+     * @return
+     */
+    ArrayList<IPlayer> getPlayersList();
 
     /**
      * Adds player to leaderboard.
@@ -18,14 +26,13 @@ public interface ILeaderBoard {
     /**
      * Removes player from leaderboard once player has disconnected.
      *
-     * @param playerID id of player that shall be removed
+     * @param removedPlayer player that shall be removed from leaderboard
      */
-    void removePlayer(int playerID);
+    void removePlayer(IPlayer removedPlayer);
 
     /**
-     * Gets list of players that are currently playing.
-     * Player objects contain information on individual performance: num of rounds played and average time per round.
-     * @return
+     * Sorts the players list based on their average times needed to complete a round.
+     * Players with lowest average time first.
      */
-    List<IPlayer> getPlayersList();
+    void sortList();
 }
