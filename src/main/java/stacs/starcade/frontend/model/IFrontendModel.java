@@ -1,5 +1,7 @@
 package stacs.starcade.frontend.model;
 
+import stacs.starcade.shared.ICard;
+
 import java.util.List;
 
 public interface IFrontendModel {

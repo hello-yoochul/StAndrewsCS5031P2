@@ -4,26 +4,24 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.HttpClient;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
-import stacs.starcade.frontend.model.ICard;
 import stacs.starcade.frontend.model.FrontendModel;
-import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.shared.Checks;
+import stacs.starcade.shared.ICard;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static stacs.starcade.shared.Checks.*;
 import static stacs.starcade.frontend.model.IFrontendModel.*;
 
 
 /**
  *
  */
-public class FrontendController implements IFrontendController {
+public class Controller implements IController {
     String basicServerAddress = "http://localhost:8080/";
 
     private FrontendModel model;
@@ -40,7 +38,7 @@ public class FrontendController implements IFrontendController {
     /**
      * FrontendController constructor.
      */
-    public FrontendController(FrontendModel model) {
+    public Controller(FrontendModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
     }
@@ -109,31 +107,31 @@ public class FrontendController implements IFrontendController {
         model.setUpCard(cards);
     }
 
-    /**
-     * Check if the three cards are set.
-     *
-     * @return true if it is set
-     */
-    @Override
-    public boolean isSet() {
-        // TODO: 1 check if three cards are chosen
-        // TODO: 2 get the chosen card from model
-        // TODO: 3 and send them to server, e.g., http://localhost:8080/game/isSet?firstCard=1111&secondCard=1221&thirdCard=3113
-
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://localhost:8080/isSet")).build();
-
-//        try {
-//            // TODO: 4 From the request above, check if the server sends the info on it is set
-//            java.net.http.HttpResponse<String> response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
-//            System.out.println(response.body());
-//        } catch (IOException | InterruptedException e) {
-//            throw new RuntimeException("error", e);
-//        }
-
-        // TODO: 5 if it is set remove the cards on the board and repaint, if not, show dialog message "not set"
-
-        return false;
-    }
+//    /**
+//     * Check if the three cards are set.
+//     *
+//     * @return true if it is set
+//     */
+//    @Override
+//    public boolean isSet() {
+//        // TODO: 1 check if three cards are chosen
+//        // TODO: 2 get the chosen card from model
+//        // TODO: 3 and send them to server, e.g., http://localhost:8080/game/isSet?firstCard=1111&secondCard=1221&thirdCard=3113
+//
+//        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://localhost:8080/isSet")).build();
+//
+////        try {
+////            // TODO: 4 From the request above, check if the server sends the info on it is set
+////            java.net.http.HttpResponse<String> response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
+////            System.out.println(response.body());
+////        } catch (IOException | InterruptedException e) {
+////            throw new RuntimeException("error", e);
+////        }
+//
+//        // TODO: 5 if it is set remove the cards on the board and repaint, if not, show dialog message "not set"
+//
+//        return false;
+//    }
 
     /**
      * Pause the game.
@@ -162,5 +160,21 @@ public class FrontendController implements IFrontendController {
     @Override
     public void setPlayerId() {
         // TODO: Get player ID from Server and store it the Model, FrontendModel
+    }
+
+    @Override
+    public void validateCards(ICard[] threeCards) throws IllegalArgumentException {
+        // Validate input
+        if (threeCards.length != 3) {
+            throw new IllegalArgumentException("A set can only consist of exactly three cards!");
+        }
+
+        if (Checks.isSet(threeCards)) {
+            // Check whether owner (player) of card objects has already logged this set of cards
+            // Trigger model to log set for owner of cards
+//            model.logSet(threeCards);
+        } else {
+            // Trigger Error Message that three given cards do not make a set
+        }
     }
 }

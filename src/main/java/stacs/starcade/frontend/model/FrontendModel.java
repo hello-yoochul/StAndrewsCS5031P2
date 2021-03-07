@@ -1,6 +1,8 @@
 package stacs.starcade.frontend.model;
 
 
+import stacs.starcade.shared.ICard;
+
 import java.util.*;
 
 /**
