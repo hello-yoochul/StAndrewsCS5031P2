@@ -5,10 +5,13 @@ import stacs.starcade.shared.ICard;
 import java.util.ArrayList;
 
 public interface IModel {
-    /**
-     * Generates an array list of 81 card objects with unique attribute-expression combinations.
-     */
-    void setCards();
 
-    ArrayList<ICard> getCards();
+    ArrayList<ICard> getAllCards();
+
+    /**
+     * Gets twelve cards with 5 sets.
+     * Persists the cards, if no set of cards exists, create new set
+     * @return ArrayList of twelve cards
+     */
+    ArrayList<ICard> getTwelveCards();
 }
