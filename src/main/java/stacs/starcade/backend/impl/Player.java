@@ -24,12 +24,8 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public void setSetsLog(ICard[] threeCards) {
-        setsLog.add(threeCards);
-    }
+    public void setSetsLog(ICard[] threeCards) { setsLog.add(threeCards); }
 
     @Override
-    public ArrayList<ICard[]> getSetsLog() {
-        return this.setsLog;
-    }
+    public ArrayList<ICard[]> getSetsLog() { return this.setsLog; }
 }

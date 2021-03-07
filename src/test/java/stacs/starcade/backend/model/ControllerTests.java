@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import stacs.starcade.backend.impl.Card;
 import stacs.starcade.backend.impl.Controller;
 import stacs.starcade.backend.impl.Model;
-import stacs.starcade.backend.impl.Player;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +30,7 @@ public class ControllerTests {
     public void setup() {
         c = new Controller(new Model());
         mockModel = mock(IModel.class);
-        mockPlayer1 = new Player();
+        mockPlayer1 = mock(IPlayer.class);
         mockPlayer2 = mock(IPlayer.class);
         card1 = new Card();
         card2 = new Card();
@@ -55,7 +54,7 @@ public class ControllerTests {
         card2.setLineStyle(DASHED);
 
         card3.setColour(RED);
-        card3.setShape(SQUARE);
+        card3.setShape(TRIANGLE);
         card3.setNumber(NULL);
         card3.setLineStyle(DASHED);
 
@@ -77,7 +76,7 @@ public class ControllerTests {
         card2.setLineStyle(DASHED);
 
         card3.setColour(RED);
-        card3.setShape(SQUARE);
+        card3.setShape(TRIANGLE);
         card3.setNumber(ONE);
         card3.setLineStyle(DOTTED);
 
@@ -102,7 +101,7 @@ public class ControllerTests {
         card2.setOwner(mockPlayer1);
 
         card3.setColour(RED);
-        card3.setShape(SQUARE);
+        card3.setShape(TRIANGLE);
         card3.setNumber(NULL);
         card3.setLineStyle(DASHED);
         card3.setOwner(mockPlayer1);
