@@ -37,10 +37,9 @@ public class LeaderBoardPane extends JPanel implements Observer {
         this.table = new JTable(data, colNames);
         this.table.setGridColor(Color.BLACK);
         this.table.setVisible(true);
-        JScrollPane tableContainer = new JScrollPane(this.table);
 
         // Add table to pane
-        add(tableContainer, this.table);
+        add(new JScrollPane(this.table));
     }
 
     @Override

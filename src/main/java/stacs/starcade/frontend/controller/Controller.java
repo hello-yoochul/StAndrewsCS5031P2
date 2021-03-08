@@ -226,7 +226,9 @@ public class Controller implements IController {
             }
         } else {
             JOptionPane.showMessageDialog(null, "No Set...", "VALIDATION RESULT", JOptionPane.ERROR_MESSAGE);
-            // TODO: remove the selected cards
+            model.removeSelectedCard(threeCards[0]);
+            model.removeSelectedCard(threeCards[1]);
+            model.removeSelectedCard(threeCards[2]);
         }
     }
 
