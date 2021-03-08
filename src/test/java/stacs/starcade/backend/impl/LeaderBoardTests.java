@@ -2,18 +2,12 @@ package stacs.starcade.backend.impl;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.List;
-import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import stacs.starcade.shared.Card;
-import stacs.starcade.shared.Checks;
-import stacs.starcade.shared.ICard;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

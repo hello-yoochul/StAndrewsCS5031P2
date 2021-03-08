@@ -47,6 +47,10 @@ public class Player implements IPlayer {
         return this.name;
     }
 
+    private void setTotalTime(Duration currentTime) {
+        this.totalTime.plus(currentTime);
+    }
+
     /**
      * Gets duration player has needed for previously played rounds on avergade.
      *
@@ -90,7 +94,7 @@ public class Player implements IPlayer {
      */
     @Override
     public void endRound() {
-        this.totalTime.plus(timer.getTime());
+        setTotalTime(timer.getTime());
         timer.reset();
         setAvgTime();
 
