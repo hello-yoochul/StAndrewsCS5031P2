@@ -56,11 +56,4 @@ public class ModelTests {
         }
     }
 
-    @Test
-    void checkCardsPersist() {
-        List<ICard> cards = model.getTwelveCards();
-        List<ICard> cards2 = model.getTwelveCards();
-        assertEquals(cards.size(), cards2.size());
-    }
-
 }

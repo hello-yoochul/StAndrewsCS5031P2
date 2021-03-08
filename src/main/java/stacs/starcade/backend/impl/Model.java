@@ -109,6 +109,10 @@ public class Model implements IModel {
                                 twelveCards.get(k)
                         })) {
                             numSets ++;
+
+                            if (numSets > 3){
+                                break;
+                            }
                         }
                     }
                 }
@@ -136,9 +140,9 @@ public class Model implements IModel {
     }
 
     private ICard getRandomCardNotInList(ArrayList<ICard> list) {
-        ICard c = getRandomCard();
-        boolean unique = true;
         while (true) {
+            ICard c = getRandomCard();
+            boolean unique = true;
             for (ICard card : list) {
                 if (c.equals(card)) {
                     unique = false;
