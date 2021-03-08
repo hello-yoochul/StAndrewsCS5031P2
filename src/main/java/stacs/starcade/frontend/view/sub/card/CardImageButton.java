@@ -26,6 +26,12 @@ public class CardImageButton extends JButton {
     private String imagePathStr;
     private Toolkit toolkit;
 
+    public CardImageButton() {
+        this.addMouseListener(new MyMouseListener());
+        setSize(BUTTON_SIZE);
+        toolkit = Toolkit.getDefaultToolkit();
+    }
+
     /**
      * Construct CardImageButton with addition of the mouse listener:
      * if client click the card image button, the button colour will
