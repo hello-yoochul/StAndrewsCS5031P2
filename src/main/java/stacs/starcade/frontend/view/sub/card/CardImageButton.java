@@ -45,7 +45,9 @@ public class CardImageButton extends JButton {
      * To get images from the directory.
      */
     private Toolkit toolkit;
-
+    /**
+     * Needed to send message to Model to remove or add the selected card image button.
+     */
     private FrontendModel model;
 
     /**
@@ -97,7 +99,7 @@ public class CardImageButton extends JButton {
                     isClicked = true;
                     model.selectCard(getCard());
                 } else {
-                    JOptionPane.showMessageDialog(getRoot(clickedButton), "Please select less than three cards");
+                    JOptionPane.showMessageDialog(null, "Please select less than three cards");
                 }
             } else {
                 clickedButton.setBackground(Color.WHITE);
