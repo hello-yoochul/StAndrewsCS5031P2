@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import stacs.starcade.backend.impl.Model;
@@ -39,8 +38,8 @@ public class CardTests {
         c.setColour(Colour.RED);
         card.setLineStyle(LineStyle.DASHED);
         c.setLineStyle(LineStyle.DASHED);
-        card.setNumber(Number.ONE);
-        c.setNumber(Number.ONE);
+        card.setNumber(Number.THREE);
+        c.setNumber(Number.THREE);
         card.setShape(Shape.CIRCLE);
         c.setShape(Shape.CIRCLE);
 
@@ -63,7 +62,7 @@ public class CardTests {
 
     @Test
     void testSetGetNumber(){
-        ICard.Number c = Number.ONE;
+        ICard.Number c = Number.THREE;
         card.setNumber(c);
         assertEquals(c, card.getNumber());
     }

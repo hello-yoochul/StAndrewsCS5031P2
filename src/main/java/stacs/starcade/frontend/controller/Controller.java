@@ -1,7 +1,5 @@
 package stacs.starcade.frontend.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
@@ -9,40 +7,25 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import stacs.starcade.backend.impl.IPlayer;
-import stacs.starcade.backend.impl.Model;
 import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
 import java.util.*;
 
-import static stacs.starcade.shared.Checks.*;
 import static stacs.starcade.frontend.model.IFrontendModel.*;
-import static stacs.starcade.shared.ICard.Colour.RED;
-import static stacs.starcade.shared.ICard.LineStyle.DOTTED;
-import static stacs.starcade.shared.ICard.Number.ONE;
-import static stacs.starcade.shared.ICard.Shape.TRIANGLE;
 
 
 /**
  *
  */
 public class Controller implements IController {
-    String basicServerAddress = "http://localhost:8080/";
 
     private IFrontendModel model;
     private HttpClient client;
@@ -50,10 +33,10 @@ public class Controller implements IController {
     HttpPost postRequest;
     HttpResponse response;
 
-    String serverBasicAddress = "https://localhost:8080/";
-    final static String startGameParam = "/startGame";
+    final static String basicServerAddress = "http://localhost:8080/";
+    final static String registerPlayerParam = "/registerPlayer";
+    final static String nextRoundParam = "/nextRound";
     final static String getLeaderboardParam = "/getLeaderboard";
-    final static String getCardsParam = "/getCards";
 
     /**
      * FrontendController constructor.
@@ -66,7 +49,7 @@ public class Controller implements IController {
 
     private void register() {
         int playerID = 0;
-        HttpGet clientID = new HttpGet(basicServerAddress + "/register");
+        HttpGet clientID = new HttpGet(basicServerAddress + registerPlayerParam);
         // Read playerID from request
         this.model.setPlayerId(playerID);
     }
@@ -81,7 +64,7 @@ public class Controller implements IController {
             model.setGameStatus(GameStatus.RUNNING);
 
             // get the unique player id from the server and store it to Model variable
-            postRequest = new HttpPost(basicServerAddress + startGameParam);
+            postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/YOOCHUL");
             postRequest.setHeader("Accept", "application/json");
             postRequest.setHeader("Connection", "keep-alive");
             postRequest.setHeader("Content-Type", "application/json");
@@ -103,6 +86,8 @@ public class Controller implements IController {
     }
 
     public static void main(String[] args) {
+        Controller controller = new Controller(new FrontendModel());
+        controller.setUpCards();
     }
 
     /**
@@ -112,7 +97,7 @@ public class Controller implements IController {
     public void setUpCards() {
         List<ICard> cards = new ArrayList<>();
 
-        postRequest = new HttpPost(basicServerAddress + "/getCards/1");
+        postRequest = new HttpPost(basicServerAddress + nextRoundParam +"/1");
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
@@ -142,11 +127,9 @@ public class Controller implements IController {
 
                         cards.add(card);
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             } else {
                 System.out.println("(response error) status code : " + response.getStatusLine().getStatusCode());
             }
@@ -269,3 +252,4 @@ public class Controller implements IController {
         return setsEqual;
     }
 }
+

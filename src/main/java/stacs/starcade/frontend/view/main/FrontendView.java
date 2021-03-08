@@ -20,9 +20,9 @@ public class FrontendView extends JFrame implements Observer {
     private final Controller controller;
     private final FrontendModel model;
 
-    ControlPane controlPanel;
-    CardPane cardPanel;
-    InfoPane infoPanel;
+    private ControlPane controlPanel;
+    private CardPane cardPanel;
+    private InfoPane infoPanel;
 
     private static final int DEFAULT_FRAME_WIDTH = 1600;
     private static final int DEFAULT_FRAME_HEIGHT = 900;
@@ -60,7 +60,7 @@ public class FrontendView extends JFrame implements Observer {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(4, 4, 4, 4);
 
-        add((controlPanel = new ControlPane(this.model,this.controller)), gbc);
+        add((controlPanel = new ControlPane(this.model, this.controller)), gbc);
         gbc.weighty = 1;
         gbc.gridy++;
         add((cardPanel = new CardPane(this.model, this.controller)), gbc);

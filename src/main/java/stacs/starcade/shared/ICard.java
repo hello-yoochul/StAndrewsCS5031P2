@@ -5,31 +5,31 @@ package stacs.starcade.shared;
  */
 public interface ICard {
     enum Colour {BLUE, GREEN, RED}
-    enum Number {NULL, ONE, TWO}
+    enum Number {ONE, TWO, THREE}
     enum Shape {TRIANGLE, SQUARE, CIRCLE}
     enum LineStyle {DOTTED, DASHED, SOLID}
 
     /**
      * Sets the colour on the cards.
-     * @param colour
+     * @param colour set card colour
      */
     void setColour(Colour colour);
 
     /**
      * Sets the shape on the cards.
-     * @param shape
+     * @param shape the set card shape
      */
     void setShape(Shape shape);
 
     /**
      * Sets the number on the cards.
-     * @param number
+     * @param number the set card number
      */
     void setNumber(Number number);
 
     /**
      * Sets the line_style on the cards.
-     * @param lineStyle
+     * @param lineStyle the set card line_style
      */
     void setLineStyle(LineStyle lineStyle);
 

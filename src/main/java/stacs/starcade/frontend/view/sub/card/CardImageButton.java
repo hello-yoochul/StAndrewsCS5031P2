@@ -6,7 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * In card view panel, it will have 12 buttons.
@@ -15,20 +16,43 @@ import java.awt.event.MouseEvent;
 // TODO: I am not sure it is needed, but we should figure out how we can store client choice to the Model.
 public class CardImageButton extends JButton {
     private ICard card;
+    private String imagePathStr;
 
-    public CardImageButton(ICard card) {
-        this.card = card;
+    /**
+     * Construct CardImageButton with addition of the mouse listener:
+     * if client click the card image button, the button colour will
+     * be changed to show their choice.
+     */
+    public CardImageButton() {
         this.addMouseListener(new MyMouseListener());
     }
 
-    public ICard getValue() {
+    /**
+     * Get Image path string of the card.
+     */
+    public String getImagePathStr() {
+        return imagePathStr;
+    }
+
+    /**
+     * Set the card and Store the path of the corresponding card image.
+     */
+    public void setCard(ICard card) {
+        imagePathStr = card.getColour() + "-" + card.getNumber() + "-" + card.getShape() + "-" + card.getLineStyle() + ".png";
+        this.card = card;
+    }
+
+    /**
+     * Get the card in the button.
+     */
+    public ICard getCard() {
         return this.card;
     }
 
-    public void setValue(ICard value) {
-        this.card = value;
-    }
-
+    /**
+     * Inner class for Mouse Listener. If client click the card image button,
+     * the button colour will be changed to show their chocie.
+     */
     class MyMouseListener extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
             JButton clickedButton = (JButton) e.getSource();

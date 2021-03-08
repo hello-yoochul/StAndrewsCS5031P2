@@ -7,28 +7,29 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Panel for Buttons controller.
  */
-public class ControlPane extends JPanel {
-    FrontendModel model;
-    Controller controller;
+// TODO: start game, end game, start nextround, validate set. -> 4 buttons should be implemented
+public class ControlPane extends JPanel implements Observer {
+    private FrontendModel model;
+    private Controller controller;
 
     private JButton startGameButton;
     private JButton checkSetButton;
     private JButton endGameButton;
-    private JToggleButton pauseGameToggleButton;
 
     public static final String START = "START";
     public static final String CHECK_SET = "CHECK SET";
     public static final String END_GAME = "END";
-    public static final String PAUSE = "PAUSE";
-    public static final String UNPAUSE = "UNPAUSE";
 
     public ControlPane(FrontendModel model,Controller controller) {
         this.model = model;
         this.controller = controller;
+        ((Observable) model).addObserver(this);
 
         setBackground(Color.gray);
 
@@ -41,7 +42,6 @@ public class ControlPane extends JPanel {
         startGameButton = new JButton(START);
         checkSetButton = new JButton(CHECK_SET);
         endGameButton = new JButton(END_GAME);
-        pauseGameToggleButton = new JToggleButton(PAUSE);
     }
 
     private void generateButtonListener() {
@@ -49,13 +49,17 @@ public class ControlPane extends JPanel {
         startGameButton.addActionListener(al);
         checkSetButton.addActionListener(al);
         endGameButton.addActionListener(al);
-        pauseGameToggleButton.addActionListener(al);
     }
 
     private void addButtons() {
         add(startGameButton);
         add(checkSetButton);
-        add(pauseGameToggleButton);
+        add(endGameButton);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        repaint();
     }
 
     /**
@@ -74,11 +78,11 @@ public class ControlPane extends JPanel {
             }
 
             if (evt == checkSetButton) {
-//                controller.isSet();
+//                controller.validateCards();
             }
 
-            if (evt == pauseGameToggleButton) {
-                //controller.pauseGame();
+            if (evt == endGameButton) {
+//                controller.validateCards();
             }
         }
     }

@@ -1,6 +1,8 @@
 package stacs.starcade.frontend.model;
 
 
+import stacs.starcade.backend.impl.ILeaderBoard;
+import stacs.starcade.backend.impl.LeaderBoard;
 import stacs.starcade.frontend.view.main.FrontendView;
 import stacs.starcade.shared.ICard;
 
@@ -17,6 +19,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     private List<ICard> chosenCards;
     private int playerId;
     private ArrayList<ICard[]> setsLog;
+    private ILeaderBoard leaderBoard;
 
     /**
      * Construct FrontendModel.
@@ -25,6 +28,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
         cardsOnBoard = new ArrayList<>();
         chosenCards = new ArrayList<>();
         setsLog = new ArrayList<>();
+        leaderBoard = new LeaderBoard();
     }
 
     /**
@@ -34,6 +38,26 @@ public class FrontendModel extends Observable implements IFrontendModel {
     public void update() {
         this.setChanged();
         this.notifyObservers();
+    }
+
+    /**
+     * Set the leader board.
+     *
+     * @param leaderBoard the leader board.
+     */
+    @Override
+    public void setLeaderBoard(ILeaderBoard leaderBoard) {
+        this.leaderBoard = leaderBoard;
+    }
+
+    /**
+     * Get the leader board.
+     *
+     * @return the leader board.
+     */
+    @Override
+    public ILeaderBoard getLeaderBoard() {
+        return leaderBoard;
     }
 
     /**
@@ -104,7 +128,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
      */
     @Override
     public void selectCard(ICard card) {
-        if(!cardsOnBoard.contains(card)){
+        if (!cardsOnBoard.contains(card)) {
             throw new IllegalArgumentException("card does not exsit on the board");
         }
         cardsOnBoard.remove(card);
