@@ -70,7 +70,7 @@ public class ControlPane extends JPanel {
             Object evt = actionEvent.getSource();
 
             if (evt == startGameButton) {
-                controller.startGame();
+//                controller.startGame();
             }
 
             if (evt == checkSetButton) {
