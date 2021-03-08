@@ -11,42 +11,49 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * In card view panel, it will have 12 buttons.
- * Each button should be object so this class is needed.
+ * Needed to know which card object is clicked.
  */
-// TODO: I am not sure it is needed, but we should figure out how we can store client choice to the Model.
 public class CardImageButton extends JButton {
-    static final String BASIC_IMAGE_PATH = "src/main/resources/cardImages/";
-    static final Dimension BUTTON_SIZE = new Dimension(110, 160);
-    static final int IMAGE_WIDTH = 100;
-    static final int IMAGE_HEIGHT = 150;
+    /**
+     * Image resource path.
+     */
+    private static final String BASIC_IMAGE_PATH = "src/main/resources/cardImages/";
+    /**
+     * Image width of the card image in each button.
+     */
+    private static final int IMAGE_WIDTH = 130;
+    /**
+     * Image height of the card image in each button.
+     */
+    private static final int IMAGE_HEIGHT = 180;
 
-    private FrontendModel model;
+    /**
+     * Button should be toggled when clicked.
+     */
+    private boolean isClicked = false;
+
+    /**
+     * Card to be correspondent to one of Model card, to show on the button.
+     */
     private ICard card;
+    /**
+     * The card image path.
+     */
     private String imagePathStr;
+    /**
+     * To get images from the directory.
+     */
     private Toolkit toolkit;
-
-    public CardImageButton() {
-        this.addMouseListener(new MyMouseListener());
-        setSize(BUTTON_SIZE);
-        toolkit = Toolkit.getDefaultToolkit();
-    }
 
     /**
      * Construct CardImageButton with addition of the mouse listener:
-     * if client click the card image button, the button colour will
+     * if client clicks the card image button, the button colour will
      * be changed to show their choice.
-     *
-     * @param model the front end model
      */
-    public CardImageButton(FrontendModel model) {
+    public CardImageButton() {
         this.addMouseListener(new MyMouseListener());
-        this.model = model;
-
-        setSize(BUTTON_SIZE);
-
-        toolkit = Toolkit.getDefaultToolkit(); // to get image from resource folder
-//        testImg = toolkit.getImage(BASIC_IMAGE_PATH + "/BLUE-ONE-CIRCLE-OPEN.png").getScaledInstance(IMAGE_WIDTH, IMAGE_HEIGHT, Image.SCALE_DEFAULT);
+        toolkit = Toolkit.getDefaultToolkit();
+        setBackground(Color.WHITE);
     }
 
     /**
@@ -80,7 +87,13 @@ public class CardImageButton extends JButton {
     class MyMouseListener extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
             JButton clickedButton = (JButton) e.getSource();
-            clickedButton.setBackground(Color.BLACK);
+            if (!isClicked) {
+                clickedButton.setBackground(Color.BLACK);
+                isClicked = true;
+            } else {
+                clickedButton.setBackground(Color.WHITE);
+                isClicked = false;
+            }
         }
     }
 }
