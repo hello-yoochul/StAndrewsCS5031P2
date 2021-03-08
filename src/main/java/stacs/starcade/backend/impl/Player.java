@@ -80,6 +80,14 @@ public class Player implements IPlayer {
     }
 
     /**
+     * Gets the round the player is currently playing.
+     *
+     * @return round as integer
+     */
+    @Override
+    public Integer getRound() { return this.round; }
+
+    /**
      * Starts a new round and the timer for this round.
      *
      * @param twelveCards the cards the round shall be played with
