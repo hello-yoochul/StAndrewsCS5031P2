@@ -24,6 +24,8 @@ public class CardImageButton extends JButton {
         this.card = card;
         this.addMouseListener(new MyMouseListener());
 
+        // TODO: Once client get the 12 cards from the server, the 12 of this will be created and
+        // TODO: will be add to the Model maybe.
         card.getColour();
         card.getNumber();
         card.getShape();
