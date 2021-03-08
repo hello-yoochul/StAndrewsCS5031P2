@@ -1,6 +1,7 @@
 package stacs.starcade.frontend.view.sub.card;
 
 import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
@@ -92,20 +93,23 @@ public class CardImageButton extends JButton {
      */
     class MyMouseListener extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
-            JButton clickedButton = (JButton) e.getSource();
-            if (!isClicked) {
-                if (model.getSelectedCards().size() < MAXIMUM_NUMBER_OF_SELECTED_CARDS) {
-                    clickedButton.setBackground(Color.BLACK);
-                    isClicked = true;
-                    model.selectCard(getCard());
+            if (model.getStatus() == IFrontendModel.GameStatus.RUNNING) {
+                JButton clickedButton = (JButton) e.getSource();
+                if (!isClicked) {
+                    if (model.getSelectedCards().size() < MAXIMUM_NUMBER_OF_SELECTED_CARDS) {
+                        clickedButton.setBackground(Color.BLACK);
+                        isClicked = true;
+                        model.selectCard(getCard());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please select less than three cards");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Please select less than three cards");
+                    clickedButton.setBackground(Color.WHITE);
+                    isClicked = false;
+                    model.removeSelectedCard(getCard());
                 }
-            } else {
-                clickedButton.setBackground(Color.WHITE);
-                isClicked = false;
-                model.removeSelectedCard(getCard());
             }
+
         }
     }
 }

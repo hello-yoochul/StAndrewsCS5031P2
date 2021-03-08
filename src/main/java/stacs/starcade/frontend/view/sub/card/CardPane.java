@@ -46,12 +46,6 @@ public class CardPane extends JPanel implements Observer {
         this.setLayout(new GridLayout(3, 4));
     }
 
-    void unclickAllSelectedButton(){
-        for (int i = 0; i < cardImageButtons.size(); i++) {
-            cardImageButtons.get(i).setBackground(Color.WHITE);
-        }
-    }
-
     /**
      * Get all the 12 cards from frontend Model and draw it on the Card Panel:
      * when model has a change, it will be invoked to redraw.
