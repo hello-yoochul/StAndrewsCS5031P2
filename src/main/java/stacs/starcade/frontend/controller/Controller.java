@@ -35,8 +35,8 @@ public class Controller implements IController {
 
     final static String basicServerAddress = "http://localhost:8080/";
     final static String registerPlayerParam = "/registerPlayer";
+    final static String nextRoundParam = "/nextRound";
     final static String getLeaderboardParam = "/getLeaderboard";
-    final static String getCardsParam = "/getCards";
 
     /**
      * FrontendController constructor.
@@ -64,7 +64,7 @@ public class Controller implements IController {
             model.setGameStatus(GameStatus.RUNNING);
 
             // get the unique player id from the server and store it to Model variable
-            postRequest = new HttpPost(basicServerAddress + registerPlayerParam);
+            postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/YOOCHUL");
             postRequest.setHeader("Accept", "application/json");
             postRequest.setHeader("Connection", "keep-alive");
             postRequest.setHeader("Content-Type", "application/json");
@@ -86,6 +86,8 @@ public class Controller implements IController {
     }
 
     public static void main(String[] args) {
+        Controller controller = new Controller(new FrontendModel());
+        controller.setUpCards();
     }
 
     /**
@@ -95,7 +97,7 @@ public class Controller implements IController {
     public void setUpCards() {
         List<ICard> cards = new ArrayList<>();
 
-        postRequest = new HttpPost(basicServerAddress + "/getCards/1");
+        postRequest = new HttpPost(basicServerAddress + nextRoundParam +"/1");
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
@@ -250,3 +252,4 @@ public class Controller implements IController {
         return setsEqual;
     }
 }
+
