@@ -125,6 +125,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
 
     @Override
     public void removeSelectedCard(ICard card) {
+        cardsOnBoard.add(card);
         selectedCards.remove(card);
     }
 
