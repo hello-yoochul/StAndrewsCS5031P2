@@ -25,7 +25,8 @@ public class SetGameAPITests {
     @Test
     void registerPlayer() {
         // success
-        client.get().uri("/registerPlayer")
+        String anyName = "anyName";
+        client.get().uri("/registerPlayer/" + anyName)
           .accept(MediaType.APPLICATION_JSON)
           .exchange()
           .expectStatus().isOk()
