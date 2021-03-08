@@ -36,6 +36,12 @@ public interface IPlayer {
     Duration getAvgTime();
 
     /**
+     * Gets the round the player is currently playing.
+     * @return round as integer
+     */
+    Integer getRound();
+
+    /**
      * Starts a new round and the timer for this round.
      *
      * @param twelveCards the cards the round shall be played with

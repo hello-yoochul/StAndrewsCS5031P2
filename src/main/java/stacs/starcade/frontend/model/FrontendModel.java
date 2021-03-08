@@ -21,7 +21,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     private List<ICard> selectedCards;
     private int playerId;
     private ArrayList<ICard[]> setsLog;
-    private ILeaderBoard leaderBoard;
+    private String[][] leaderBoard;
     private String playerName;
 
     /**
@@ -31,7 +31,6 @@ public class FrontendModel extends Observable implements IFrontendModel {
         cardsOnBoard = new ArrayList<>();
         selectedCards = new ArrayList<>();
         setsLog = new ArrayList<>();
-        leaderBoard = new LeaderBoard();
     }
 
     /**
@@ -49,7 +48,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
      * @param leaderBoard the leader board.
      */
     @Override
-    public void setLeaderBoard(ILeaderBoard leaderBoard) {
+    public void setLeaderBoard(String[][] leaderBoard) {
         this.leaderBoard = leaderBoard;
     }
 
@@ -59,8 +58,8 @@ public class FrontendModel extends Observable implements IFrontendModel {
      * @return the leader board.
      */
     @Override
-    public ILeaderBoard getLeaderBoard() {
-        return leaderBoard;
+    public String[][] getLeaderBoard() {
+        return this.leaderBoard;
     }
 
     /**
@@ -126,7 +125,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
 
     @Override
     public void removeSelectedCard(ICard card) {
-        cardsOnBoard.add(card);
+//        cardsOnBoard.add(card);
         selectedCards.remove(card);
     }
 
@@ -140,7 +139,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
         if (!cardsOnBoard.contains(card)) {
             throw new IllegalArgumentException("card does not exsit on the board");
         }
-        cardsOnBoard.remove(card);
+//        cardsOnBoard.remove(card);
         selectedCards.add(card);
     }
 
@@ -160,9 +159,11 @@ public class FrontendModel extends Observable implements IFrontendModel {
     @Override
     public void setSetsLog(ICard[] threeCards) {
         setsLog.add(threeCards);
+        System.out.println("SET SETS LOG - SIZE: " + setsLog.size());
         for (ICard card : threeCards) {
             selectedCards.remove(card);
         }
+        update();
     }
 
     /**
