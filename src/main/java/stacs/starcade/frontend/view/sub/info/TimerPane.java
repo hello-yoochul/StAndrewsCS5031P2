@@ -22,7 +22,8 @@ public class TimerPane extends JPanel implements Observer {
 
     public TimerPane(IFrontendModel model, IController controller) {
         this.model = model;
-        ((Observable) model).addObserver(this);
+
+        ((Observable) this.model).addObserver(this);
 
         timerLabel = new JLabel("0:00:00");
         timerLabel.setBounds(0, 0, 100, 20);
@@ -60,7 +61,7 @@ public class TimerPane extends JPanel implements Observer {
                     e.printStackTrace();
                 }
                 timerLabel.setText(formatDuration(model.getTime()));
-                System.out.println("keeeppp");
+                //System.out.println("keeeppp");
             } while (true);
         }
     }

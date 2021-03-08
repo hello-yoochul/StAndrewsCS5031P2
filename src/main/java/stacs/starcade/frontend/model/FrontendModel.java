@@ -1,6 +1,7 @@
 package stacs.starcade.frontend.model;
 
 
+import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.view.main.FrontendView;
 import stacs.starcade.shared.ICard;
 import stacs.starcade.shared.ITimer;
@@ -62,7 +63,16 @@ public class FrontendModel extends Observable implements IFrontendModel {
      */
     @Override
     public void setLeaderBoard(String[][] leaderBoard) {
-        this.leaderBoard = leaderBoard;
+        int lbSize = leaderBoard.length;
+        this.leaderBoard = new String[lbSize][Controller.NUM_COLS];
+
+        for (int i = 0; i < lbSize; i++) {
+            for (int j = 0; j < Controller.NUM_COLS; j++) {
+                this.leaderBoard[i][j] = leaderBoard[i][j];
+            }
+        }
+        System.out.println("Set up LB");
+        update();
     }
 
     /**
@@ -137,7 +147,10 @@ public class FrontendModel extends Observable implements IFrontendModel {
     }
 
     @Override
-    public void removeSelectedCard(ICard card) { selectedCards.remove(card); }
+    public void removeSelectedCard(ICard card) {
+        selectedCards.remove(card);
+        update();
+    }
 
     /**
      * Select card among the cards on board.
@@ -147,7 +160,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     @Override
     public void selectCard(ICard card) {
         if (!cardsOnBoard.contains(card)) {
-            throw new IllegalArgumentException("card does not exsit on the board");
+            throw new IllegalArgumentException("card does not exist on the board");
         }
         selectedCards.add(card);
     }

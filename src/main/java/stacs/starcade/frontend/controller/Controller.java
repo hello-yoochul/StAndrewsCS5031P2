@@ -27,7 +27,7 @@ import static stacs.starcade.frontend.model.IFrontendModel.*;
 public class Controller implements IController {
 
     private static final int MAX_NUM_SETS = 5;
-    private static final int NUM_COLS = 3;
+    public static final int NUM_COLS = 3;
     private IFrontendModel model;
     private HttpClient client;
 
@@ -100,7 +100,6 @@ public class Controller implements IController {
                 }
 
                 model.setLeaderBoard(entries);
-                System.out.println(response);
             } else {
                 System.out.println("response is error : " + response.getStatusLine().getStatusCode());
             }
@@ -182,25 +181,34 @@ public class Controller implements IController {
         if (threeCards.length != 3) {
             throw new IllegalArgumentException("A set can only consist of exactly three cards!");
         } else if (logSize > 0 && alreadyLogged(threeCards)) {
+            removeSelectedCards(threeCards);
             throw new IllegalArgumentException("Selected set has already been logged.");
         }
 
         (new JLabel("Set!!")).setHorizontalAlignment(SwingConstants.CENTER);
 
         if (Checks.isSet(threeCards)) {
-            JOptionPane.showMessageDialog(null, "Set!!", "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Set!!", "VALIDATION RESULT",
+                    JOptionPane.PLAIN_MESSAGE);
             // Check whether owner (player) of card objects has already logged this set of cards
             model.setSetsLog(threeCards); // Trigger model to log valid set of cards
             if (model.getSetsLog().size() == MAX_NUM_SETS) {
                 System.out.println("END ROUND");
                 endRound();
+                JOptionPane.showMessageDialog(null, "You found all sets. The round is over." +
+                        "Congratulations!! ", "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No Set...", "VALIDATION RESULT", JOptionPane.ERROR_MESSAGE);
-            model.removeSelectedCard(threeCards[0]);
-            model.removeSelectedCard(threeCards[1]);
-            model.removeSelectedCard(threeCards[2]);
+            JOptionPane.showMessageDialog(null, "No Set...", "VALIDATION RESULT",
+                    JOptionPane.ERROR_MESSAGE);
+            removeSelectedCards(threeCards);
         }
+    }
+
+    private void removeSelectedCards(ICard[] threeCards) {
+        model.removeSelectedCard(threeCards[0]);
+        model.removeSelectedCard(threeCards[1]);
+        model.removeSelectedCard(threeCards[2]);
     }
 
     /**

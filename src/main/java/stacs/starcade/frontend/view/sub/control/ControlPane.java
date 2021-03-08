@@ -34,7 +34,8 @@ public class ControlPane extends JPanel implements Observer {
     public ControlPane(IFrontendModel model, IController controller) {
         this.model = model;
         this.controller = controller;
-        ((Observable) model).addObserver(this);
+
+        ((Observable) this.model).addObserver(this);
 
         setBackground(Color.gray);
 
