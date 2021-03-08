@@ -12,7 +12,7 @@ public class Model implements IModel {
     private int nextPlayerID = 0;
     private ILeaderBoard leaderBoard;
 
-    ArrayList<ICard> allCards;
+    private ArrayList<ICard> allCards;
 
     private final static int NUM_TWELVE = 12;
     private final static int NUM_SETS = 5;
@@ -52,7 +52,7 @@ public class Model implements IModel {
      * @return IPlayer object that has ID playerID
      */
     @Override
-    public IPlayer getPlayer(int playerID) throws IllegalArgumentException {
+    public IPlayer getPlayer(int playerID) {
         for (IPlayer p : this.getLeaderboard().getPlayersList()) {
             if (p.getPlayerId() == playerID) {
                 return p;
