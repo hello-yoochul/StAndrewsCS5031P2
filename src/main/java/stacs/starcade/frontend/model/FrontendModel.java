@@ -1,11 +1,12 @@
 package stacs.starcade.frontend.model;
 
 
-import stacs.starcade.backend.impl.ILeaderBoard;
-import stacs.starcade.backend.impl.LeaderBoard;
 import stacs.starcade.frontend.view.main.FrontendView;
 import stacs.starcade.shared.ICard;
+import stacs.starcade.shared.ITimer;
+import stacs.starcade.shared.Timer;
 
+import java.time.Duration;
 import java.util.*;
 
 /**
@@ -23,7 +24,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     private ArrayList<ICard[]> setsLog;
     private String[][] leaderBoard;
     private String playerName;
-    private Timer timer;
+    private ITimer timer;
 
     /**
      * Construct FrontendModel.
@@ -32,7 +33,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
         cardsOnBoard = new ArrayList<>();
         selectedCards = new ArrayList<>();
         setsLog = new ArrayList<>();
-        leaderBoard = new LeaderBoard();
+//        leaderBoard = new LeaderBoard();
         timer = new Timer();
 //        status = GameStatus.PAUSED;
     }
