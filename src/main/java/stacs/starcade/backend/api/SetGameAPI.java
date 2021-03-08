@@ -27,7 +27,7 @@ public class SetGameAPI implements ISetGameAPI {
      */
     @GetMapping("/registerPlayer/{playerName}")
     public Integer registerPlayer(@PathVariable String playerName) {
-        int newPID = model.getPlayerID();
+        int newPID = model.generatePlayerID();
         IPlayer newP = new Player(playerName, newPID);
         model.addPlayer(newP);
         return newPID;

@@ -23,6 +23,7 @@ public class LeaderBoardTests {
     private ArrayList<IPlayer> lbList;
     private IPlayer p1;
     private IPlayer p2;
+    private IPlayer p3;
 
     @BeforeEach
     public void setup() {
@@ -30,6 +31,7 @@ public class LeaderBoardTests {
         lbList = leaderBoard.getPlayersList();
         p1 = mock(Player.class);
         p2 = mock(Player.class);
+        p3 = mock(Player.class);
     }
 
     @Test
@@ -80,13 +82,15 @@ public class LeaderBoardTests {
         // Add two players
         leaderBoard.addPlayer(p1);
         leaderBoard.addPlayer(p2);
+        leaderBoard.addPlayer(p3);
 
         when(p1.getAvgTime()).thenReturn(Duration.ofSeconds(90));
         when(p2.getAvgTime()).thenReturn(Duration.ofSeconds(60));
+        when(p3.getAvgTime()).thenReturn(Duration.ofSeconds(120));
 
         leaderBoard.sortList();
 
         // sortList() should reorder the list so that p2 is item 0 and p1 item 1
-        assertTrue(lbList.get(0).equals(p2) && lbList.get(1).equals(p1));
+        assertTrue(lbList.get(0).equals(p2) && lbList.get(1).equals(p1) && lbList.get(2).equals(p3));
     }
 }

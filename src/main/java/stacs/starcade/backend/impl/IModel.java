@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 public interface IModel {
 
-    int getPlayerID();
-
     /**
      * Gets player with given playerID.
      * @param playerID given ID
