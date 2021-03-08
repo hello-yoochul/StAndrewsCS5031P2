@@ -32,6 +32,8 @@ public class FrontendView extends JFrame implements Observer {
         this.model = model;
         this.controller = controller;
 
+        model.setPlayerName(JOptionPane.showInputDialog(this, "Enter your name:"));
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
         setLocationRelativeTo(null);
