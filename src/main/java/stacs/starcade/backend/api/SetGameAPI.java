@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import stacs.starcade.backend.impl.IPlayer;
 import stacs.starcade.backend.impl.*;
 import stacs.starcade.backend.impl.Player;
+import stacs.starcade.shared.Card;
 import stacs.starcade.shared.ICard;
 
 /**

@@ -10,6 +10,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
@@ -124,11 +125,9 @@ public class Controller implements IController {
 
                         cards.add(card);
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             } else {
                 System.out.println("(response error) status code : " + response.getStatusLine().getStatusCode());
             }

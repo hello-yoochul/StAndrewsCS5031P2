@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 /**
  * Panel for Buttons controller.
  */
+// TODO: start game, end game, start nextround, validate set. -> 4 buttons should be implemented
 public class ControlPane extends JPanel {
     private FrontendModel model;
     private Controller controller;
@@ -18,13 +19,10 @@ public class ControlPane extends JPanel {
     private JButton startGameButton;
     private JButton checkSetButton;
     private JButton endGameButton;
-    private JToggleButton pauseGameToggleButton;
 
     public static final String START = "START";
     public static final String CHECK_SET = "CHECK SET";
     public static final String END_GAME = "END";
-    public static final String PAUSE = "PAUSE";
-    public static final String UNPAUSE = "UNPAUSE";
 
     public ControlPane(FrontendModel model,Controller controller) {
         this.model = model;
@@ -41,7 +39,6 @@ public class ControlPane extends JPanel {
         startGameButton = new JButton(START);
         checkSetButton = new JButton(CHECK_SET);
         endGameButton = new JButton(END_GAME);
-        pauseGameToggleButton = new JToggleButton(PAUSE);
     }
 
     private void generateButtonListener() {
@@ -49,13 +46,12 @@ public class ControlPane extends JPanel {
         startGameButton.addActionListener(al);
         checkSetButton.addActionListener(al);
         endGameButton.addActionListener(al);
-        pauseGameToggleButton.addActionListener(al);
     }
 
     private void addButtons() {
         add(startGameButton);
         add(checkSetButton);
-        add(pauseGameToggleButton);
+        add(endGameButton);
     }
 
     /**
@@ -70,15 +66,15 @@ public class ControlPane extends JPanel {
             Object evt = actionEvent.getSource();
 
             if (evt == startGameButton) {
-//                controller.startGame();
+                controller.startGame();
             }
 
             if (evt == checkSetButton) {
-//                controller.isSet();
+//                controller.validateCards();
             }
 
-            if (evt == pauseGameToggleButton) {
-                //controller.pauseGame();
+            if (evt == endGameButton) {
+//                controller.validateCards();
             }
         }
     }
