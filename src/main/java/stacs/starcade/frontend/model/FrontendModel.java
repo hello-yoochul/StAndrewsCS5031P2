@@ -14,9 +14,11 @@ import java.util.*;
  * invoked to repaint the panel.
  */
 public class FrontendModel extends Observable implements IFrontendModel {
+    public final static int MAXIMUM_NUMBER_OF_SELECTED_CARDS = 3;
+
     private IFrontendModel.GameStatus status;
     private List<ICard> cardsOnBoard;
-    private List<ICard> chosenCards;
+    private List<ICard> selectedCards;
     private int playerId;
     private ArrayList<ICard[]> setsLog;
     private ILeaderBoard leaderBoard;
@@ -26,7 +28,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
      */
     public FrontendModel() {
         cardsOnBoard = new ArrayList<>();
-        chosenCards = new ArrayList<>();
+        selectedCards = new ArrayList<>();
         setsLog = new ArrayList<>();
         leaderBoard = new LeaderBoard();
     }
@@ -121,6 +123,12 @@ public class FrontendModel extends Observable implements IFrontendModel {
         return playerId;
     }
 
+    @Override
+    public void removeSelectedCard(ICard card) {
+        cardsOnBoard.add(card);
+        selectedCards.remove(card);
+    }
+
     /**
      * Select card among the cards on board.
      *
@@ -132,17 +140,17 @@ public class FrontendModel extends Observable implements IFrontendModel {
             throw new IllegalArgumentException("card does not exsit on the board");
         }
         cardsOnBoard.remove(card);
-        chosenCards.add(card);
+        selectedCards.add(card);
     }
 
     /**
-     * Get the chosen cards.
+     * Get the selected cards.
      *
-     * @return the chosen cards
+     * @return the selected cards
      */
     @Override
-    public List<ICard> getChosenCards() {
-        return chosenCards;
+    public List<ICard> getSelectedCards() {
+        return selectedCards;
     }
 
     /**

@@ -20,7 +20,6 @@ public class CardImageButtonTests {
 
     @BeforeEach
     void setup() {
-        model = new FrontendModel();
         cardImageButton = new CardImageButton(model);
     }
 

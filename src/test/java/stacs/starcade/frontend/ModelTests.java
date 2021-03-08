@@ -62,7 +62,7 @@ public class ModelTests {
     @Test
     void mustThrowIllegalArgumentExceptionWhenClientSelectInvalidCard() {
         ICard invalidCard = new Card();
-        assertFalse(model.getChosenCards().contains(invalidCard));
+        assertFalse(model.getSelectedCards().contains(invalidCard));
 
         assertThrows(IllegalArgumentException.class, () -> {
             model.selectCard(invalidCard);

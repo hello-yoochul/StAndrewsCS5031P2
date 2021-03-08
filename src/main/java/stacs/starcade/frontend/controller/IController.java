@@ -16,7 +16,7 @@ public interface IController {
     /**
      * Select a card. Player will invoke this method 3 times to choose three cards.
      *
-     * @param card a card to check if chosen cards are set
+     * @param card a card to check if selected cards are set
      */
     void selectCard(ICard card);
 

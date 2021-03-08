@@ -80,6 +80,13 @@ public interface IFrontendModel {
     Integer getPlayerId();
 
     /**
+     * Remove selected card.
+     *
+     * @param card selected Card
+     */
+    void removeSelectedCard(ICard card);
+
+    /**
      * Select card among the cards on board.
      *
      * @param card selected Card among the cards on board
@@ -87,11 +94,11 @@ public interface IFrontendModel {
     void selectCard(ICard card);
 
     /**
-     * Get the chosen cards.
+     * Get the selected cards.
      *
-     * @return the chosen cards
+     * @return the selected cards
      */
-    List<ICard> getChosenCards();
+    List<ICard> getSelectedCards();
 
     /**
      * Adds a valid set to the setsLog of current round
