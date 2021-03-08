@@ -7,12 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Panel for Buttons controller.
  */
 // TODO: start game, end game, start nextround, validate set. -> 4 buttons should be implemented
-public class ControlPane extends JPanel {
+public class ControlPane extends JPanel implements Observer {
     private FrontendModel model;
     private Controller controller;
 
@@ -27,6 +29,7 @@ public class ControlPane extends JPanel {
     public ControlPane(FrontendModel model,Controller controller) {
         this.model = model;
         this.controller = controller;
+        ((Observable) model).addObserver(this);
 
         setBackground(Color.gray);
 
@@ -52,6 +55,11 @@ public class ControlPane extends JPanel {
         add(startGameButton);
         add(checkSetButton);
         add(endGameButton);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        repaint();
     }
 
     /**

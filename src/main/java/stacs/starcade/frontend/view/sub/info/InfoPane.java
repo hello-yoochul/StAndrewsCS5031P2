@@ -5,11 +5,13 @@ import stacs.starcade.frontend.model.FrontendModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Panel for {@link CurrentSetPane} and {@link LeaderBoardPane}.
  */
-public class InfoPane extends JPanel {
+public class InfoPane extends JPanel implements Observer {
     private FrontendModel model;
     private Controller controller;
 
@@ -19,6 +21,7 @@ public class InfoPane extends JPanel {
     public InfoPane(FrontendModel model, Controller controller) {
         this.model = model;
         this.controller = controller;
+        ((Observable) model).addObserver(this);
 
         setLayout(new GridLayout(2, 1));
 
@@ -35,5 +38,10 @@ public class InfoPane extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
 //        super.paintComponent(g);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        repaint();
     }
 }
