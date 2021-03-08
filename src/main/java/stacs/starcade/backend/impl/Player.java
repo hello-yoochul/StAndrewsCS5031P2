@@ -11,7 +11,7 @@ public class Player implements IPlayer {
 
     private String name;
     private Integer id;
-    private Integer round;
+    private Integer round = 0;
 
     private ITimer timer;
     private Duration totalTime;
@@ -47,6 +47,19 @@ public class Player implements IPlayer {
         return this.name;
     }
 
+    /**
+     * Gets the twelve cards that have been stored for the running round.
+     *
+     * @return an array list of twelve card objects
+     */
+    @Override
+    public ArrayList<ICard> getStoredCards() { return this.twelveCards; }
+
+    /**
+     * Updates the total time by adding the recorded time of the previously finished round to the current total time.
+     *
+     * @param currentTime is the previously recorded time
+     */
     private void setTotalTime(Duration currentTime) {
         this.totalTime.plus(currentTime);
     }
@@ -79,14 +92,9 @@ public class Player implements IPlayer {
         // Increment round
         // Set cards for this round
         // start Timer
-
-
-        if (this.round > 0) {
-
-        }
         this.round++;
-        this.totalTime.plus(totalTime);
         this.twelveCards = twelveCards;
+        this.timer.start();
     }
 
     /**

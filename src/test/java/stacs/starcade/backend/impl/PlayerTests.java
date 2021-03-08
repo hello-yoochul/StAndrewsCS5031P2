@@ -1,23 +1,28 @@
 package stacs.starcade.backend.impl;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import stacs.starcade.shared.ICard;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PlayerTests {
 
     private IPlayer player;
     private IPlayer mockPlayer;
+    private ArrayList<ICard> mockCardList;
 
     @BeforeEach
     public void setup() {
         player = new Player("Paul", 1);
         mockPlayer = mock(Player.class);
+        mockCardList = mock(ArrayList.class);
     }
 
     @Test
@@ -31,18 +36,24 @@ public class PlayerTests {
     }
 
     @Test
-    void testGetDurationOfCurrentRound() {
-
+    void testGetAverageDuration() {
+        when(mockPlayer.getAvgTime()).thenReturn(Duration.ofSeconds(60));
+        assertEquals(Duration.ofSeconds(60), mockPlayer.getAvgTime());
     }
 
     @Test
-    void testStartingARound() {
-
+    void testStartingARoundByCheckingWhetherCardsHaveBeenStoredSuccessfully() {
+        player.startRound(mockCardList);
+        assertTrue(player.getStoredCards().equals(mockCardList));
     }
 
     @Test
     void testEndingARound() {
-
+        Duration avgTime1 = player.getAvgTime();
+        player.startRound(mockCardList);
+        player.endRound();
+        Duration avgTime2 = player.getAvgTime();
+        assertTrue(avgTime1 < avgTime2);
     }
 
 }
