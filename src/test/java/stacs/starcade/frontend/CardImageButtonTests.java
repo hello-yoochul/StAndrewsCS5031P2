@@ -32,7 +32,7 @@ public class CardImageButtonTests {
         card.setNumber(Number.ONE);
         cardImageButton.setCard(card);
 
-        assertThat(cardImageButton.getImagePathStr(), is(equalTo("RED-ONE-TRIANGLE-DOTTED.png")));
+        assertThat(cardImageButton.getImagePathStr(), is(equalTo("/RED-ONE-TRIANGLE-DOTTED.png")));
     }
 
     @Test
