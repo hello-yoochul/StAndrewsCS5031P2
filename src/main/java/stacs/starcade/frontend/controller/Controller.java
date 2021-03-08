@@ -29,6 +29,7 @@ import static stacs.starcade.frontend.model.IFrontendModel.*;
  */
 public class Controller implements IController {
 
+    private static final int MAX_NUM_SETS = 5;
     private IFrontendModel model;
     private HttpClient client;
 
@@ -170,32 +171,6 @@ public class Controller implements IController {
         model.setGameStatus(GameStatus.RUNNING);
     }
 
-//    /**
-//     * Check if the three cards are set.
-//     *
-//     * @return true if it is set
-//     */
-//    @Override
-//    public boolean isSet() {
-//        // TODO: 1 check if three cards are selected
-//        // TODO: 2 get the selected card from model
-//        // TODO: 3 and send them to server, e.g., http://localhost:8080/game/isSet?firstCard=1111&secondCard=1221&thirdCard=3113
-//
-//        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://localhost:8080/isSet")).build();
-//
-////        try {
-////            // TODO: 4 From the request above, check if the server sends the info on it is set
-////            java.net.http.HttpResponse<String> response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
-////            System.out.println(response.body());
-////        } catch (IOException | InterruptedException e) {
-////            throw new RuntimeException("error", e);
-////        }
-//
-//        // TODO: 5 if it is set remove the cards on the board and repaint, if not, show dialog message "not set"
-//
-//        return false;
-//    }
-
     /**
      * Select a card. Player will invoke this method 3 times to choose three cards.
      *
@@ -236,6 +211,9 @@ public class Controller implements IController {
             JOptionPane.showMessageDialog(null, "Set!!", "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
             // Check whether owner (player) of card objects has already logged this set of cards
             model.setSetsLog(threeCards); // Trigger model to log valid set of cards
+            if (model.getSetsLog().size() == MAX_NUM_SETS) {
+                endRound();
+            }
         } else {
             JOptionPane.showMessageDialog(null, "No Set...", "VALIDATION RESULT", JOptionPane.ERROR_MESSAGE);
             // TODO: remove the selected cards

@@ -163,6 +163,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
         for (ICard card : threeCards) {
             selectedCards.remove(card);
         }
+        update();
     }
 
     /**
