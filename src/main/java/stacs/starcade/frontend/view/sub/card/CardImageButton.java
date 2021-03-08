@@ -1,6 +1,5 @@
 package stacs.starcade.frontend.view.sub.card;
 
-import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.ICard;
 
@@ -9,7 +8,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static javax.swing.SwingUtilities.getRoot;
 import static stacs.starcade.frontend.model.FrontendModel.MAXIMUM_NUMBER_OF_SELECTED_CARDS;
 
 /**
@@ -60,6 +58,10 @@ public class CardImageButton extends JButton {
         this.model = model;
         this.addMouseListener(new MyMouseListener());
         toolkit = Toolkit.getDefaultToolkit();
+
+        setContentAreaFilled(false);
+        setOpaque(true);
+        setBorderPainted(false);
         setBackground(Color.WHITE);
     }
 
@@ -92,30 +94,22 @@ public class CardImageButton extends JButton {
      * the button colour will be changed to show their chocie.
      */
     class MyMouseListener extends MouseAdapter {
-
         public void mouseClicked(MouseEvent e) {
             if (model.getStatus() == IFrontendModel.GameStatus.RUNNING) {
-
                 JButton clickedButton = (JButton) e.getSource();
                 if (!isClicked) {
                     if (model.getSelectedCards().size() < MAXIMUM_NUMBER_OF_SELECTED_CARDS) {
-
+                        System.out.println("Clicked Button");
+                        setBackground(Color.GRAY);
                         isClicked = true;
                         model.selectCard(getCard());
-
-                        clickedButton.setBackground(Color.BLACK);
-                        JOptionPane.showMessageDialog(null, "Card(" + getCard().getColour() +
-                                ", " + getCard().getShape() + ", " + getCard().getLineStyle() + ", " +
-                                getCard().getNumber() + ") has been selected!");
                     } else {
                         JOptionPane.showMessageDialog(null, "Please select less than three cards");
                     }
                 } else {
-
-                    clickedButton.setBackground(Color.WHITE);
+                    setBackground(Color.WHITE);
                     isClicked = false;
                     model.removeSelectedCard(getCard());
-
                 }
             }
 
