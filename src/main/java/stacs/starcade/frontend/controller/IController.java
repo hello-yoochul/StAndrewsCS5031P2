@@ -25,5 +25,15 @@ public interface IController {
      */
     void setPlayerId();
 
+    /**
+     * Validate the three cards if it is set.
+     *
+     * @param threeCards the three cards to be validated
+     */
     void validateCards(ICard[] threeCards);
+
+    /**
+     * End the round.
+     */
+    void endRound();
 }
