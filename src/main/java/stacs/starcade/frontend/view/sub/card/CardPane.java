@@ -51,7 +51,7 @@ public class CardPane extends JPanel {
         int cardsSize = cards.size();
         if (cardsSize != 0) {
             for (int i = 1; i < cardsSize; i++) {
-                CardImageButton cardImageButton = new CardImageButton(cards.get(i));
+                CardImageButton cardImageButton = new CardImageButton(/*cards.get(i)*/);
                 cardImageButtonList.add(cardImageButton);
                 add(cardImageButton);
             }

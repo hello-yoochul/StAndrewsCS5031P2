@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
  * Panel for Buttons controller.
  */
 public class ControlPane extends JPanel {
-    FrontendModel model;
-    Controller controller;
+    private FrontendModel model;
+    private Controller controller;
 
     private JButton startGameButton;
     private JButton checkSetButton;

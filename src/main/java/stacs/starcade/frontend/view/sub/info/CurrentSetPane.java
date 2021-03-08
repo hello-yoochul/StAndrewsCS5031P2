@@ -10,8 +10,8 @@ import javax.swing.*;
  */
 public class CurrentSetPane extends JPanel {
 
-    FrontendModel model;
-    Controller controller;
+    private FrontendModel model;
+    private Controller controller;
 
     public CurrentSetPane(FrontendModel model, Controller controller) {
         this.model = model;

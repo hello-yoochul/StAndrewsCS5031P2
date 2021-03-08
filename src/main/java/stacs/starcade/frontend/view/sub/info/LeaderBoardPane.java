@@ -9,8 +9,8 @@ import javax.swing.*;
  * Panel for the leader board.
  */
 public class LeaderBoardPane extends JPanel {
-    FrontendModel model;
-    Controller controller;
+    private FrontendModel model;
+    private Controller controller;
 
     public LeaderBoardPane(FrontendModel model, Controller controller) {
         this.model = model;

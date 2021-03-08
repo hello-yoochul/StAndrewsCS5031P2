@@ -1,5 +1,6 @@
 package stacs.starcade.frontend.view.sub.card;
 
+import stacs.starcade.shared.Card;
 import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
@@ -17,27 +18,23 @@ import static stacs.starcade.shared.ICard.*;
 // TODO: I am not sure it is needed, but we should figure out how we can store client choice to the Model.
 public class CardImageButton extends JButton {
     private ICard card;
-
     private String imagePathStr;
 
-    public CardImageButton(ICard card) {
-        this.card = card;
+    public CardImageButton() {
         this.addMouseListener(new MyMouseListener());
-
-        // TODO: Once client get the 12 cards from the server, the 12 of this will be created and
-        // TODO: will be add to the Model maybe.
-        card.getColour();
-        card.getNumber();
-        card.getShape();
-        card.getLineStyle();
     }
 
-    public ICard getValue() {
+    public String getImagePathStr() {
+        return imagePathStr;
+    }
+
+    public void setCard(ICard card) {
+        imagePathStr = card.getColour() + "-" + card.getNumber() + "-" + card.getShape() + "-" + card.getLineStyle() + ".png";
+        this.card = card;
+    }
+
+    public ICard getCard() {
         return this.card;
-    }
-
-    public void setValue(ICard value) {
-        this.card = value;
     }
 
     class MyMouseListener extends MouseAdapter {
