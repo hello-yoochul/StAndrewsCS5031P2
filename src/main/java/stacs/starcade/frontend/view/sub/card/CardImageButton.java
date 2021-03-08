@@ -7,9 +7,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static stacs.starcade.shared.ICard.*;
-
-
 /**
  * In card view panel, it will have 12 buttons.
  * Each button should be object so this class is needed.
@@ -17,29 +14,43 @@ import static stacs.starcade.shared.ICard.*;
 // TODO: I am not sure it is needed, but we should figure out how we can store client choice to the Model.
 public class CardImageButton extends JButton {
     private ICard card;
-
     private String imagePathStr;
 
-    public CardImageButton(ICard card) {
-        this.card = card;
+    /**
+     * Construct CardImageButton with addition of the mouse listener:
+     * if client click the card image button, the button colour will
+     * be changed to show their choice.
+     */
+    public CardImageButton() {
         this.addMouseListener(new MyMouseListener());
-
-        // TODO: Once client get the 12 cards from the server, the 12 of this will be created and
-        // TODO: will be add to the Model maybe.
-        card.getColour();
-        card.getNumber();
-        card.getShape();
-        card.getLineStyle();
     }
 
-    public ICard getValue() {
+    /**
+     * Get Image path string of the card.
+     */
+    public String getImagePathStr() {
+        return imagePathStr;
+    }
+
+    /**
+     * Set the card and Store the path of the corresponding card image.
+     */
+    public void setCard(ICard card) {
+        imagePathStr = card.getColour() + "-" + card.getNumber() + "-" + card.getShape() + "-" + card.getLineStyle() + ".png";
+        this.card = card;
+    }
+
+    /**
+     * Get the card in the button.
+     */
+    public ICard getCard() {
         return this.card;
     }
 
-    public void setValue(ICard value) {
-        this.card = value;
-    }
-
+    /**
+     * Inner class for Mouse Listener. If client click the card image button,
+     * the button colour will be changed to show their chocie.
+     */
     class MyMouseListener extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
             JButton clickedButton = (JButton) e.getSource();

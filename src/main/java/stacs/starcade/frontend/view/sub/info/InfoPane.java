@@ -10,11 +10,11 @@ import java.awt.*;
  * Panel for {@link CurrentSetPane} and {@link LeaderBoardPane}.
  */
 public class InfoPane extends JPanel {
-    FrontendModel model;
-    Controller controller;
+    private FrontendModel model;
+    private Controller controller;
 
-    CurrentSetPane currentSetPane;
-    LeaderBoardPane leaderBoardPane;
+    private CurrentSetPane currentSetPane;
+    private LeaderBoardPane leaderBoardPane;
 
     public InfoPane(FrontendModel model, Controller controller) {
         this.model = model;
