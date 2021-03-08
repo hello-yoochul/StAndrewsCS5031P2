@@ -85,7 +85,12 @@ public class ControlPane extends JPanel implements Observer {
             }
 
             if (evt == checkSetButton) {
-                controller.validateCards(model.getSelectedCards().toArray(new ICard[model.getSelectedCards().size()]));
+                try {
+                    controller.validateCards(model.getSelectedCards().toArray(new ICard[model.getSelectedCards().size()]));
+                } catch (IllegalArgumentException iae) {
+                    JOptionPane.showMessageDialog(null, "You had already selected this set!!",
+                            "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
+                }
             }
 
             if (evt == nextRoundButton) {
