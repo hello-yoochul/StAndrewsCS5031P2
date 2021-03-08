@@ -24,10 +24,10 @@ public class ControlPane extends JPanel implements Observer {
     private JButton nextRoundButton;
     private JButton endRoundButton;
 
-    public static final String START = "START";
+    public static final String START = "START GAME";
     public static final String CHECK_SET = "CHECK SET";
     public static final String NEXT_ROUND = "NEXT ROUND";
-    public static final String END_ROUND = "END ROUND";
+    public static final String END_GAME = "END GAME";
 
     public ControlPane(FrontendModel model,Controller controller) {
         this.model = model;
@@ -45,7 +45,7 @@ public class ControlPane extends JPanel implements Observer {
         startGameButton = new JButton(START);
         checkSetButton = new JButton(CHECK_SET);
         nextRoundButton = new JButton(NEXT_ROUND);
-        endRoundButton = new JButton(END_ROUND);
+        endRoundButton = new JButton(END_GAME);
     }
 
     private void generateButtonListener() {
@@ -58,9 +58,10 @@ public class ControlPane extends JPanel implements Observer {
 
     private void addButtons() {
         add(startGameButton);
+        add(endRoundButton);
+        add(Box.createRigidArea(new Dimension(10, 0)));
         add(checkSetButton);
         add(nextRoundButton);
-        add(endRoundButton);
     }
 
     @Override
