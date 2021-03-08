@@ -41,7 +41,7 @@ public class FrontendView extends JFrame implements Observer {
         setLocationRelativeTo(null);
 
         // when model changed, panels become updated.
-        ((Observable) model).addObserver(this);
+        ((Observable) this.model).addObserver(this);
         setUpComponents();
         setVisible(true);
 

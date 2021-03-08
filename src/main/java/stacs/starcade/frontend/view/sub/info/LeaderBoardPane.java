@@ -21,11 +21,11 @@ public class LeaderBoardPane extends JPanel implements Observer {
     public LeaderBoardPane(IFrontendModel model, IController controller) {
         this.model = model;
         this.controller = controller;
+        ((Observable) this.model).addObserver(this);
 
 //        this.setLayout(new BorderLayout());
 
         setTable();
-        ((Observable) model).addObserver(this);
 
         setBackground(Color.PINK);
     }

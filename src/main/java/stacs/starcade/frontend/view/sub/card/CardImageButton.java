@@ -7,13 +7,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Observable;
+import java.util.Observer;
 
 import static stacs.starcade.frontend.model.FrontendModel.MAXIMUM_NUMBER_OF_SELECTED_CARDS;
 
 /**
  * Needed to know which card object is clicked.
  */
-public class CardImageButton extends JButton {
+public class CardImageButton extends JButton implements Observer {
     /**
      * Image resource path.
      */
@@ -56,6 +58,9 @@ public class CardImageButton extends JButton {
      */
     public CardImageButton(IFrontendModel model) {
         this.model = model;
+
+        ((Observable) this.model).addObserver(this);
+
         this.addMouseListener(new MyMouseListener());
         toolkit = Toolkit.getDefaultToolkit();
 
@@ -76,9 +81,11 @@ public class CardImageButton extends JButton {
      * Set the card and Store the path of the corresponding card image.
      */
     public void setCard(ICard card) {
-        imagePathStr = "/" + card.getColour() + "-" + card.getNumber() + "-" + card.getShape() + "-" + card.getLineStyle() + ".png";
+        imagePathStr = "/" + card.getColour() + "-" + card.getNumber() + "-" + card.getShape() + "-" +
+                card.getLineStyle() + ".png";
         this.card = card;
-        Image cardImage = toolkit.getImage(BASIC_IMAGE_PATH + imagePathStr).getScaledInstance(IMAGE_WIDTH, IMAGE_HEIGHT, Image.SCALE_DEFAULT);
+        Image cardImage = toolkit.getImage(BASIC_IMAGE_PATH + imagePathStr)
+                .getScaledInstance(IMAGE_WIDTH, IMAGE_HEIGHT, Image.SCALE_DEFAULT);
         setIcon(new ImageIcon(cardImage));
     }
 
@@ -87,6 +94,24 @@ public class CardImageButton extends JButton {
      */
     public ICard getCard() {
         return this.card;
+    }
+
+    /**
+     * This method is called whenever the observed object is changed. An
+     * application calls an {@code Observable} object's
+     * {@code notifyObservers} method to have all the object's
+     * observers notified of the change.
+     *
+     * @param o   the observable object.
+     * @param arg an argument passed to the {@code notifyObservers}
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        // If the card associated with this button is not in selected list
+        // the background color has to be set to white
+        if (!model.getSelectedCards().contains(getCard())) {
+            setBackground(Color.WHITE);
+        }
     }
 
     /**
@@ -99,7 +124,6 @@ public class CardImageButton extends JButton {
                 JButton clickedButton = (JButton) e.getSource();
                 if (!isClicked) {
                     if (model.getSelectedCards().size() < MAXIMUM_NUMBER_OF_SELECTED_CARDS) {
-                        System.out.println("Clicked Button");
                         setBackground(Color.GRAY);
                         isClicked = true;
                         model.selectCard(getCard());

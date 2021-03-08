@@ -35,7 +35,9 @@ public class CardPane extends JPanel implements Observer {
     public CardPane(IFrontendModel model, IController controller) {
         this.controller = controller;
         this.model = model;
-        ((Observable) model).addObserver(this);
+
+        ((Observable) this.model).addObserver(this);
+
         toolkit = Toolkit.getDefaultToolkit(); // to get image from resource folder
         cardImageButtons = new ArrayList<>();
 

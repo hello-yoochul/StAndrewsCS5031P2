@@ -24,7 +24,8 @@ public class InfoPane extends JPanel implements Observer {
     public InfoPane(IFrontendModel model, IController controller) {
         this.model = model;
         this.controller = controller;
-        ((Observable) model).addObserver(this);
+
+        ((Observable) this.model).addObserver(this);
 
         setLayout(new GridLayout(3, 1));
 
