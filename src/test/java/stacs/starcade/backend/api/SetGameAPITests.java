@@ -57,7 +57,7 @@ public class SetGameAPITests {
         client.get().uri("/startGame")
                 .exchange();
 
-        client.get().uri("/getCards/1")
+        client.get().uri("/get/1")
                 .exchange()
                 .expectStatus().isOk().expectBodyList(Card.class);
     }
