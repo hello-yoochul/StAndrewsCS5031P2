@@ -18,7 +18,6 @@ import java.util.List;
  * Tests for the {@link SetGameAPI} class.
  */
 
-@AutoConfigureWebTestClient(timeout = "10000")
 @SpringBootTest
 public class SetGameAPITests {
 
@@ -30,50 +29,36 @@ public class SetGameAPITests {
     }
 
     @Test
-    void createGame() {
+    void registerPlayer() {
         // success
-        client.get().uri("/startGame")
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody().json("1");
+        client.post().uri("/registerPlayer")
+          .accept(MediaType.APPLICATION_JSON)
+          .exchange()
+          .expectStatus().isOk()
+          .expectBody().json("1");
     }
 
     @Test
     void mustReturnNotFoundForNonExistingGame() {
-        client.get().uri("/game/1000")
-                .exchange()
-                .expectStatus().isNotFound();
+        client.post().uri("/game/1000")
+          .exchange()
+          .expectStatus().isNotFound();
     }
 
     @Test
     void mustGetLeaderBoard() {
         client.get().uri("/getLeaderboard")
-                .exchange().expectStatus().isOk().expectBody(LeaderBoard.class);
+          .exchange().expectStatus().isOk().expectBodyList(LeaderBoard.class);
     }
 
     @Test
     void mustReturnCards() {
-        client.get().uri("/startGame")
-                .exchange();
+        client.post().uri("/registerPlayer/John").accept(MediaType.APPLICATION_JSON)
+          .exchange();
 
-        client.get().uri("/get/1")
-                .exchange()
-                .expectStatus().isOk().expectBodyList(Card.class);
-    }
-
-    @Test
-    void gettingNonExistentGame() {
-        client.get().uri("/getCards/1")
+        client.post().uri("/nextRound/1").accept(MediaType.APPLICATION_JSON)
           .exchange()
-          .expectStatus().isBadRequest();
+          .expectStatus().isOk().expectBodyList(Card.class);
     }
 
-    @Test
-    void getNewPlayer() {
-        client.get().uri("/startGame")
-          .exchange()
-          .expectBody().json("1");
-
-    }
 }

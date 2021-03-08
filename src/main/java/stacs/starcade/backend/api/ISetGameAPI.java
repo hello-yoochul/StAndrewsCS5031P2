@@ -36,7 +36,7 @@ public interface ISetGameAPI {
      *
      * @param playerID the unique player ID
      */
-    void endRound(@PathVariable int playerID);
+    void endRound(@PathVariable int playerID, @PathVariable ArrayList<ArrayList<ICard>> sets);
 
     /**
      * Removes player from leaderboard.
