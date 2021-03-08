@@ -7,8 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Observable;
-import java.util.Observer;
+
+import static javax.swing.SwingUtilities.getRoot;
+import static stacs.starcade.frontend.model.FrontendModel.MAXIMUM_NUMBER_OF_SELECTED_CARDS;
 
 /**
  * Needed to know which card object is clicked.
@@ -45,12 +46,15 @@ public class CardImageButton extends JButton {
      */
     private Toolkit toolkit;
 
+    private FrontendModel model;
+
     /**
      * Construct CardImageButton with addition of the mouse listener:
      * if client clicks the card image button, the button colour will
      * be changed to show their choice.
      */
-    public CardImageButton() {
+    public CardImageButton(FrontendModel model) {
+        this.model = model;
         this.addMouseListener(new MyMouseListener());
         toolkit = Toolkit.getDefaultToolkit();
         setBackground(Color.WHITE);
@@ -88,11 +92,17 @@ public class CardImageButton extends JButton {
         public void mouseClicked(MouseEvent e) {
             JButton clickedButton = (JButton) e.getSource();
             if (!isClicked) {
-                clickedButton.setBackground(Color.BLACK);
-                isClicked = true;
+                if (model.getSelectedCards().size() < MAXIMUM_NUMBER_OF_SELECTED_CARDS) {
+                    clickedButton.setBackground(Color.BLACK);
+                    isClicked = true;
+                    model.selectCard(getCard());
+                } else {
+                    JOptionPane.showMessageDialog(getRoot(clickedButton), "Please select less than three cards");
+                }
             } else {
                 clickedButton.setBackground(Color.WHITE);
                 isClicked = false;
+                model.removeSelectedCard(getCard());
             }
         }
     }

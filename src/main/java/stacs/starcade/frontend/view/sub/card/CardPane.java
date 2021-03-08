@@ -31,8 +31,6 @@ public class CardPane extends JPanel implements Observer {
 
     private ArrayList<CardImageButton> cardImageButtons;
 
-
-
     public CardPane(FrontendModel model, Controller controller) {
         this.controller = controller;
         this.model = model;
@@ -41,66 +39,12 @@ public class CardPane extends JPanel implements Observer {
         cardImageButtons = new ArrayList<>();
 
         for (int i = 0; i < 12; i++) {
-            cardImageButtons.add(new CardImageButton());
+            cardImageButtons.add(new CardImageButton(this.model));
             add(cardImageButtons.get(i));
         }
 
         this.setLayout(new GridLayout(3, 4));
     }
-
-    // TEST for 12 cards view
-    public static void main(String[] args) {
-        ControlPane controlPanel;
-        CardPane testCardPane;
-        InfoPane infoPanel;
-        FrontendModel testModel = new FrontendModel();
-        Controller testController = new Controller(testModel);
-
-        JFrame frame = new JFrame();
-        // obtained from https://stackoverflow.com/questions/33576358/how-to-use-java-swing-layout-manager-to-make-this-gui
-        frame.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1;
-        gbc.weighty = 0.05;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(4, 4, 4, 4);
-
-        frame.add((controlPanel = new ControlPane(testModel, testController)), gbc);
-        gbc.weighty = 1;
-        gbc.gridy++;
-        frame.add((testCardPane = new CardPane(testModel, testController)), gbc);
-
-        gbc.gridy = 0;
-        gbc.gridx++;
-        gbc.gridheight = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        gbc.weighty = 1;
-        gbc.weightx = 0.5;
-        frame.add((infoPanel = new InfoPane(testModel, testController)), gbc);
-
-        ArrayList<ICard> twelveCards = new ArrayList<>();
-
-        for (int i = 0; i < 12; i++) {
-            ICard card = new Card();
-            card.setLineStyle(ICard.LineStyle.DOTTED);
-            card.setColour(ICard.Colour.RED);
-            card.setShape(ICard.Shape.TRIANGLE);
-            card.setNumber(ICard.Number.ONE);
-            twelveCards.add(card);
-        }
-
-        testModel.setUpCard(twelveCards);
-
-        frame.setSize(1400, 700);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        testCardPane.repaint();
-    }
-
 
     /**
      * Get all the 12 cards from frontend Model and draw it on the Card Panel:
@@ -112,7 +56,6 @@ public class CardPane extends JPanel implements Observer {
         int cardsSize = cards.size();
         if (cardsSize != 0) {
             for (int i = 0; i < cardsSize; i++) {
-                System.out.println("cardsSize: " + cardsSize);
                 cardImageButtons.get(i).setCard(cards.get(i));
             }
         }

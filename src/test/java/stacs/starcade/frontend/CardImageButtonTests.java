@@ -16,10 +16,11 @@ import static stacs.starcade.shared.ICard.Number;
 
 public class CardImageButtonTests {
     private CardImageButton cardImageButton;
+    private FrontendModel model;
 
     @BeforeEach
     void setup() {
-        cardImageButton = new CardImageButton();
+        cardImageButton = new CardImageButton(model);
     }
 
     @Test

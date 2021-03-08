@@ -9,7 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Panel for Set cards chosen by the player.
+ * Panel for Set cards selected by the player.
  */
 public class CurrentSetPane extends JPanel implements Observer {
 
