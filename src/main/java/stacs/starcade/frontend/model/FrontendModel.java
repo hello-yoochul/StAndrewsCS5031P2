@@ -5,7 +5,9 @@ import stacs.starcade.backend.impl.ILeaderBoard;
 import stacs.starcade.backend.impl.LeaderBoard;
 import stacs.starcade.frontend.view.main.FrontendView;
 import stacs.starcade.shared.ICard;
+import stacs.starcade.shared.Timer;
 
+import java.time.Duration;
 import java.util.*;
 
 /**
@@ -16,13 +18,14 @@ import java.util.*;
 public class FrontendModel extends Observable implements IFrontendModel {
     public final static int MAXIMUM_NUMBER_OF_SELECTED_CARDS = 3;
 
-    private IFrontendModel.GameStatus status;
+    private GameStatus status;
     private List<ICard> cardsOnBoard;
     private List<ICard> selectedCards;
     private int playerId;
     private ArrayList<ICard[]> setsLog;
     private ILeaderBoard leaderBoard;
     private String playerName;
+    private Timer timer;
 
     /**
      * Construct FrontendModel.
@@ -32,6 +35,17 @@ public class FrontendModel extends Observable implements IFrontendModel {
         selectedCards = new ArrayList<>();
         setsLog = new ArrayList<>();
         leaderBoard = new LeaderBoard();
+        timer = new Timer();
+        status = GameStatus.PAUSED;
+    }
+
+    public void startTimer() {
+        timer.start();
+        update();
+    }
+
+    public Duration getTime() {
+        return timer.getTime();
     }
 
     /**
@@ -71,6 +85,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     @Override
     public void setUpCard(List<ICard> cards) {
         this.cardsOnBoard = cards;
+        startTimer();
         update();
     }
 
@@ -90,7 +105,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
      * @param status one of the {@link GameStatus}
      */
     @Override
-    public void setGameStatus(IFrontendModel.GameStatus status) {
+    public void setGameStatus(GameStatus status) {
         this.status = status;
     }
 

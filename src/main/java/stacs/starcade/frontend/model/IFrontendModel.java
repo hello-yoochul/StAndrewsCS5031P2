@@ -23,6 +23,9 @@ public interface IFrontendModel {
      */
     void update();
 
+
+    void startTimer();
+
     /**
      * Set the leader board.
      *
