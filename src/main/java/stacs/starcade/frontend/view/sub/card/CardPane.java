@@ -44,6 +44,18 @@ public class CardPane extends JPanel implements Observer {
         }
 
         this.setLayout(new GridLayout(3, 4));
+
+        setCardsOnButtons();
+    }
+
+    private void setCardsOnButtons() {
+        List<ICard> cards = model.getCards();
+        if (cards.size() != 0) {
+            for (int i = 0; i < cards.size(); i++) {
+                System.out.println("setCards");
+                cardImageButtons.get(i).setCard(cards.get(i));
+            }
+        }
     }
 
     /**
@@ -53,14 +65,7 @@ public class CardPane extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         System.out.println("REPAINT CARD PANE");
-        List<ICard> cards = model.getCards();
-        int cardsSize = cards.size();
-        if (cardsSize != 0) {
-            for (int i = 0; i < cardsSize; i++) {
-                System.out.println("setCards");
-                cardImageButtons.get(i).setCard(cards.get(i));
-            }
-        }
+        setCardsOnButtons();
         repaint();
     }
 }

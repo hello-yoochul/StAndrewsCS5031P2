@@ -30,16 +30,6 @@ public class TimerPane extends JPanel implements Observer {
     }
 
     /**
-     * Once the game start, the timer thread will be started.
-     */
-    @Override
-    public void update(Observable o, Object arg) {
-        if (model.getStatus() == GameStatus.RUNNING) {
-            new Thread(timerRunner).start();
-        }
-    }
-
-    /**
      * Format changer for Duration.
      */
     // obtained from https://stackoverflow.com/questions/266825/how-to-format-a-duration-in-java-e-g-format-hmmss
@@ -58,6 +48,7 @@ public class TimerPane extends JPanel implements Observer {
      * Inner class for timer running in another Thread.
      */
     class TimerRunner extends JPanel implements Runnable {
+
         @Override
         public void run() {
             do {
@@ -69,6 +60,16 @@ public class TimerPane extends JPanel implements Observer {
                 timerLabel.setText(formatDuration(model.getTime()));
                 System.out.println("keeeppp");
             } while (true);
+        }
+    }
+
+    /**
+     * Once the game start, the timer thread will be started.
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        if (model.getStatus() == GameStatus.RUNNING) {
+            new Thread(timerRunner).start();
         }
     }
 }

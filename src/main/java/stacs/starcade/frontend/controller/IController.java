@@ -21,11 +21,6 @@ public interface IController {
     void selectCard(ICard card);
 
     /**
-     * Set the current unique player id.
-     */
-    void setPlayerId();
-
-    /**
      * Validate the three cards if it is set.
      *
      * @param threeCards the three cards to be validated
@@ -36,4 +31,9 @@ public interface IController {
      * End the round.
      */
     void endRound();
+
+    /**
+     * Trigger disconnecting client from server.
+     */
+    void disconnect();
 }

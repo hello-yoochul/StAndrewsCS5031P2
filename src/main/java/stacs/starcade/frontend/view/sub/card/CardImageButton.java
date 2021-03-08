@@ -101,6 +101,9 @@ public class CardImageButton extends JButton {
                         clickedButton.setBackground(Color.BLACK);
                         isClicked = true;
                         model.selectCard(getCard());
+                        JOptionPane.showMessageDialog(null, "Card(" + getCard().getColour() +
+                                ", " + getCard().getShape() + ", " + getCard().getLineStyle() + ", " +
+                                getCard().getNumber() + ") has been selected!");
                     } else {
                         JOptionPane.showMessageDialog(null, "Please select less than three cards");
                     }
