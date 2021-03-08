@@ -1,10 +1,7 @@
 package stacs.starcade.shared;
 
-import stacs.starcade.backend.impl.IPlayer;
-
 public class Card implements ICard {
 
-    private IPlayer owner;
     private Colour colour;
     private Shape shape;
     private LineStyle lineStyle;

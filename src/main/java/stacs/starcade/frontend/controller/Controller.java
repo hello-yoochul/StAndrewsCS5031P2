@@ -10,17 +10,14 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
-import static javax.swing.SwingUtilities.getRoot;
 import static stacs.starcade.frontend.model.IFrontendModel.*;
 
 
@@ -50,7 +47,11 @@ public class Controller implements IController {
         register();
     }
 
-    private void register() {
+    /**
+     * Registers the client with the server and gets a unique player id.
+     */
+    @Override
+    public void register() {
         HttpGet postRequest = new HttpGet(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
@@ -65,6 +66,7 @@ public class Controller implements IController {
             } else {
                 System.out.println("response is error : " + response.getStatusLine().getStatusCode());
             }
+            getLeaderBoard();
         } catch (IOException e) {
             throw new RuntimeException("error", e);
         }
@@ -119,11 +121,6 @@ public class Controller implements IController {
         }
     }
 
-    public static void main(String[] args) {
-        Controller controller = new Controller(new FrontendModel());
-        controller.setUpCards();
-    }
-
     /**
      * Set up the 12 cards.
      */
@@ -170,16 +167,6 @@ public class Controller implements IController {
 
         model.setUpCard(cards);
         model.setGameStatus(GameStatus.RUNNING);
-    }
-
-    /**
-     * Select a card. Player will invoke this method 3 times to choose three cards.
-     *
-     * @param card a card to check if selected cards are set
-     */
-    @Override
-    public void selectCard(ICard card) {
-        model.selectCard(card);
     }
 
     /**
@@ -273,7 +260,6 @@ public class Controller implements IController {
         if (model.getStatus() != GameStatus.RUNNING) {
             model.setGameStatus(GameStatus.RUNNING);
 
-            // TODO: remove the "anyname" and get the input of client name
             HttpPost postRequest = new HttpPost(basicServerAddress + endRoundParam + "/" + model.getPlayerId());
             postRequest.setHeader("Accept", "application/json");
             postRequest.setHeader("Connection", "keep-alive");

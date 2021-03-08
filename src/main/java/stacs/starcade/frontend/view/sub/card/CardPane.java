@@ -1,6 +1,7 @@
 package stacs.starcade.frontend.view.sub.card;
 
 import stacs.starcade.frontend.controller.Controller;
+import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.frontend.view.sub.control.ControlPane;
@@ -24,14 +25,14 @@ import static stacs.starcade.frontend.model.IFrontendModel.*;
  * The panel for 12 cards.
  */
 public class CardPane extends JPanel implements Observer {
-    private final Controller controller;
-    private final FrontendModel model;
+    private final IController controller;
+    private final IFrontendModel model;
 
     private Toolkit toolkit;
 
     private ArrayList<CardImageButton> cardImageButtons;
 
-    public CardPane(FrontendModel model, Controller controller) {
+    public CardPane(IFrontendModel model, IController controller) {
         this.controller = controller;
         this.model = model;
         ((Observable) model).addObserver(this);

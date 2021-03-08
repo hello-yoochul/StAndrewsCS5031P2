@@ -1,7 +1,5 @@
 package stacs.starcade.frontend.view.sub.card;
 
-import javax.swing.border.Border;
-import javax.swing.event.ChangeListener;
 import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.ICard;
@@ -51,26 +49,25 @@ public class CardImageButton extends JButton {
     /**
      * Needed to send message to Model to remove or add the selected card image button.
      */
-    private FrontendModel model;
+    private IFrontendModel model;
 
     /**
      * Construct CardImageButton with addition of the mouse listener:
      * if client clicks the card image button, the button colour will
      * be changed to show their choice.
      */
-    public CardImageButton(FrontendModel model) {
+    public CardImageButton(IFrontendModel model) {
         this.model = model;
         this.addMouseListener(new MyMouseListener());
         toolkit = Toolkit.getDefaultToolkit();
         setBackground(Color.WHITE);
-        setContentAreaFilled(false);
     }
 
     /**
      * Get Image path string of the card.
      */
     public String getImagePathStr() {
-        return imagePathStr;
+        return this.imagePathStr;
     }
 
     /**
@@ -92,12 +89,12 @@ public class CardImageButton extends JButton {
 
     /**
      * Inner class for Mouse Listener. If client click the card image button,
-     * the button colour will be changed to show their choice.
+     * the button colour will be changed to show their chocie.
      */
-
     class MyMouseListener extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
             if (model.getStatus() == IFrontendModel.GameStatus.RUNNING) {
+                JButton clickedButton = (JButton) e.getSource();
                 if (!isClicked) {
                     if (model.getSelectedCards().size() < MAXIMUM_NUMBER_OF_SELECTED_CARDS) {
                         System.out.println("Clicked Button");
@@ -115,6 +112,7 @@ public class CardImageButton extends JButton {
                     setBackground(Color.WHITE);
                     isClicked = false;
                     model.removeSelectedCard(getCard());
+
                 }
             }
 
