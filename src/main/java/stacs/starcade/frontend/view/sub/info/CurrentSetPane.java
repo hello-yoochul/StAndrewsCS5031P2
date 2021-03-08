@@ -4,6 +4,7 @@ import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.model.FrontendModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -19,6 +20,8 @@ public class CurrentSetPane extends JPanel implements Observer {
         this.model = model;
         this.controller = controller;
         ((Observable) model).addObserver(this);
+
+        setBackground(Color.BLACK);
     }
 
     @Override

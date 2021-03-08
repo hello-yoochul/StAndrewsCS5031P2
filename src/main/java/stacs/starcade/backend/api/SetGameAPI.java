@@ -45,7 +45,7 @@ public class SetGameAPI implements ISetGameAPI {
 //        model.getPlayer(playerID).startRound(twelveCards);
         ArrayList<ICard> twelveCards = new ArrayList<>();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 11; i++) {
             ICard card = new Card();
             card.setLineStyle(ICard.LineStyle.DOTTED);
             card.setColour(ICard.Colour.RED);
@@ -53,6 +53,14 @@ public class SetGameAPI implements ISetGameAPI {
             card.setNumber(ICard.Number.ONE);
             twelveCards.add(card);
         }
+
+        ICard card = new Card();
+        card.setLineStyle(ICard.LineStyle.DOTTED);
+        card.setColour(ICard.Colour.BLUE);
+        card.setShape(ICard.Shape.CIRCLE);
+        card.setNumber(ICard.Number.TWO);
+        twelveCards.add(card);
+
         return twelveCards;
     }
 

@@ -29,17 +29,22 @@ public class CardPane extends JPanel implements Observer {
 
     private Toolkit toolkit;
 
-    private ArrayList<CardImageButton> cardImageButtonList;
-
     private ArrayList<CardImageButton> cardImageButtons;
+
+
 
     public CardPane(FrontendModel model, Controller controller) {
         this.controller = controller;
         this.model = model;
         ((Observable) model).addObserver(this);
         toolkit = Toolkit.getDefaultToolkit(); // to get image from resource folder
-        cardImageButtonList = new ArrayList<>();
         cardImageButtons = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            cardImageButtons.add(new CardImageButton());
+            add(cardImageButtons.get(i));
+        }
+
         this.setLayout(new GridLayout(3, 4));
     }
 
@@ -96,6 +101,7 @@ public class CardPane extends JPanel implements Observer {
         testCardPane.repaint();
     }
 
+
     /**
      * Get all the 12 cards from frontend Model and draw it on the Card Panel:
      * when model has a change, it will be invoked to redraw.
@@ -106,10 +112,8 @@ public class CardPane extends JPanel implements Observer {
         int cardsSize = cards.size();
         if (cardsSize != 0) {
             for (int i = 0; i < cardsSize; i++) {
-                CardImageButton cardImageButton = new CardImageButton(this.model);
-                cardImageButton.setCard(cards.get(i));
-                cardImageButtonList.add(cardImageButton);
-                add(cardImageButton);
+                System.out.println("cardsSize: " + cardsSize);
+                cardImageButtons.get(i).setCard(cards.get(i));
             }
         }
     }

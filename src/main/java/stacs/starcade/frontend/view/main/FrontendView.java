@@ -81,12 +81,7 @@ public class FrontendView extends JFrame implements Observer {
      * @param arg1 an argument passed to the {@code notifyObservers} method.
      */
     public void update(Observable arg0, Object arg1) {
-        SwingUtilities.invokeLater(
-                new Runnable() {
-                    public void run() {
-                        repaint();
-                    }
-                });
+        repaint();
     }
 }
 
