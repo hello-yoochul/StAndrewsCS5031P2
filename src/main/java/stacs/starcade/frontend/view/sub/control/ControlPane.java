@@ -2,6 +2,7 @@ package stacs.starcade.frontend.view.sub.control;
 
 import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -78,7 +79,7 @@ public class ControlPane extends JPanel implements Observer {
             }
 
             if (evt == checkSetButton) {
-//                controller.validateCards();
+                controller.validateCards(model.getSelectedCards().toArray(new ICard[model.getSelectedCards().size()]));
             }
 
             if (evt == endGameButton) {

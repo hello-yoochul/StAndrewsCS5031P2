@@ -16,9 +16,11 @@ import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
+import static javax.swing.SwingUtilities.getRoot;
 import static stacs.starcade.frontend.model.IFrontendModel.*;
 
 
@@ -63,8 +65,8 @@ public class Controller implements IController {
         if (model.getStatus() != GameStatus.RUNNING) {
             model.setGameStatus(GameStatus.RUNNING);
 
-            // get the unique player id from the server and store it to Model variable
-            postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/YOOCHUL");
+            // TODO: remove the "anyname" and get the input of client name
+            postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/anyname");
             postRequest.setHeader("Accept", "application/json");
             postRequest.setHeader("Connection", "keep-alive");
             postRequest.setHeader("Content-Type", "application/json");
@@ -97,7 +99,7 @@ public class Controller implements IController {
     public void setUpCards() {
         List<ICard> cards = new ArrayList<>();
 
-        postRequest = new HttpPost(basicServerAddress + nextRoundParam +"/1");
+        postRequest = new HttpPost(basicServerAddress + nextRoundParam + "/"+ model.getPlayerId());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
@@ -196,11 +198,15 @@ public class Controller implements IController {
             throw new IllegalArgumentException("Selected set has already been logged.");
         }
 
+        (new JLabel("Set!!")).setHorizontalAlignment(SwingConstants.CENTER);
+
         if (Checks.isSet(threeCards)) {
+            JOptionPane.showMessageDialog(null, "Set!!","VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
             // Check whether owner (player) of card objects has already logged this set of cards
             model.setSetsLog(threeCards); // Trigger model to log valid set of cards
         } else {
-            // Trigger Error Message that three given cards do not make a set
+            JOptionPane.showMessageDialog(null, "No Set...", "VALIDATION RESULT", JOptionPane.ERROR_MESSAGE);
+            // TODO: remove the selected cards
         }
     }
 

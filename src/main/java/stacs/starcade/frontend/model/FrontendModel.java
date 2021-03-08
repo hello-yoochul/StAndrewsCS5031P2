@@ -159,6 +159,9 @@ public class FrontendModel extends Observable implements IFrontendModel {
     @Override
     public void setSetsLog(ICard[] threeCards) {
         setsLog.add(threeCards);
+        for (ICard card : threeCards) {
+            selectedCards.remove(card);
+        }
     }
 
     /**
