@@ -60,9 +60,7 @@ public class Player implements IPlayer {
      *
      * @param currentTime is the previously recorded time
      */
-    private void setTotalTime(Duration currentTime) {
-        this.totalTime.plus(currentTime);
-    }
+    private void setTotalTime(Duration currentTime) { this.totalTime = totalTime.plus(currentTime); }
 
     /**
      * Gets duration player has needed for previously played rounds on avergade.
@@ -88,10 +86,6 @@ public class Player implements IPlayer {
      */
     @Override
     public void startRound(ArrayList<ICard> twelveCards) {
-
-        // Increment round
-        // Set cards for this round
-        // start Timer
         this.round++;
         this.twelveCards = twelveCards;
         this.timer.start();
@@ -103,8 +97,8 @@ public class Player implements IPlayer {
     @Override
     public void endRound() {
         setTotalTime(timer.getTime());
-        timer.reset();
         setAvgTime();
+        timer.reset();
 
         // TODO: Notify leaderboard to update list
     }

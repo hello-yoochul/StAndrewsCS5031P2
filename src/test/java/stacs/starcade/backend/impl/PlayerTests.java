@@ -2,6 +2,8 @@ package stacs.starcade.backend.impl;
 
 import java.time.Duration;
 import java.util.ArrayList;
+
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import stacs.starcade.shared.ICard;
@@ -49,11 +51,15 @@ public class PlayerTests {
 
     @Test
     void testEndingARound() {
-        Duration avgTime1 = player.getAvgTime();
-        player.startRound(mockCardList);
+        Duration avgTime1 = player.getAvgTime(); // Get average time before starting round (this should be 0)
+        player.startRound(mockCardList);// Start round
+
+        // End round
+        // This should set average time for round that just ended.
         player.endRound();
-        Duration avgTime2 = player.getAvgTime();
-        assertTrue(avgTime1 < avgTime2);
+        Duration avgTime2 = player.getAvgTime(); // Get updated average time
+
+        assertTrue(avgTime1.compareTo(avgTime2) < 0);
     }
 
 }
