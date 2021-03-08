@@ -25,7 +25,7 @@ public class ControlPane extends JPanel implements Observer {
     private JButton nextRoundButton;
     private JButton endGameButton;
 
-    public static final String START = "START";
+    public static final String START = "START GAME";
     public static final String CHECK_SET = "CHECK SET";
     public static final String NEXT_ROUND = "NEXT ROUND";
     public static final String END_GAME = "END GAME";
@@ -59,6 +59,7 @@ public class ControlPane extends JPanel implements Observer {
 
     private void addButtons() {
         add(startGameButton);
+        add(Box.createRigidArea(new Dimension(10, 0)));
         add(checkSetButton);
         add(nextRoundButton);
         add(endGameButton);
