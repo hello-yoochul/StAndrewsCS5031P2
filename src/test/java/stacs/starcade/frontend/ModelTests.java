@@ -19,8 +19,8 @@ import static org.mockito.Mockito.*;
 import static stacs.starcade.frontend.model.IFrontendModel.*;
 
 public class ModelTests {
-    FrontendModel model;
-    Random random = new Random();
+    private FrontendModel model;
+    private Random random = new Random();
 
     @BeforeEach
     void setup() {
