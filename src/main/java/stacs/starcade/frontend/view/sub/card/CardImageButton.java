@@ -1,6 +1,5 @@
 package stacs.starcade.frontend.view.sub.card;
 
-import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.ICard;
 
@@ -9,7 +8,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static javax.swing.SwingUtilities.getRoot;
 import static stacs.starcade.frontend.model.FrontendModel.MAXIMUM_NUMBER_OF_SELECTED_CARDS;
 
 /**
@@ -60,6 +58,10 @@ public class CardImageButton extends JButton {
         this.model = model;
         this.addMouseListener(new MyMouseListener());
         toolkit = Toolkit.getDefaultToolkit();
+
+        setContentAreaFilled(false);
+        setOpaque(true);
+        setBorderPainted(false);
         setBackground(Color.WHITE);
     }
 
@@ -98,10 +100,6 @@ public class CardImageButton extends JButton {
                 if (!isClicked) {
                     if (model.getSelectedCards().size() < MAXIMUM_NUMBER_OF_SELECTED_CARDS) {
                         System.out.println("Clicked Button");
-                        setBorderPainted(false);
-                        setFocusPainted(false);
-                        setContentAreaFilled(false);
-                        setOpaque(true);
                         setBackground(Color.GRAY);
                         isClicked = true;
                         model.selectCard(getCard());
@@ -112,7 +110,6 @@ public class CardImageButton extends JButton {
                     setBackground(Color.WHITE);
                     isClicked = false;
                     model.removeSelectedCard(getCard());
-
                 }
             }
 
