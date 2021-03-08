@@ -21,11 +21,13 @@ public class ControlPane extends JPanel implements Observer {
 
     private JButton startGameButton;
     private JButton checkSetButton;
-    private JButton endGameButton;
+    private JButton nextRoundButton;
+    private JButton endRoundButton;
 
     public static final String START = "START";
     public static final String CHECK_SET = "CHECK SET";
-    public static final String END_GAME = "END";
+    public static final String NEXT_ROUND = "NEXT ROUND";
+    public static final String END_ROUND = "END ROUND";
 
     public ControlPane(FrontendModel model,Controller controller) {
         this.model = model;
@@ -42,20 +44,23 @@ public class ControlPane extends JPanel implements Observer {
     private void generateButtons() {
         startGameButton = new JButton(START);
         checkSetButton = new JButton(CHECK_SET);
-        endGameButton = new JButton(END_GAME);
+        nextRoundButton = new JButton(NEXT_ROUND);
+        endRoundButton = new JButton(END_ROUND);
     }
 
     private void generateButtonListener() {
         ActionListener al = new MyButtonListener();
         startGameButton.addActionListener(al);
         checkSetButton.addActionListener(al);
-        endGameButton.addActionListener(al);
+        nextRoundButton.addActionListener(al);
+        endRoundButton.addActionListener(al);
     }
 
     private void addButtons() {
         add(startGameButton);
         add(checkSetButton);
-        add(endGameButton);
+        add(nextRoundButton);
+        add(endRoundButton);
     }
 
     @Override
@@ -82,8 +87,12 @@ public class ControlPane extends JPanel implements Observer {
                 controller.validateCards(model.getSelectedCards().toArray(new ICard[model.getSelectedCards().size()]));
             }
 
-            if (evt == endGameButton) {
-//                controller.validateCards();
+            if (evt == nextRoundButton) {
+//                controller.endRound();
+            }
+
+            if (evt == endRoundButton) {
+                controller.endRound();
             }
         }
     }

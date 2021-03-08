@@ -38,6 +38,7 @@ public class Controller implements IController {
     final static String basicServerAddress = "http://localhost:8080/";
     final static String registerPlayerParam = "/registerPlayer";
     final static String nextRoundParam = "/nextRound";
+    final static String endRoundParam = "/endRound";
     final static String getLeaderboardParam = "/getLeaderboard";
 
     /**
@@ -99,7 +100,7 @@ public class Controller implements IController {
     public void setUpCards() {
         List<ICard> cards = new ArrayList<>();
 
-        postRequest = new HttpPost(basicServerAddress + nextRoundParam + "/"+ model.getPlayerId());
+        postRequest = new HttpPost(basicServerAddress + nextRoundParam + "/" + model.getPlayerId());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
@@ -187,6 +188,11 @@ public class Controller implements IController {
         // TODO: Get player ID from Server and store it the Model, FrontendModel
     }
 
+    /**
+     * Validate the three cards if it is set.
+     *
+     * @param threeCards the three cards to be validated
+     */
     @Override
     public void validateCards(ICard[] threeCards) throws IllegalArgumentException {
         int logSize = model.getSetsLog().size(); // Get size of current setsLog
@@ -201,7 +207,7 @@ public class Controller implements IController {
         (new JLabel("Set!!")).setHorizontalAlignment(SwingConstants.CENTER);
 
         if (Checks.isSet(threeCards)) {
-            JOptionPane.showMessageDialog(null, "Set!!","VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Set!!", "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
             // Check whether owner (player) of card objects has already logged this set of cards
             model.setSetsLog(threeCards); // Trigger model to log valid set of cards
         } else {
@@ -257,6 +263,33 @@ public class Controller implements IController {
             setsEqual = true;
         }
         return setsEqual;
+    }
+
+    /**
+     * End the round.
+     */
+    @Override
+    public void endRound() {
+        if (model.getStatus() != GameStatus.RUNNING) {
+            model.setGameStatus(GameStatus.RUNNING);
+
+            // TODO: remove the "anyname" and get the input of client name
+            postRequest = new HttpPost(basicServerAddress + endRoundParam + "/" + model.getPlayerId());
+            postRequest.setHeader("Accept", "application/json");
+            postRequest.setHeader("Connection", "keep-alive");
+            postRequest.setHeader("Content-Type", "application/json");
+
+            try {
+                response = client.execute(postRequest);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    //
+                } else {
+                    System.out.println("response is error : " + response.getStatusLine().getStatusCode());
+                }
+            } catch (IOException e) {
+                throw new RuntimeException("error", e);
+            }
+        }
     }
 }
 
