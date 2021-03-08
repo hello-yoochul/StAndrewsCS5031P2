@@ -19,6 +19,9 @@ public class LeaderBoardPane extends JPanel implements Observer {
     public LeaderBoardPane(FrontendModel model, Controller controller) {
         this.model = model;
         this.controller = controller;
+
+        this.setLayout(new BorderLayout());
+
         setTable();
         ((Observable) model).addObserver(this);
 
@@ -32,9 +35,13 @@ public class LeaderBoardPane extends JPanel implements Observer {
         String[][] data = model.getLeaderBoard();
 
         this.table = new JTable(data, colNames);
+        JScrollPane tableContainer = new JScrollPane(this.table);
+
+//        this.table.setGridColor(Color.BLACK);
+//        this.table.setVisible(true);
 
         // Add table to pane
-        add(this.table);
+        add(tableContainer, this.table);
     }
 
     @Override
