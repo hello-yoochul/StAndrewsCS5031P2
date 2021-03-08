@@ -97,6 +97,7 @@ public class CardImageButton extends JButton {
                 JButton clickedButton = (JButton) e.getSource();
                 if (!isClicked) {
                     if (model.getSelectedCards().size() < MAXIMUM_NUMBER_OF_SELECTED_CARDS) {
+                        System.out.println("Clicked Button");
                         clickedButton.setBackground(Color.BLACK);
                         isClicked = true;
                         model.selectCard(getCard());

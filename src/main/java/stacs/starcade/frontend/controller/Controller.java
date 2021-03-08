@@ -29,6 +29,8 @@ import static stacs.starcade.frontend.model.IFrontendModel.*;
  */
 public class Controller implements IController {
 
+    private static final int MAX_NUM_SETS = 5;
+    private static final int NUM_COLS = 3;
     private IFrontendModel model;
     private HttpClient client;
 
@@ -47,16 +49,13 @@ public class Controller implements IController {
     public Controller(IFrontendModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
-//        register();
-        //TODO: a leader board should be loaded at the beginning
-//        getLeaderBoard();
+        register();
     }
 
-    private void getLeaderBoard() {
-        // Ignore the button event if the game has already started
-        model.setGameStatus(GameStatus.RUNNING);
+    private void register() {
+        System.out.println("name: " + model.getPlayerName());
 
-        postRequest = new HttpPost(basicServerAddress + getLeaderboardParam);
+        postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
@@ -64,7 +63,47 @@ public class Controller implements IController {
         try {
             response = client.execute(postRequest);
             if (response.getStatusLine().getStatusCode() == 200) {
+                ResponseHandler<String> handler = new BasicResponseHandler();
+                String body = handler.handleResponse(response);
+                model.setPlayerId(Integer.parseInt(body));
+            } else {
+                System.out.println("response is error : " + response.getStatusLine().getStatusCode());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("error", e);
+        }
+    }
+
+    public void getLeaderBoard() {
+        // Ignore the button event if the game has already started
+
+        HttpGet getRequest = new HttpGet(basicServerAddress + getLeaderboardParam);
+        getRequest.setHeader("Accept", "application/json");
+        getRequest.setHeader("Connection", "keep-alive");
+        getRequest.setHeader("Content-Type", "application/json");
+
+        try {
+            HttpResponse response = client.execute(getRequest);
+            if (response.getStatusLine().getStatusCode() == 200) {
+
                 //TODO: get leaderboard from server and paint it on the right panel (infoPane)
+                ResponseHandler<String> handler = new BasicResponseHandler();
+                String body = handler.handleResponse(response);
+                JSONArray jsonArray = new JSONArray(body);
+
+                int rows = jsonArray.length();
+                int cols = NUM_COLS;
+                String[][] entries = new String[rows][cols];
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    entries[i][0] = jsonObject.getString("playerName");
+                    entries[i][1] = ((Integer) jsonObject.getInt("round")).toString();
+                    entries[i][2] = jsonObject.getString("avgTime");
+                }
+
+                model.setLeaderBoard(entries);
                 System.out.println(response);
             } else {
                 System.out.println("response is error : " + response.getStatusLine().getStatusCode());
@@ -74,43 +113,16 @@ public class Controller implements IController {
         }
     }
 
-//    private void register() {
-//        int playerID = 0;
-//        HttpGet clientID = new HttpGet(basicServerAddress + registerPlayerParam);
-//        // Read playerID from request
-//        this.model.setPlayerId(playerID);
-//    }
-
     /**
      * Start a game.
      */
     @Override
     public void startGame() {
+        System.out.println("IS game running: " + model.getStatus());
         // Ignore the button event if the game has already started
         if (model.getStatus() != GameStatus.RUNNING) {
             model.setGameStatus(GameStatus.RUNNING);
-
-            System.out.println("name: " + model.getPlayerName());
-
-            // TODO: remove the "anyname" and get the input of client name
-            postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
-            postRequest.setHeader("Accept", "application/json");
-            postRequest.setHeader("Connection", "keep-alive");
-            postRequest.setHeader("Content-Type", "application/json");
-
-            try {
-                response = client.execute(postRequest);
-                if (response.getStatusLine().getStatusCode() == 200) {
-                    ResponseHandler<String> handler = new BasicResponseHandler();
-                    String body = handler.handleResponse(response);
-                    model.setPlayerId(Integer.parseInt(body));
-                    setUpCards();
-                } else {
-                    System.out.println("response is error : " + response.getStatusLine().getStatusCode());
-                }
-            } catch (IOException e) {
-                throw new RuntimeException("error", e);
-            }
+            setUpCards();
         }
     }
 
@@ -168,32 +180,6 @@ public class Controller implements IController {
         model.setGameStatus(GameStatus.RUNNING);
     }
 
-//    /**
-//     * Check if the three cards are set.
-//     *
-//     * @return true if it is set
-//     */
-//    @Override
-//    public boolean isSet() {
-//        // TODO: 1 check if three cards are selected
-//        // TODO: 2 get the selected card from model
-//        // TODO: 3 and send them to server, e.g., http://localhost:8080/game/isSet?firstCard=1111&secondCard=1221&thirdCard=3113
-//
-//        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://localhost:8080/isSet")).build();
-//
-////        try {
-////            // TODO: 4 From the request above, check if the server sends the info on it is set
-////            java.net.http.HttpResponse<String> response = client.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
-////            System.out.println(response.body());
-////        } catch (IOException | InterruptedException e) {
-////            throw new RuntimeException("error", e);
-////        }
-//
-//        // TODO: 5 if it is set remove the cards on the board and repaint, if not, show dialog message "not set"
-//
-//        return false;
-//    }
-
     /**
      * Select a card. Player will invoke this method 3 times to choose three cards.
      *
@@ -234,9 +220,15 @@ public class Controller implements IController {
             JOptionPane.showMessageDialog(null, "Set!!", "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
             // Check whether owner (player) of card objects has already logged this set of cards
             model.setSetsLog(threeCards); // Trigger model to log valid set of cards
+            if (model.getSetsLog().size() == MAX_NUM_SETS) {
+                System.out.println("END ROUND");
+                endRound();
+            }
         } else {
             JOptionPane.showMessageDialog(null, "No Set...", "VALIDATION RESULT", JOptionPane.ERROR_MESSAGE);
-            // TODO: remove the selected cards
+            model.removeSelectedCard(threeCards[0]);
+            model.removeSelectedCard(threeCards[1]);
+            model.removeSelectedCard(threeCards[2]);
         }
     }
 

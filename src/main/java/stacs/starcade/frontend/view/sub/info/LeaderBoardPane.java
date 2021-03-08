@@ -14,13 +14,32 @@ import java.util.Observer;
 public class LeaderBoardPane extends JPanel implements Observer {
     private FrontendModel model;
     private Controller controller;
+    private JTable table;
 
     public LeaderBoardPane(FrontendModel model, Controller controller) {
         this.model = model;
         this.controller = controller;
+
+//        this.setLayout(new BorderLayout());
+
+        setTable();
         ((Observable) model).addObserver(this);
 
         setBackground(Color.PINK);
+    }
+
+    private void setTable() {
+        controller.getLeaderBoard();
+
+        String[] colNames = {"Player", "Rounds", "AvgTime"};
+        String[][] data = model.getLeaderBoard();
+
+        this.table = new JTable(data, colNames);
+        this.table.setGridColor(Color.BLACK);
+        this.table.setVisible(true);
+
+        // Add table to pane
+        add(new JScrollPane(this.table));
     }
 
     @Override

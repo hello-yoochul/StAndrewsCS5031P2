@@ -31,14 +31,14 @@ public interface IFrontendModel {
      *
      * @param leaderBoard the leader board.
      */
-    void setLeaderBoard(ILeaderBoard leaderBoard);
+    void setLeaderBoard(String[][] leaderBoard);
 
     /**
      * Get the leader board.
      *
      * @return the leader board.
      */
-    ILeaderBoard getLeaderBoard();
+    String[][] getLeaderBoard();
 
     /**
      * Set up card when client start the game or 3 set card are spotted.
