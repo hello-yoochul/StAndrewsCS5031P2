@@ -51,7 +51,7 @@ public class CardPane extends JPanel implements Observer {
      * when model has a change, it will be invoked to redraw.
      */
     @Override
-    protected void paintComponent(Graphics g) {
+    public void update(Observable o, Object arg) {
         List<ICard> cards = model.getCards();
         int cardsSize = cards.size();
         if (cardsSize != 0) {
@@ -59,10 +59,6 @@ public class CardPane extends JPanel implements Observer {
                 cardImageButtons.get(i).setCard(cards.get(i));
             }
         }
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
         repaint();
     }
 }
