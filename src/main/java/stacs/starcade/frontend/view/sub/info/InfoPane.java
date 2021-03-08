@@ -9,7 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Panel for {@link CurrentSetPane} and {@link LeaderBoardPane}.
+ * Info panel which consists of {@link CurrentSetPane}, {@link LeaderBoardPane} and {@link TimerPane}.
  */
 public class InfoPane extends JPanel implements Observer {
     private FrontendModel model;
@@ -27,6 +27,8 @@ public class InfoPane extends JPanel implements Observer {
         setLayout(new GridLayout(3, 1));
 
         timerPane = new TimerPane(this.model, this.controller);
+//        new Thread(timerPane).start();
+
         currentSetPane = new CurrentSetPane(this.model, this.controller);
         leaderBoardPane = new LeaderBoardPane(this.model, this.controller);
 

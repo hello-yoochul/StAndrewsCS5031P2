@@ -1,8 +1,6 @@
 package stacs.starcade.frontend.model;
 
 
-import stacs.starcade.backend.impl.ILeaderBoard;
-import stacs.starcade.backend.impl.LeaderBoard;
 import stacs.starcade.frontend.view.main.FrontendView;
 import stacs.starcade.shared.ICard;
 import stacs.starcade.shared.ITimer;
@@ -37,12 +35,11 @@ public class FrontendModel extends Observable implements IFrontendModel {
         setsLog = new ArrayList<>();
 //        leaderBoard = new LeaderBoard();
         timer = new Timer();
-        status = GameStatus.PAUSED;
+//        status = GameStatus.PAUSED;
     }
 
     public void startTimer() {
         timer.start();
-        update();
     }
 
     public Duration getTime() {
@@ -105,7 +102,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
      * @param status one of the {@link GameStatus}
      */
     @Override
-    public void setGameStatus(GameStatus status) {
+    public void setGameStatus(IFrontendModel.GameStatus status) {
         this.status = status;
     }
 
