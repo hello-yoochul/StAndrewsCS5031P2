@@ -51,16 +51,13 @@ public class LeaderBoard implements ILeaderBoard {
      */
     public void sortList() {
         if (players.size() > 1) {
-            players.sort(new Comparator<IPlayer>() {
-                @Override
-                public int compare(IPlayer p1, IPlayer p2) {
-                    if (p1.getAvgTime().compareTo(p2.getAvgTime()) == 0) {
-                        return 0;
-                    } else if (p1.getAvgTime().compareTo(p2.getAvgTime()) < 0) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
+            players.sort((p1, p2) -> {
+                if (p1.getAvgTime().compareTo(p2.getAvgTime()) == 0) {
+                    return 0;
+                } else if (p1.getAvgTime().compareTo(p2.getAvgTime()) < 0) {
+                    return -1;
+                } else {
+                    return 1;
                 }
             });
         }

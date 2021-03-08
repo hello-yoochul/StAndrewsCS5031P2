@@ -10,17 +10,14 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
-import static javax.swing.SwingUtilities.getRoot;
 import static stacs.starcade.frontend.model.IFrontendModel.*;
 
 
@@ -130,7 +127,7 @@ public class Controller implements IController {
     public void setUpCards() {
         List<ICard> cards = new ArrayList<>();
 
-        HttpPost postRequest = new HttpPost(basicServerAddress + nextRoundParam + "/" + model.getPlayerId());
+        HttpGet postRequest = new HttpGet(basicServerAddress + nextRoundParam + "/" + model.getPlayerId());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
