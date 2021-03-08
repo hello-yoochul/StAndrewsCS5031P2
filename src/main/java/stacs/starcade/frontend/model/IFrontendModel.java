@@ -1,5 +1,6 @@
 package stacs.starcade.frontend.model;
 
+import stacs.starcade.backend.impl.ILeaderBoard;
 import stacs.starcade.frontend.view.main.FrontendView;
 import stacs.starcade.shared.ICard;
 
@@ -21,6 +22,20 @@ public interface IFrontendModel {
      * Notify observers.
      */
     void update();
+
+    /**
+     * Set the leader board.
+     *
+     * @param leaderBoard the leader board.
+     */
+    void setLeaderBoard(ILeaderBoard leaderBoard);
+
+    /**
+     * Get the leader board.
+     *
+     * @return the leader board.
+     */
+    ILeaderBoard getLeaderBoard();
 
     /**
      * Set up card when client start the game or 3 set card are spotted.

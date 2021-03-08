@@ -10,11 +10,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * The panel for 12 cards.
  */
-public class CardPane extends JPanel {
+public class CardPane extends JPanel implements Observer {
     static final String BASIC_IMAGE_PATH = "src/main/resources/cardImages/";
     static final int INITIAL_NUMBER_OF_CARDS = 12;
     static final Dimension BUTTON_SIZE = new Dimension(100, 160);
@@ -33,6 +35,8 @@ public class CardPane extends JPanel {
     public CardPane(FrontendModel model, Controller controller) {
         this.controller = controller;
         this.model = model;
+
+        ((Observable) model).addObserver(this);
 
         toolkit = Toolkit.getDefaultToolkit(); // to get image from resource folder
 //        testImg = toolkit.getImage(BASIC_IMAGE_PATH + "/BLUE-ONE-CIRCLE-OPEN.png").getScaledInstance(IMAGE_WIDTH, IMAGE_HEIGHT, Image.SCALE_DEFAULT);
@@ -56,5 +60,10 @@ public class CardPane extends JPanel {
                 add(cardImageButton);
             }
         }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        repaint();
     }
 }
