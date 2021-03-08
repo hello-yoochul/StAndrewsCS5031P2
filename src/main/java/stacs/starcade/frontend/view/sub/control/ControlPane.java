@@ -1,6 +1,7 @@
 package stacs.starcade.frontend.view.sub.control;
 
 import stacs.starcade.frontend.controller.Controller;
+import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.shared.ICard;
 
@@ -17,19 +18,19 @@ import java.util.Observer;
 // TODO: start game, end game, start nextround, validate set. -> 4 buttons should be implemented
 public class ControlPane extends JPanel implements Observer {
     private FrontendModel model;
-    private Controller controller;
+    private IController controller;
 
     private JButton startGameButton;
     private JButton checkSetButton;
     private JButton nextRoundButton;
-    private JButton endRoundButton;
+    private JButton endGameButton;
 
     public static final String START = "START";
     public static final String CHECK_SET = "CHECK SET";
     public static final String NEXT_ROUND = "NEXT ROUND";
-    public static final String END_ROUND = "END ROUND";
+    public static final String END_GAME = "END GAME";
 
-    public ControlPane(FrontendModel model,Controller controller) {
+    public ControlPane(FrontendModel model, IController controller) {
         this.model = model;
         this.controller = controller;
         ((Observable) model).addObserver(this);
@@ -45,7 +46,7 @@ public class ControlPane extends JPanel implements Observer {
         startGameButton = new JButton(START);
         checkSetButton = new JButton(CHECK_SET);
         nextRoundButton = new JButton(NEXT_ROUND);
-        endRoundButton = new JButton(END_ROUND);
+        endGameButton = new JButton(END_GAME);
     }
 
     private void generateButtonListener() {
@@ -53,14 +54,14 @@ public class ControlPane extends JPanel implements Observer {
         startGameButton.addActionListener(al);
         checkSetButton.addActionListener(al);
         nextRoundButton.addActionListener(al);
-        endRoundButton.addActionListener(al);
+        endGameButton.addActionListener(al);
     }
 
     private void addButtons() {
         add(startGameButton);
         add(checkSetButton);
         add(nextRoundButton);
-        add(endRoundButton);
+        add(endGameButton);
     }
 
     @Override
@@ -88,11 +89,11 @@ public class ControlPane extends JPanel implements Observer {
             }
 
             if (evt == nextRoundButton) {
-//                controller.endRound();
+                controller.setUpCards();
             }
 
-            if (evt == endRoundButton) {
-                controller.endRound();
+            if (evt == endGameButton) {
+                controller.disconnect();
             }
         }
     }
