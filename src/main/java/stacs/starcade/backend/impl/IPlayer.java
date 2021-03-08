@@ -24,6 +24,12 @@ public interface IPlayer {
     String getPlayerName();
 
     /**
+     * Gets the twelve cards that have been stored for the running round.
+     * @return an array list of twelve card objects
+     */
+    ArrayList<ICard> getStoredCards();
+
+    /**
      * Gets duration player has needed for previously played rounds on avergade.
      * @return average round duration
      */

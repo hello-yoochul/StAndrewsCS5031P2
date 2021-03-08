@@ -45,11 +45,6 @@ public class Model implements IModel {
 
     }
 
-    @Override
-    public int getPlayerID() {
-        return ++this.nextPlayerID;
-    }
-
     /**
      * Gets player with given playerID.
      *

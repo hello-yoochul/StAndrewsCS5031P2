@@ -14,16 +14,11 @@ public interface ITimer {
      */
     void start();
 
-//    /**
-//     * Pause the timer.
-//     */
-//    void pause();
-
-//    /**
-//     * Query the timer state.
-//     * @return true if the timer is currently running, false otherwise.
-//     */
-//    boolean isRunning();
+    /**
+     * Query the timer state.
+     * @return true if the timer is currently running, false otherwise.
+     */
+    boolean isRunning();
 
     /**
      * Get the time on the timer.
