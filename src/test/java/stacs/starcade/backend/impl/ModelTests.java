@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 public class ModelTests {
 
     private Model model;
+
     @BeforeEach
     public void setup() {
         model = new Model();

@@ -1,5 +1,6 @@
 package stacs.starcade.frontend.view.sub.card;
 
+import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
@@ -15,16 +16,31 @@ import java.util.Observer;
  */
 // TODO: I am not sure it is needed, but we should figure out how we can store client choice to the Model.
 public class CardImageButton extends JButton {
+    static final String BASIC_IMAGE_PATH = "src/main/resources/cardImages/";
+    static final Dimension BUTTON_SIZE = new Dimension(110, 160);
+    static final int IMAGE_WIDTH = 100;
+    static final int IMAGE_HEIGHT = 150;
+
+    private FrontendModel model;
     private ICard card;
     private String imagePathStr;
+    private Toolkit toolkit;
 
     /**
      * Construct CardImageButton with addition of the mouse listener:
      * if client click the card image button, the button colour will
      * be changed to show their choice.
+     *
+     * @param model the front end model
      */
-    public CardImageButton() {
+    public CardImageButton(FrontendModel model) {
         this.addMouseListener(new MyMouseListener());
+        this.model = model;
+
+        setSize(BUTTON_SIZE);
+
+        toolkit = Toolkit.getDefaultToolkit(); // to get image from resource folder
+//        testImg = toolkit.getImage(BASIC_IMAGE_PATH + "/BLUE-ONE-CIRCLE-OPEN.png").getScaledInstance(IMAGE_WIDTH, IMAGE_HEIGHT, Image.SCALE_DEFAULT);
     }
 
     /**
@@ -38,8 +54,10 @@ public class CardImageButton extends JButton {
      * Set the card and Store the path of the corresponding card image.
      */
     public void setCard(ICard card) {
-        imagePathStr = card.getColour() + "-" + card.getNumber() + "-" + card.getShape() + "-" + card.getLineStyle() + ".png";
+        imagePathStr = "/" + card.getColour() + "-" + card.getNumber() + "-" + card.getShape() + "-" + card.getLineStyle() + ".png";
         this.card = card;
+        Image cardImage = toolkit.getImage(BASIC_IMAGE_PATH + imagePathStr).getScaledInstance(IMAGE_WIDTH, IMAGE_HEIGHT, Image.SCALE_DEFAULT);
+        setIcon(new ImageIcon(cardImage));
     }
 
     /**

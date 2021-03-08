@@ -16,8 +16,8 @@ import static org.mockito.Mockito.mock;
  * Tests for the {@link Controller} class.
  */
 public class ControllerTests {
-    IController controller;
-    IFrontendModel model;
+    private IController controller;
+    private IFrontendModel model;
 
     @BeforeEach
     void setup() {
