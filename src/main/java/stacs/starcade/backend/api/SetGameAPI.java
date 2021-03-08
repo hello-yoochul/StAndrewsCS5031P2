@@ -41,8 +41,18 @@ public class SetGameAPI implements ISetGameAPI {
      */
     @PostMapping("/nextRound/{playerID}")
     public ArrayList<ICard> startNextRound(@PathVariable int playerID) throws ResponseStatusException {
-        ArrayList<ICard> twelveCards = model.getTwelveCards();
-        model.getPlayer(playerID).startRound(twelveCards);
+//        ArrayList<ICard> twelveCards = model.getTwelveCards();
+//        model.getPlayer(playerID).startRound(twelveCards);
+        ArrayList<ICard> twelveCards = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            ICard card = new Card();
+            card.setLineStyle(ICard.LineStyle.DOTTED);
+            card.setColour(ICard.Colour.RED);
+            card.setShape(ICard.Shape.TRIANGLE);
+            card.setNumber(ICard.Number.ONE);
+            twelveCards.add(card);
+        }
         return twelveCards;
     }
 
