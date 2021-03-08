@@ -15,6 +15,7 @@ public class InfoPane extends JPanel implements Observer {
     private FrontendModel model;
     private Controller controller;
 
+    TimerPane timerPane;
     private CurrentSetPane currentSetPane;
     private LeaderBoardPane leaderBoardPane;
 
@@ -23,11 +24,13 @@ public class InfoPane extends JPanel implements Observer {
         this.controller = controller;
         ((Observable) model).addObserver(this);
 
-        setLayout(new GridLayout(2, 1));
+        setLayout(new GridLayout(3, 1));
 
+        timerPane = new TimerPane(this.model, this.controller);
         currentSetPane = new CurrentSetPane(this.model, this.controller);
         leaderBoardPane = new LeaderBoardPane(this.model, this.controller);
 
+        add(timerPane);
         add(currentSetPane);
         add(leaderBoardPane);
     }
