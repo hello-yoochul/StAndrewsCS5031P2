@@ -44,6 +44,7 @@ public class Controller implements IController {
     public Controller(IFrontendModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
+        register();
     }
 
     /**
@@ -51,7 +52,7 @@ public class Controller implements IController {
      */
     @Override
     public void register() {
-        HttpPost postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
+        HttpGet postRequest = new HttpGet(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
