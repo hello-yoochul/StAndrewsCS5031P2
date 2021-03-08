@@ -125,7 +125,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
 
     @Override
     public void removeSelectedCard(ICard card) {
-        cardsOnBoard.add(card);
+//        cardsOnBoard.add(card);
         selectedCards.remove(card);
     }
 
@@ -139,7 +139,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
         if (!cardsOnBoard.contains(card)) {
             throw new IllegalArgumentException("card does not exsit on the board");
         }
-        cardsOnBoard.remove(card);
+//        cardsOnBoard.remove(card);
         selectedCards.add(card);
     }
 
@@ -159,6 +159,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     @Override
     public void setSetsLog(ICard[] threeCards) {
         setsLog.add(threeCards);
+        System.out.println("SET SETS LOG - SIZE: " + setsLog.size());
         for (ICard card : threeCards) {
             selectedCards.remove(card);
         }
