@@ -30,6 +30,7 @@ import static stacs.starcade.frontend.model.IFrontendModel.*;
 public class Controller implements IController {
 
     private static final int MAX_NUM_SETS = 5;
+    private static final int NUM_COLS = 3;
     private IFrontendModel model;
     private HttpClient client;
 
@@ -50,22 +51,39 @@ public class Controller implements IController {
         client = HttpClientBuilder.create().build();
 //        register();
         //TODO: a leader board should be loaded at the beginning
-//        getLeaderBoard();
+        getLeaderBoard();
     }
 
-    private void getLeaderBoard() {
+    public void getLeaderBoard() {
         // Ignore the button event if the game has already started
         model.setGameStatus(GameStatus.RUNNING);
 
-        postRequest = new HttpPost(basicServerAddress + getLeaderboardParam);
-        postRequest.setHeader("Accept", "application/json");
-        postRequest.setHeader("Connection", "keep-alive");
-        postRequest.setHeader("Content-Type", "application/json");
+        HttpGet getRequest = new HttpGet(basicServerAddress + getLeaderboardParam);
+        getRequest.setHeader("Accept", "application/json");
+        getRequest.setHeader("Connection", "keep-alive");
+        getRequest.setHeader("Content-Type", "application/json");
 
         try {
-            response = client.execute(postRequest);
+            HttpResponse response = client.execute(getRequest);
             if (response.getStatusLine().getStatusCode() == 200) {
                 //TODO: get leaderboard from server and paint it on the right panel (infoPane)
+                ResponseHandler<String> handler = new BasicResponseHandler();
+                String body = handler.handleResponse(response);
+                JSONArray jsonArray = new JSONArray(body);
+
+                int rows = jsonArray.length();
+                int cols = NUM_COLS;
+                String[][] entries = new String[rows][cols];
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    entries[i][0] = jsonObject.getString("playerName");
+                    entries[i][1] = jsonObject.getString("round");
+                    entries[i][2] = jsonObject.getString("avgTime");
+                }
+
+                model.setLeaderBoard(entries);
                 System.out.println(response);
             } else {
                 System.out.println("response is error : " + response.getStatusLine().getStatusCode());
