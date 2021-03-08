@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import static stacs.starcade.shared.ICard.*;
+
 
 /**
  * In card view panel, it will have 12 buttons.
@@ -16,9 +18,16 @@ import java.awt.event.MouseEvent;
 public class CardImageButton extends JButton {
     private ICard card;
 
+    private String imagePathStr;
+
     public CardImageButton(ICard card) {
         this.card = card;
         this.addMouseListener(new MyMouseListener());
+
+        card.getColour();
+        card.getNumber();
+        card.getShape();
+        card.getLineStyle();
     }
 
     public ICard getValue() {

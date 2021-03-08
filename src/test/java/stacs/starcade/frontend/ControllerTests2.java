@@ -2,14 +2,11 @@ package stacs.starcade.frontend;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import stacs.starcade.backend.impl.IModel;
-import stacs.starcade.backend.impl.IPlayer;
 import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.Card;
-import stacs.starcade.backend.impl.Player;
 import stacs.starcade.shared.ICard;
 
 import static org.junit.Assert.assertThrows;
@@ -18,7 +15,6 @@ import static org.mockito.Mockito.mock;
 import static stacs.starcade.shared.Checks.isSet;
 import static stacs.starcade.shared.ICard.Colour.*;
 import static stacs.starcade.shared.ICard.LineStyle.*;
-import static stacs.starcade.shared.ICard.Number.*;
 import static stacs.starcade.shared.ICard.Shape.*;
 
 public class ControllerTests2 {
@@ -48,17 +44,17 @@ public class ControllerTests2 {
         // Numbers and LineStyles are all different
         card1.setColour(BLUE);
         card1.setShape(TRIANGLE);
-        card1.setNumber(NULL);
+        card1.setNumber(ICard.Number.THREE);
         card1.setLineStyle(DASHED);
 
         card2.setColour(GREEN);
         card2.setShape(CIRCLE);
-        card2.setNumber(NULL);
+        card2.setNumber(ICard.Number.THREE);
         card2.setLineStyle(DASHED);
 
         card3.setColour(RED);
         card3.setShape(SQUARE);
-        card3.setNumber(NULL);
+        card3.setNumber(ICard.Number.THREE);
         card3.setLineStyle(DASHED);
 
         assertTrue(isSet(threeCards));
@@ -70,17 +66,17 @@ public class ControllerTests2 {
         // No property satisfies the conditions for the three cards making up a set
         card1.setColour(BLUE);
         card1.setShape(TRIANGLE);
-        card1.setNumber(NULL);
+        card1.setNumber(ICard.Number.THREE);
         card1.setLineStyle(DASHED);
 
         card2.setColour(GREEN);
         card2.setShape(CIRCLE);
-        card2.setNumber(NULL);
+        card2.setNumber(ICard.Number.THREE);
         card2.setLineStyle(DASHED);
 
         card3.setColour(RED);
         card3.setShape(SQUARE);
-        card3.setNumber(ONE);
+        card3.setNumber(ICard.Number.ONE);
         card3.setLineStyle(DOTTED);
 
         assertFalse(isSet(threeCards));
