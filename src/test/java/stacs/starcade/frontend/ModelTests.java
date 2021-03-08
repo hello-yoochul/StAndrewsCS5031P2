@@ -36,6 +36,13 @@ public class ModelTests {
     }
 
     @Test
+    void mustSetPlayerName() {
+        String name = "anyName";
+        model.setPlayerName(name);
+        assertThat(model.getPlayerName(), is(equalTo(name)));
+    }
+
+    @Test
     void mustSetCards() {
         int mockPlayerId = random.nextInt(100);
         model.setPlayerId(mockPlayerId);

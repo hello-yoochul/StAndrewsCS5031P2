@@ -22,6 +22,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     private int playerId;
     private ArrayList<ICard[]> setsLog;
     private ILeaderBoard leaderBoard;
+    private String playerName;
 
     /**
      * Construct FrontendModel.
@@ -172,5 +173,25 @@ public class FrontendModel extends Observable implements IFrontendModel {
     @Override
     public ArrayList<ICard[]> getSetsLog() {
         return this.setsLog;
+    }
+
+    /**
+     * Set the player name.
+     *
+     * @param playerName the player name
+     */
+    @Override
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    /**
+     * Get the player name.
+     *
+     * @return the current player name.
+     */
+    @Override
+    public String getPlayerName() {
+        return playerName;
     }
 }

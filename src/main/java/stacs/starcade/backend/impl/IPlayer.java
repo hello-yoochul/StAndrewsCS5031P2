@@ -30,7 +30,7 @@ public interface IPlayer {
     ArrayList<ICard> getStoredCards();
 
     /**
-     * Gets duration player has needed for previously played rounds on avergade.
+     * Gets duration player has needed for previously played rounds on average.
      * @return average round duration
      */
     Duration getAvgTime();

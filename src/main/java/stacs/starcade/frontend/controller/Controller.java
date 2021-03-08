@@ -47,15 +47,39 @@ public class Controller implements IController {
     public Controller(IFrontendModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
-        register();
+//        register();
+        //TODO: a leader board should be loaded at the beginning
+//        getLeaderBoard();
     }
 
-    private void register() {
-        int playerID = 0;
-        HttpGet clientID = new HttpGet(basicServerAddress + registerPlayerParam);
-        // Read playerID from request
-        this.model.setPlayerId(playerID);
+    private void getLeaderBoard() {
+        // Ignore the button event if the game has already started
+        model.setGameStatus(GameStatus.RUNNING);
+
+        postRequest = new HttpPost(basicServerAddress + getLeaderboardParam);
+        postRequest.setHeader("Accept", "application/json");
+        postRequest.setHeader("Connection", "keep-alive");
+        postRequest.setHeader("Content-Type", "application/json");
+
+        try {
+            response = client.execute(postRequest);
+            if (response.getStatusLine().getStatusCode() == 200) {
+                //TODO: get leaderboard from server and paint it on the right panel (infoPane)
+                System.out.println(response);
+            } else {
+                System.out.println("response is error : " + response.getStatusLine().getStatusCode());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("error", e);
+        }
     }
+
+//    private void register() {
+//        int playerID = 0;
+//        HttpGet clientID = new HttpGet(basicServerAddress + registerPlayerParam);
+//        // Read playerID from request
+//        this.model.setPlayerId(playerID);
+//    }
 
     /**
      * Start a game.
@@ -66,8 +90,10 @@ public class Controller implements IController {
         if (model.getStatus() != GameStatus.RUNNING) {
             model.setGameStatus(GameStatus.RUNNING);
 
+            System.out.println("name: " + model.getPlayerName());
+
             // TODO: remove the "anyname" and get the input of client name
-            postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/anyname");
+            postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
             postRequest.setHeader("Accept", "application/json");
             postRequest.setHeader("Connection", "keep-alive");
             postRequest.setHeader("Content-Type", "application/json");

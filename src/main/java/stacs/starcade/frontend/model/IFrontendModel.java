@@ -113,4 +113,18 @@ public interface IFrontendModel {
      * @return setsLog object
      */
     ArrayList<ICard[]> getSetsLog();
+
+    /**
+     * Set the player name.
+     *
+     * @param playerName the player name
+     */
+    void setPlayerName(String playerName);
+
+    /**
+     * Get the player name.
+     *
+     * @return the current player name.
+     */
+    String getPlayerName();
 }
