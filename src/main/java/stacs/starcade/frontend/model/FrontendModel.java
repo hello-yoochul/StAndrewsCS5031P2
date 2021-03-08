@@ -36,12 +36,11 @@ public class FrontendModel extends Observable implements IFrontendModel {
         setsLog = new ArrayList<>();
         leaderBoard = new LeaderBoard();
         timer = new Timer();
-        status = GameStatus.PAUSED;
+//        status = GameStatus.PAUSED;
     }
 
     public void startTimer() {
         timer.start();
-        update();
     }
 
     public Duration getTime() {

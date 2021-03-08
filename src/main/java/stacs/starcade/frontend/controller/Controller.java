@@ -131,8 +131,6 @@ public class Controller implements IController {
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
 
-        // TODO: Get the 12 card from server and paint it on the Swing View
-
         HttpResponse response = null;
         try {
             response = client.execute(postRequest);
