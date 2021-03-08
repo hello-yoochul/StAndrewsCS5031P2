@@ -47,14 +47,13 @@ public class Controller implements IController {
     public Controller(IFrontendModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
-        register();
-        getLeaderBoard();
     }
 
     /**
      * Registers the client with the server and gets a unique player id.
      */
-    private void register() {
+    @Override
+    public void register() {
         HttpPost postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
@@ -69,6 +68,7 @@ public class Controller implements IController {
             } else {
                 System.out.println("response is error : " + response.getStatusLine().getStatusCode());
             }
+            getLeaderBoard();
         } catch (IOException e) {
             throw new RuntimeException("error", e);
         }
@@ -123,11 +123,6 @@ public class Controller implements IController {
         }
     }
 
-    public static void main(String[] args) {
-        Controller controller = new Controller(new FrontendModel());
-        controller.setUpCards();
-    }
-
     /**
      * Set up the 12 cards.
      */
@@ -174,16 +169,6 @@ public class Controller implements IController {
 
         model.setUpCard(cards);
         model.setGameStatus(GameStatus.RUNNING);
-    }
-
-    /**
-     * Select a card. Player will invoke this method 3 times to choose three cards.
-     *
-     * @param card a card to check if selected cards are set
-     */
-    @Override
-    public void selectCard(ICard card) {
-        model.selectCard(card);
     }
 
     /**
@@ -277,7 +262,6 @@ public class Controller implements IController {
         if (model.getStatus() != GameStatus.RUNNING) {
             model.setGameStatus(GameStatus.RUNNING);
 
-            // TODO: remove the "anyname" and get the input of client name
             HttpPost postRequest = new HttpPost(basicServerAddress + endRoundParam + "/" + model.getPlayerId());
             postRequest.setHeader("Accept", "application/json");
             postRequest.setHeader("Connection", "keep-alive");

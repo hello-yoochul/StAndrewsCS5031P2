@@ -45,8 +45,7 @@ public class FrontendView extends JFrame implements Observer {
         setUpComponents();
         setVisible(true);
 
-//        pack();
-//        setMinimumSize(getPreferredSize());
+        controller.register();
     }
 
     /**
