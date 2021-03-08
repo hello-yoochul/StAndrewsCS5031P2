@@ -31,7 +31,7 @@ public class SetGameAPITests {
     @Test
     void registerPlayer() {
         // success
-        client.post().uri("/registerPlayer")
+        client.get().uri("/registerPlayer")
           .accept(MediaType.APPLICATION_JSON)
           .exchange()
           .expectStatus().isOk()
@@ -40,7 +40,7 @@ public class SetGameAPITests {
 
     @Test
     void mustReturnNotFoundForNonExistingGame() {
-        client.post().uri("/game/1000")
+        client.get().uri("/game/1000")
           .exchange()
           .expectStatus().isNotFound();
     }
@@ -53,10 +53,10 @@ public class SetGameAPITests {
 
     @Test
     void mustReturnCards() {
-        client.post().uri("/registerPlayer/John").accept(MediaType.APPLICATION_JSON)
+        client.get().uri("/registerPlayer/John").accept(MediaType.APPLICATION_JSON)
           .exchange();
 
-        client.post().uri("/nextRound/1").accept(MediaType.APPLICATION_JSON)
+        client.get().uri("/nextRound/1").accept(MediaType.APPLICATION_JSON)
           .exchange()
           .expectStatus().isOk().expectBodyList(Card.class);
     }

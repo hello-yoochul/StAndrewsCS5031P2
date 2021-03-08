@@ -51,7 +51,7 @@ public class Controller implements IController {
     }
 
     private void register() {
-        HttpPost postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
+        HttpGet postRequest = new HttpGet(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
@@ -131,7 +131,7 @@ public class Controller implements IController {
     public void setUpCards() {
         List<ICard> cards = new ArrayList<>();
 
-        HttpPost postRequest = new HttpPost(basicServerAddress + nextRoundParam + "/" + model.getPlayerId());
+        HttpGet postRequest = new HttpGet(basicServerAddress + nextRoundParam + "/" + model.getPlayerId());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
