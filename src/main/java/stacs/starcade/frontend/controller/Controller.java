@@ -48,8 +48,12 @@ public class Controller implements IController {
         this.model = model;
         client = HttpClientBuilder.create().build();
         register();
+        getLeaderBoard();
     }
 
+    /**
+     * Registers the client with the server and gets a unique player id.
+     */
     private void register() {
         HttpPost postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
         postRequest.setHeader("Accept", "application/json");

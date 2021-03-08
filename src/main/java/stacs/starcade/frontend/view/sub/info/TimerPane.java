@@ -1,7 +1,9 @@
 package stacs.starcade.frontend.view.sub.info;
 
 import stacs.starcade.frontend.controller.Controller;
+import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.frontend.model.IFrontendModel;
 
 import javax.swing.*;
 import java.time.Duration;
@@ -14,11 +16,11 @@ import static stacs.starcade.frontend.model.IFrontendModel.*;
  * Panel for Timer.
  */
 public class TimerPane extends JPanel implements Observer {
-    private FrontendModel model;
+    private IFrontendModel model;
     private JLabel timerLabel;
     private TimerRunner timerRunner;
 
-    public TimerPane(FrontendModel model, Controller controller) {
+    public TimerPane(IFrontendModel model, IController controller) {
         this.model = model;
         ((Observable) model).addObserver(this);
 

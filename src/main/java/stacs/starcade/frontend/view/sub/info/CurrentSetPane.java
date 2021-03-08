@@ -1,7 +1,9 @@
 package stacs.starcade.frontend.view.sub.info;
 
 import stacs.starcade.frontend.controller.Controller;
+import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.frontend.model.IFrontendModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,10 +15,10 @@ import java.util.Observer;
  */
 public class CurrentSetPane extends JPanel implements Observer {
 
-    private FrontendModel model;
-    private Controller controller;
+    private IFrontendModel model;
+    private IController controller;
 
-    public CurrentSetPane(FrontendModel model, Controller controller) {
+    public CurrentSetPane(IFrontendModel model, IController controller) {
         this.model = model;
         this.controller = controller;
         ((Observable) model).addObserver(this);

@@ -1,7 +1,9 @@
 package stacs.starcade.frontend.view.sub.info;
 
 import stacs.starcade.frontend.controller.Controller;
+import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.frontend.model.IFrontendModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,11 +14,11 @@ import java.util.Observer;
  * Panel for the leader board.
  */
 public class LeaderBoardPane extends JPanel implements Observer {
-    private FrontendModel model;
-    private Controller controller;
+    private IFrontendModel model;
+    private IController controller;
     private JTable table;
 
-    public LeaderBoardPane(FrontendModel model, Controller controller) {
+    public LeaderBoardPane(IFrontendModel model, IController controller) {
         this.model = model;
         this.controller = controller;
 
@@ -35,12 +37,16 @@ public class LeaderBoardPane extends JPanel implements Observer {
         String[][] data = model.getLeaderBoard();
 
         this.table = new JTable(data, colNames);
-        this.table.setShowHorizontalLines(true);
+        this.table.setShowGrid(true);
+//        this.table.setShowHorizontalLines(true);
         this.table.setGridColor(Color.BLACK);
         this.table.setVisible(true);
 
         // Add table to pane
-        add(new JScrollPane(this.table));
+        JScrollPane jSP = new JScrollPane(this.table);
+        this.table.setFillsViewportHeight(true);
+        jSP.setVerticalScrollBar(new JScrollBar());
+        add(jSP);
     }
 
     @Override

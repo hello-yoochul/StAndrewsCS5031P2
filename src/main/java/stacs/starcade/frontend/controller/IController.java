@@ -3,6 +3,12 @@ package stacs.starcade.frontend.controller;
 import stacs.starcade.shared.ICard;
 
 public interface IController {
+
+    /**
+     * Gets the leaderboard from the model.
+     */
+    void getLeaderBoard();
+
     /**
      * Start a game.
      */
