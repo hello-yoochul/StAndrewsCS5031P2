@@ -148,8 +148,8 @@ public class Controller implements IController {
 //     */
 //    @Override
 //    public boolean isSet() {
-//        // TODO: 1 check if three cards are chosen
-//        // TODO: 2 get the chosen card from model
+//        // TODO: 1 check if three cards are selected
+//        // TODO: 2 get the selected card from model
 //        // TODO: 3 and send them to server, e.g., http://localhost:8080/game/isSet?firstCard=1111&secondCard=1221&thirdCard=3113
 //
 //        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://localhost:8080/isSet")).build();
@@ -170,7 +170,7 @@ public class Controller implements IController {
     /**
      * Select a card. Player will invoke this method 3 times to choose three cards.
      *
-     * @param card a card to check if chosen cards are set
+     * @param card a card to check if selected cards are set
      */
     @Override
     public void selectCard(ICard card) {
