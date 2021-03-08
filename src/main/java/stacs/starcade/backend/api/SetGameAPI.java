@@ -1,17 +1,12 @@
 package stacs.starcade.backend.api;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.stream.Stream;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.server.ResponseStatusException;
 import stacs.starcade.backend.impl.IPlayer;
 import stacs.starcade.backend.impl.*;
-import stacs.starcade.shared.Card;
 import stacs.starcade.backend.impl.Player;
 import stacs.starcade.shared.ICard;
 
@@ -30,13 +25,11 @@ public class SetGameAPI implements ISetGameAPI {
      *
      * @return newly generated player ID.
      */
-    @GetMapping("/registerPlayer")
+    @GetMapping("/registerPlayer/{playerName}")
     public Integer registerPlayer(@PathVariable String playerName) {
         int newPID = model.getPlayerID();
         IPlayer newP = new Player(playerName, newPID);
-
         model.addPlayer(newP);
-
         return newPID;
     }
 
@@ -45,9 +38,8 @@ public class SetGameAPI implements ISetGameAPI {
      *
      * @return returns an array with twelve cards that will be used for the new round.
      */
-    @GetMapping("/nextRound")
+    @PostMapping("/nextRound/{playerID}")
     public ArrayList<ICard> startNextRound(@PathVariable int playerID) throws ResponseStatusException {
-
         ArrayList<ICard> twelveCards = model.getTwelveCards();
         model.getPlayer(playerID).startRound(twelveCards);
         return twelveCards;
@@ -58,10 +50,10 @@ public class SetGameAPI implements ISetGameAPI {
      *
      * This will stop the timer for the current round.
      *
-     * @param playerID
+     * @param playerID the unique player ID
      */
     // TODO: Pass in sets and verify them
-    @PostMapping("/endRound")
+    @PostMapping("/endRound/{playerID}")
     public void endRound(@PathVariable int playerID) throws ResponseStatusException {
         model.getPlayer(playerID).endRound();
     }
@@ -70,7 +62,7 @@ public class SetGameAPI implements ISetGameAPI {
      * Removes player from leaderboard.
      * @param playerID ID of player that is removed
      */
-    @PostMapping("/disconnect")
+    @PostMapping("/disconnect/{playerID}")
     public void disconnect(@PathVariable int playerID) {
         IPlayer removedPlayer = model.getPlayer(playerID);
         model.disconnectPlayer(removedPlayer);

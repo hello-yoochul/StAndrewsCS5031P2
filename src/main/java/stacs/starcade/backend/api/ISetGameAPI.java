@@ -34,7 +34,7 @@ public interface ISetGameAPI {
      *
      * This will stop the timer for the current round.
      *
-     * @param playerID
+     * @param playerID the unique player ID
      */
     void endRound(@PathVariable int playerID);
 
