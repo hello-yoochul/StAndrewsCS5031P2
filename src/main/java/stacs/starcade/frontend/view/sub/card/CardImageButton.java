@@ -49,14 +49,14 @@ public class CardImageButton extends JButton {
     /**
      * Needed to send message to Model to remove or add the selected card image button.
      */
-    private FrontendModel model;
+    private IFrontendModel model;
 
     /**
      * Construct CardImageButton with addition of the mouse listener:
      * if client clicks the card image button, the button colour will
      * be changed to show their choice.
      */
-    public CardImageButton(FrontendModel model) {
+    public CardImageButton(IFrontendModel model) {
         this.model = model;
         this.addMouseListener(new MyMouseListener());
         toolkit = Toolkit.getDefaultToolkit();
@@ -67,7 +67,7 @@ public class CardImageButton extends JButton {
      * Get Image path string of the card.
      */
     public String getImagePathStr() {
-        return imagePathStr;
+        return this.imagePathStr;
     }
 
     /**
@@ -92,15 +92,18 @@ public class CardImageButton extends JButton {
      * the button colour will be changed to show their chocie.
      */
     class MyMouseListener extends MouseAdapter {
+
         public void mouseClicked(MouseEvent e) {
             if (model.getStatus() == IFrontendModel.GameStatus.RUNNING) {
+
                 JButton clickedButton = (JButton) e.getSource();
                 if (!isClicked) {
                     if (model.getSelectedCards().size() < MAXIMUM_NUMBER_OF_SELECTED_CARDS) {
-                        System.out.println("Clicked Button");
-                        clickedButton.setBackground(Color.BLACK);
+
                         isClicked = true;
                         model.selectCard(getCard());
+
+                        clickedButton.setBackground(Color.BLACK);
                         JOptionPane.showMessageDialog(null, "Card(" + getCard().getColour() +
                                 ", " + getCard().getShape() + ", " + getCard().getLineStyle() + ", " +
                                 getCard().getNumber() + ") has been selected!");
@@ -108,9 +111,11 @@ public class CardImageButton extends JButton {
                         JOptionPane.showMessageDialog(null, "Please select less than three cards");
                     }
                 } else {
+
                     clickedButton.setBackground(Color.WHITE);
                     isClicked = false;
                     model.removeSelectedCard(getCard());
+
                 }
             }
 

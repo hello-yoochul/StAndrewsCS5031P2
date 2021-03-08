@@ -1,7 +1,9 @@
 package stacs.starcade.frontend.view.main;
 
 import stacs.starcade.frontend.controller.Controller;
+import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.frontend.view.sub.card.CardPane;
 import stacs.starcade.frontend.view.sub.control.ControlPane;
 import stacs.starcade.frontend.view.sub.info.InfoPane;
@@ -17,8 +19,8 @@ import java.util.Observer;
  * and infoPane(current sets and leaderBoard).
  */
 public class FrontendView extends JFrame implements Observer {
-    private final Controller controller;
-    private final FrontendModel model;
+    private final IController controller;
+    private final IFrontendModel model;
 
     private ControlPane controlPanel;
     private CardPane cardPanel;
@@ -27,7 +29,7 @@ public class FrontendView extends JFrame implements Observer {
     private static final int DEFAULT_FRAME_WIDTH = 1600;
     private static final int DEFAULT_FRAME_HEIGHT = 900;
 
-    public FrontendView(FrontendModel model, Controller controller) {
+    public FrontendView(IFrontendModel model, IController controller) {
         super("Set Game");
         this.model = model;
         this.controller = controller;
@@ -37,13 +39,13 @@ public class FrontendView extends JFrame implements Observer {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
         setLocationRelativeTo(null);
+
         // when model changed, panels become updated.
         ((Observable) model).addObserver(this);
         setUpComponents();
         setVisible(true);
 
-//        pack();
-//        setMinimumSize(getPreferredSize());
+        controller.register();
     }
 
     /**
@@ -72,7 +74,7 @@ public class FrontendView extends JFrame implements Observer {
         gbc.gridheight = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.weighty = 1;
-        gbc.weightx = 0.4;
+        gbc.weightx = 0;
         add((infoPanel = new InfoPane(this.model, this.controller)), gbc);
     }
 
