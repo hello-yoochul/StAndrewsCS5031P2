@@ -2,6 +2,10 @@ package stacs.starcade.frontend.view.sub.info;
 
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.IClientModel;
+import stacs.starcade.frontend.view.sub.info.sub.CurrentSetPane;
+import stacs.starcade.frontend.view.sub.info.sub.LeaderBoardPane;
+import stacs.starcade.frontend.view.sub.info.sub.PlayerInfoPane;
+import stacs.starcade.frontend.view.sub.info.sub.TimerPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,8 +20,11 @@ public class InfoPane extends JPanel implements Observer {
     private IController controller;
 
     TimerPane timerPane;
+
+    private PlayerInfoPane playerInfoPane;
     private CurrentSetPane currentSetPane;
     private LeaderBoardPane leaderBoardPane;
+
 
     public InfoPane(IClientModel model, IController controller) {
         this.model = model;
@@ -25,16 +32,15 @@ public class InfoPane extends JPanel implements Observer {
 
         ((Observable) this.model).addObserver(this);
 
-        setLayout(new GridLayout(3, 1));
+        setLayout(new GridLayout(4, 1));
 
         // Add single panes to info pane
+        playerInfoPane = new PlayerInfoPane(this.model, this.controller);
         timerPane = new TimerPane(this.model, this.controller);
-
-        //        new Thread(timerPane).start();
-
         currentSetPane = new CurrentSetPane(this.model, this.controller);
         leaderBoardPane = new LeaderBoardPane(this.model, this.controller);
 
+        add(playerInfoPane);
         add(timerPane);
         add(currentSetPane);
         add(leaderBoardPane);

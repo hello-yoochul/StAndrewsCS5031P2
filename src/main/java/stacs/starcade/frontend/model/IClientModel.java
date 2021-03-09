@@ -23,10 +23,22 @@ public interface IClientModel {
      */
     void update();
 
-
+    /**
+     * Start the timer.
+     */
     void startTimer();
 
+    /**
+     * Get the duration between start time and end time.
+     *
+     * @return the duration between start time and end time.
+     */
     Duration getTime();
+
+    /**
+     * Reset the timer.
+     */
+    public void resetTimer();
 
     /**
      * Set the leader board.

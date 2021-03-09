@@ -67,8 +67,8 @@ public class FrontendView extends JFrame implements Observer {
              */
             @Override
             public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
                 controller.disconnect();
+                super.windowClosing(e);
             }
         });
     }

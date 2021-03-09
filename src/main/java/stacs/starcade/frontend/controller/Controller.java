@@ -67,7 +67,7 @@ public class Controller implements IController {
                 String body = handler.handleResponse(response);
                 model.setPlayerId(Integer.parseInt(body));
             } else {
-                System.out.println("response is error : " + response.getStatusLine().getStatusCode());
+                System.out.println("(register) response is error : " + response.getStatusLine().getStatusCode());
             }
         } catch (IOException e) {
             throw new RuntimeException("error", e);
@@ -89,12 +89,12 @@ public class Controller implements IController {
             public void run() {
                 do {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(10000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     requestLeaderBoard();
-                    System.out.println("Got LeaderBoard");
+//                    System.out.println("Got LeaderBoard");
                 } while (true);
             }
         }
@@ -129,14 +129,14 @@ public class Controller implements IController {
                     entries[i][0] = jsonObject.getString("playerName");
                     entries[i][1] = ((Integer) jsonObject.getInt("round")).toString();
                     entries[i][2] = jsonObject.getString("avgTime");
-                    System.out.println(entries[i][0]);
-                    System.out.println(entries[i][1]);
-                    System.out.println(entries[i][2]);
+//                    System.out.println(entries[i][0]);
+//                    System.out.println(entries[i][1]);
+//                    System.out.println(entries[i][2]);
                 }
 
                 model.setLeaderBoard(entries);
             } else {
-                System.out.println("response is error : " + response.getStatusLine().getStatusCode());
+                System.out.println("(requestLeaderBoard) response is error : " + response.getStatusLine().getStatusCode());
             }
         } catch (IOException e) {
             throw new RuntimeException("error", e);
@@ -193,14 +193,15 @@ public class Controller implements IController {
                     e.printStackTrace();
                 }
             } else {
-                System.out.println("(response error) status code : " + response.getStatusLine().getStatusCode());
+                System.out.println("(setUpCards) status code : " + response.getStatusLine().getStatusCode());
             }
-        } catch (IOException /*| URISyntaxException*/ e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException("(setUpCards) error", e);
         }
 
         model.setUpCard(cards);
         model.setGameStatus(GameStatus.RUNNING);
+        model.startTimer();
     }
 
     /**
@@ -228,7 +229,6 @@ public class Controller implements IController {
             // Check whether owner (player) of card objects has already logged this set of cards
             model.setSetsLog(threeCards); // Trigger model to log valid set of cards
             if (model.getSetsLog().size() == MAX_NUM_SETS) {
-                System.out.println("END ROUND");
                 endRound();
                 JOptionPane.showMessageDialog(null, "You found all sets. The round is over." +
                         "Congratulations!! ", "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
@@ -312,13 +312,14 @@ public class Controller implements IController {
                 HttpResponse response = client.execute(postRequest);
                 if (response.getStatusLine().getStatusCode() == 200) {
                     model.setUpCard(null);
-                    model.setGameStatus(GameStatus.PAUSED);
                 } else {
-                    System.out.println("response is error : " + response.getStatusLine().getStatusCode());
+                    System.out.println("(endRound) response is error : " + response.getStatusLine().getStatusCode());
                 }
             } catch (IOException e) {
-                throw new RuntimeException("error", e);
+                throw new RuntimeException("(endRound) error", e);
             }
+            model.setGameStatus(GameStatus.PAUSED);
+            model.resetTimer();
         }
     }
 
@@ -327,7 +328,6 @@ public class Controller implements IController {
      */
     @Override
     public void disconnect() {
-
         HttpPost postRequest = new HttpPost(basicServerAddress + disconnectFromServer + "/" + model.getPlayerId());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
@@ -336,13 +336,15 @@ public class Controller implements IController {
         try {
             HttpResponse response = client.execute(postRequest);
             if (response.getStatusLine().getStatusCode() == 200) {
-                model.setGameStatus(GameStatus.PAUSED);
+                JOptionPane.showMessageDialog(null, "ROUND FINISHED", "GAME STATUS", JOptionPane.PLAIN_MESSAGE);
             } else {
-                System.out.println("response is error : " + response.getStatusLine().getStatusCode());
+                System.out.println("(disconnect) response is error : " + response.getStatusLine().getStatusCode());
             }
         } catch (IOException e) {
-            throw new RuntimeException("error", e);
+            throw new RuntimeException("(disconnect) error", e);
         }
+        model.setGameStatus(GameStatus.PAUSED);
+        model.resetTimer();
     }
 }
 
