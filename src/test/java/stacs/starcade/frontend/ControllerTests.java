@@ -141,15 +141,20 @@ public class ControllerTests {
     }
 
     @Test
+    void testEndNullRound(){
+
+        assertThrows(NullPointerException.class, () -> {
+            c.endRound(null);
+        });
+
+    }
+
+    @Test
     void testEndRound(){
         ArrayList<ICard[]> a = new ArrayList<>();
         a.add(threeCards);
         a.add(threeCards);
         a.add(threeCards);
-
-        assertThrows(NullPointerException.class, () -> {
-            c.endRound(null);
-        });
 
         assertDoesNotThrow(() -> {
             c.endRound(a);
