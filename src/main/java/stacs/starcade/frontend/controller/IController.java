@@ -1,5 +1,6 @@
 package stacs.starcade.frontend.controller;
 
+import java.util.ArrayList;
 import stacs.starcade.shared.ICard;
 
 public interface IController {
@@ -34,7 +35,7 @@ public interface IController {
     /**
      * End the round.
      */
-    void endRound();
+    void endRound(ArrayList<ICard[]> sets);
 
     /**
      * Trigger disconnecting client from server.
