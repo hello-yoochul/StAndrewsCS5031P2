@@ -60,7 +60,7 @@ public class Controller implements IController {
     /**
      * Param for disconnecting the play.
      */
-    final static String disconnectFromServer = "/disconnect";
+    final static String disconnectParam = "/disconnect";
 
     private IClientModel model;
     private HttpClient client;
@@ -352,7 +352,7 @@ public class Controller implements IController {
      */
     @Override
     public void disconnect() {
-        HttpPost postRequest = new HttpPost(basicServerAddress + disconnectFromServer + "/" + model.getPlayerId());
+        HttpPost postRequest = new HttpPost(basicServerAddress + disconnectParam + "/" + model.getPlayerId());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
