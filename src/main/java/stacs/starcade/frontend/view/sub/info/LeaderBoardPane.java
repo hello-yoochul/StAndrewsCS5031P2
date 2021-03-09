@@ -48,11 +48,6 @@ public class LeaderBoardPane extends JPanel implements Observer {
         public void setData(String[][] data) {
             this.rows = data.length;
             this.data = new String[this.rows][data[0].length];
-//            for (int i = 0; i < this.rows; i++) {
-//                for (int j = 0; j < cols; j++) {
-//
-//                }
-//            }
             this.data = data;
         }
 
