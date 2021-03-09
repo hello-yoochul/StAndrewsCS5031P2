@@ -22,8 +22,6 @@ public class ControlPane extends JPanel implements Observer {
     private IClientModel model;
     private IController controller;
 
-    private LeaderBoardPane leaderBoardPane;
-
     private JButton startGameButton;
     private JButton checkSetButton;
     private JButton nextRoundButton;
@@ -51,7 +49,6 @@ public class ControlPane extends JPanel implements Observer {
     public ControlPane(IClientModel model, IController controller) {
         this.model = model;
         this.controller = controller;
-        this.leaderBoardPane = new LeaderBoardPane(model, controller);
 
         ((Observable) this.model).addObserver(this);
 
@@ -82,7 +79,7 @@ public class ControlPane extends JPanel implements Observer {
         checkSetButton.addActionListener(al);
         nextRoundButton.addActionListener(al);
         endGameButton.addActionListener(al);
-        leaderBoardButton.addActionListener(al);
+//        leaderBoardButton.addActionListener(al);
     }
 
     /**
@@ -94,7 +91,7 @@ public class ControlPane extends JPanel implements Observer {
         add(checkSetButton);
         add(nextRoundButton);
         add(endGameButton);
-        add(leaderBoardButton);
+//        add(leaderBoardButton);
     }
 
     /**
@@ -139,11 +136,11 @@ public class ControlPane extends JPanel implements Observer {
             if (evt == endGameButton) {
                 controller.disconnect();
             }
-
-            if (evt == leaderBoardButton) {
-                JDialog dialog = new JDialog();
-                dialog
-            }
+//
+//            if (evt == leaderBoardButton) {
+//                JDialog dialog = new JDialog();
+//                dialog
+//            }
         }
     }
 

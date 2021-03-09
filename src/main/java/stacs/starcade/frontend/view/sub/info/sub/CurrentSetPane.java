@@ -39,9 +39,6 @@ public class CurrentSetPane extends JPanel implements Observer {
      * Sets the grid for the current_pane.
      */
     private void setGrid() {
-        JLabel setsLabel = new JLabel("Previously selected sets: ");
-        add(setsLabel);
-
         setLayout(new GridLayout(5, 3));
 
         // Generate labels and put them into grid
@@ -72,17 +69,4 @@ public class CurrentSetPane extends JPanel implements Observer {
             repaint();
         }
     }
-
-//    private Image getScaledImage(Image srcImg){
-//        int w = 30;
-//        int h = 40;
-//        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-//        Graphics2D g2 = resizedImg.createGraphics();
-//
-//        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-//        g2.drawImage(srcImg, 0, 0, w, h, null);
-//        g2.dispose();
-//
-//        return resizedImg;
-//    }
 }

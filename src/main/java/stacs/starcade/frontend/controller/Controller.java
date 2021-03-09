@@ -155,9 +155,6 @@ public class Controller implements IController {
                     entries[i][0] = jsonObject.getString("playerName");
                     entries[i][1] = ((Integer) jsonObject.getInt("round")).toString();
                     entries[i][2] = jsonObject.getString("avgTime");
-//                    System.out.println(entries[i][0]);
-//                    System.out.println(entries[i][1]);
-//                    System.out.println(entries[i][2]);
                 }
 
                 model.setLeaderBoard(entries);

@@ -2,14 +2,11 @@ package stacs.starcade.frontend.view.sub.info.sub;
 
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.IClientModel;
-import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -17,27 +14,18 @@ import java.util.Observer;
 /**
  * Panel for the leader board.
  */
-public class LeaderBoardPane extends JFrame implements Observer {
+public class LeaderBoardPane extends JPanel implements Observer {
     private static final int AVG_TIME_COL = 2;
     private static final int DEFAULT_FRAME_WIDTH = 800;
     private static final int DEFAULT_FRAME_HEIGHT = 500;
     private IClientModel model;
     private IController controller;
-    private JFrame frame;
     private JPanel panel;
     private JTable table;
     private TableRowSorter rowSorter;
     private DataModel dataModel;
-    private JButton closeButton;
 
     public LeaderBoardPane(IClientModel model, IController controller) {
-        super("Global Leaderboard");
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
-        setLocationRelativeTo(null);
-
-        this.frame = this;
         this.model = model;
         this.controller = controller;
         ((Observable) this.model).addObserver(this);

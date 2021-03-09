@@ -41,7 +41,7 @@ public class InfoPane extends JPanel implements Observer {
         playerInfoPane = new PlayerInfoPane(this.model, this.controller);
         timerPane = new TimerPane(this.model, this.controller);
         currentSetPane = new CurrentSetPane(this.model, this.controller);
-//        leaderBoardPane = new LeaderBoardPane(this.model, this.controller);
+        leaderBoardPane = new LeaderBoardPane(this.model, this.controller);
 
 
         class GameInfoPane extends JPanel {
@@ -53,7 +53,7 @@ public class InfoPane extends JPanel implements Observer {
 
         add(new GameInfoPane(playerInfoPane, timerPane), BorderLayout.NORTH);
         add(currentSetPane, BorderLayout.CENTER);
-//        add(leaderBoardPane, BorderLayout.SOUTH);
+        add(leaderBoardPane, BorderLayout.SOUTH);
 
         setBackground(new Color(146, 146, 146));
     }
