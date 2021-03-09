@@ -133,7 +133,7 @@ public class ServerModel implements IServerModel {
 
     @Override
     public void disconnectPlayer(IPlayer removedPlayer) {
-        getLeaderboard().removePlayer(removedPlayer);
+        this.leaderBoard.removePlayer(removedPlayer);
     }
 
     private ICard getRandomCard(){
