@@ -1,7 +1,10 @@
 package stacs.starcade.frontend;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import stacs.starcade.BackendApplication;
 import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.ClientModel;
@@ -53,6 +56,13 @@ public class ControllerTests {
         card3.setLineStyle(DASHED);
 
         threeCards = new ICard[] {card1, card2, card3};
+
+        // Ensure that a Server instance is running for the tests
+        try {
+            BackendApplication.main(new String[]{});
+        } catch (Exception ignored){
+
+        }
     }
 
     @Test
@@ -64,6 +74,9 @@ public class ControllerTests {
     @Test
     void testRecogniseThatGivenCardsMakeASet() throws IllegalArgumentException {
         assertTrue(isSet(threeCards));
+        assertDoesNotThrow(() -> {
+            c.validateCards(threeCards);
+        });
     }
 
     @Test
@@ -115,6 +128,36 @@ public class ControllerTests {
         String actualMessage = iae.getMessage();
 
         assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    void testDisconnect(){
+        assertDoesNotThrow(() -> {
+            c.disconnect();
+        });
+    }
+
+    @Test
+    void testRegister(){
+        assertDoesNotThrow(() -> {
+            c.register();
+        });
+    }
+
+    @Test
+    void testEndRound(){
+        ArrayList<ICard[]> a = new ArrayList<>();
+        a.add(threeCards);
+        a.add(threeCards);
+        a.add(threeCards);
+
+        assertThrows(NullPointerException.class, () -> {
+            c.endRound(null);
+        });
+
+        assertDoesNotThrow(() -> {
+            c.endRound(a);
+        });
     }
 
 }

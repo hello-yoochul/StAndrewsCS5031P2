@@ -27,7 +27,7 @@ public class CardTests {
 
     @Test
     void testEqualsOtherObject() {
-        assertFalse(new ServerModel().equals(card));
+        assertFalse(card.equals(new ServerModel()));
     }
 
     @Test
