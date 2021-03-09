@@ -103,4 +103,18 @@ public class SetGameAPITests {
         client.get().uri(disconnectParam + returnedPlayerId)
                 .exchange().expectStatus().isOk();
     }
+
+    @Test
+    void mustRemovePlayerFromLeaderboardWhenDisconnected() {
+        int returnedPlayerId = 1;
+        client.get().uri(registerPlayerParam + anyPlayerName)
+                .exchange().expectStatus().isOk().expectBody(Integer.class).isEqualTo(returnedPlayerId);
+
+        client.get().uri(getLeaderboardParam).exchange().expectBodyList(LeaderBoard.class).hasSize(1);
+
+        client.get().uri(disconnectParam + returnedPlayerId)
+                .exchange().expectStatus().isOk();
+
+        client.get().uri(getLeaderboardParam + anyPlayerName).exchange().expectBodyList(LeaderBoard.class).hasSize(0);
+    }
 }
