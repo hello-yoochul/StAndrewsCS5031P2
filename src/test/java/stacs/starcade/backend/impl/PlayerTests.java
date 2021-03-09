@@ -61,4 +61,34 @@ public class PlayerTests {
         assertTrue(avgTime1 < avgTime2);
     }
 
+    @Test
+    void testPlayingTwoRoundsWithEqualSpeed() throws InterruptedException {
+        player.startRound(mockCardList); // Start round
+        Thread.sleep(2000);
+        player.endRound();
+        long avgTime1 = player.getAvgTime(); // Get average time before starting round (this should be 0)
+
+        player.startRound(mockCardList); // Start second round
+        Thread.sleep(2000);
+        player.endRound();
+        long avgTime2 = player.getAvgTime(); // Get updated average time
+
+        assertTrue(avgTime1 == avgTime2);
+    }
+
+    @Test
+    void testPlayingTwoRoundsWithUnequalSpeed() throws InterruptedException {
+        player.startRound(mockCardList); // Start round
+        Thread.sleep(2000);
+        player.endRound();
+        long avgTime1 = player.getAvgTime(); // Get average time before starting round (this should be 0)
+
+        player.startRound(mockCardList); // Start second round
+        Thread.sleep(1000);
+        player.endRound();
+        long avgTime2 = player.getAvgTime(); // Get updated average time
+
+        assertTrue(avgTime1 > avgTime2);
+    }
+
 }
