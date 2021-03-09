@@ -34,17 +34,7 @@ public class LeaderBoardPane extends JPanel implements Observer {
         String[][] data = model.getLeaderBoard();
 
         // Instantiate table and set auto size
-        this.table = new JTable(data, colNames) {
-            @Override
-            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-                Component component = super.prepareRenderer(renderer, row, column);
-                int width = component.getPreferredSize().width;
-                TableColumn col = getColumnModel().getColumn(column);
-                col.setPreferredWidth(Math.max(width + getIntercellSpacing().width, col.getPreferredWidth()));
-                return component;
-            }
-        };
-        this.table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        this.table = new JTable(data, colNames);
 
         this.table.setShowVerticalLines(true);
         this.table.setShowHorizontalLines(true);

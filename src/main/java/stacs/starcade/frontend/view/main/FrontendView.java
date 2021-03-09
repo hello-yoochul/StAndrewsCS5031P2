@@ -103,7 +103,7 @@ public class FrontendView extends JFrame implements Observer {
         gbc.gridheight = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weighty = 1;
-        gbc.weightx = 1;
+        gbc.weightx = 0.45;
         add((infoPanel = new InfoPane(this.model, this.controller)), gbc);
     }
 
