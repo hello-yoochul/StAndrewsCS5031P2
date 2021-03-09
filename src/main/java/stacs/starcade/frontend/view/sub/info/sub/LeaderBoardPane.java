@@ -86,6 +86,7 @@ public class LeaderBoardPane extends JPanel implements Observer {
 
         // Instantiate table and set auto size
         this.table = new JTable(dataModel);
+        this.table.setShowGrid(false);
         this.table.setShowHorizontalLines(true);
         this.table.setGridColor(Color.BLACK);
         this.table.setBorder(new LineBorder(Color.BLACK));
@@ -98,8 +99,10 @@ public class LeaderBoardPane extends JPanel implements Observer {
 
         // Add table to scroll pane, add scroll pane to pane
         JScrollPane jSP = new JScrollPane(this.table);
-        this.table.setFillsViewportHeight(true);
+        //this.table.setFillsViewportHeight(true);
         jSP.setVerticalScrollBar(new JScrollBar());
+
+        add(new JLabel("Global Leaderboard"));
         add(jSP);
     }
 
