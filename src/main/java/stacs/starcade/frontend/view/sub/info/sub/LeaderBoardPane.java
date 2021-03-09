@@ -86,7 +86,7 @@ public class LeaderBoardPane extends JPanel implements Observer {
 
         // Instantiate table and set auto size
         this.table = new JTable(dataModel);
-        this.table.setShowGrid(true);
+        this.table.setShowHorizontalLines(true);
         this.table.setGridColor(Color.BLACK);
         this.table.setBorder(new LineBorder(Color.BLACK));
 

@@ -78,7 +78,7 @@ public class FrontendView extends JFrame implements Observer {
      * and infoPane(current sets and leaderBoard).
      */
     private void setUpComponents() {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(10,10));
 
         add((controlPanel = new ControlPane(this.model, this.controller)), BorderLayout.NORTH);
         add((cardPanel = new CardPane(this.model, this.controller)), BorderLayout.CENTER);
