@@ -4,21 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeaderBoard implements ILeaderBoard {
-
-    static List<IPlayer> dummyPlayerData;
-
-    ArrayList<IPlayer> players;
+    private ArrayList<IPlayer> players;
 
     public LeaderBoard() {
         players = new ArrayList<>();
-        dummyPlayerData = new ArrayList<>();
     }
 
     /**
      * Gets list of players that are currently playing.
      * Player objects contain information on individual performance: num of rounds played and average time per round.
      *
-     * @return
+     * @return the player list in leader board
      */
     @Override
     public ArrayList<IPlayer> getPlayersList() {
