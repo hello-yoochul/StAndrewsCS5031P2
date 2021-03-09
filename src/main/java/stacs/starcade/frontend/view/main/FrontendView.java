@@ -85,33 +85,13 @@ public class FrontendView extends JFrame implements Observer {
      * and infoPane(current sets and leaderBoard).
      */
     private void setUpComponents() {
-        // obtained from https://stackoverflow.com/questions/33576358/how-to-use-java-swing-layout-manager-to-make-this-gui
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1;
-        gbc.weighty = 0.05;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(4, 4, 4, 4);
+        setLayout(new BorderLayout(10,10));
 
-        // Add control pane to grid
-        add((controlPanel = new ControlPane(this.model, this.controller)), gbc);
-
-        // Add card panel to grid
-        gbc.weighty = 1;
-        gbc.gridy++;
-        add((cardPanel = new CardPane(this.model, this.controller)), gbc);
-
-        // Add info pane to
-        gbc.gridy = 0;
-        gbc.gridx = 1;
-        gbc.gridheight = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weighty = 1;
-        gbc.weightx = 0.55;
-        add((infoPanel = new InfoPane(this.model, this.controller)), gbc);
+        add((controlPanel = new ControlPane(this.model, this.controller)), BorderLayout.NORTH);
+        add((cardPanel = new CardPane(this.model, this.controller)), BorderLayout.CENTER);
+        cardPanel.setPreferredSize(new Dimension(1000, 850));
+        add((infoPanel = new InfoPane(this.model, this.controller)), BorderLayout.EAST);
+        infoPanel.setSize(new Dimension(600, 850));
     }
 
     /**
