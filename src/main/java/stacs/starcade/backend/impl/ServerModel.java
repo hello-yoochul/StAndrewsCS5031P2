@@ -128,7 +128,7 @@ public class ServerModel implements IServerModel {
 
     @Override
     public void addPlayer(IPlayer newP) {
-        this.getLeaderboard().addPlayer(newP);
+        this.leaderBoard.addPlayer(newP);
     }
 
     @Override

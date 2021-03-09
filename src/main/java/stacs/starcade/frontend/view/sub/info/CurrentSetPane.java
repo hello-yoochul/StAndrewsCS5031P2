@@ -42,6 +42,7 @@ public class CurrentSetPane extends JPanel implements Observer {
         for (int i = 0; i < GRID_FIELDS; i++) {
             JLabel imgLabel = new JLabel();
             labels.add(imgLabel);
+            add(imgLabel);
         }
     }
 
@@ -53,10 +54,10 @@ public class CurrentSetPane extends JPanel implements Observer {
         if (numSets > 0) {
             for (int i = 0; i < numSets; i++) {
                 for (int j = 0; j < CARDS_PER_SET; j++) {
-                    counter++;
                     ICard card = loggedSets.get(i)[j];
                     Image img = getImage(card);
                     this.labels.get(counter).setIcon(new ImageIcon(img));
+                    counter++;
                 }
             }
         }

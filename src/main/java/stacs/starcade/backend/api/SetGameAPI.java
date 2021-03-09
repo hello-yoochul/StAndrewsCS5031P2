@@ -77,7 +77,6 @@ public class SetGameAPI implements ISetGameAPI {
 
         player.endRound();
         model.getLeaderboard().sortList();
-
     }
 
     /**

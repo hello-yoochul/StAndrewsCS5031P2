@@ -89,17 +89,21 @@ public class FrontendView extends JFrame implements Observer {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(4, 4, 4, 4);
 
+        // Add control pane to grid
         add((controlPanel = new ControlPane(this.model, this.controller)), gbc);
+
+        // Add card panel to grid
         gbc.weighty = 1;
         gbc.gridy++;
         add((cardPanel = new CardPane(this.model, this.controller)), gbc);
 
+        // Add info pane to
         gbc.gridy = 0;
-        gbc.gridx++;
+        gbc.gridx = 1;
         gbc.gridheight = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weighty = 1;
-        gbc.weightx = 0;
+        gbc.weightx = 1;
         add((infoPanel = new InfoPane(this.model, this.controller)), gbc);
     }
 
