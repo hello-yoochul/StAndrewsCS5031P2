@@ -35,7 +35,7 @@ public class CardPane extends JPanel implements Observer {
             add(cardImageButtons.get(i));
         }
 
-        this.setLayout(new GridLayout(3, 4));
+        setLayout(new GridLayout(3, 4));
 
         setCardsOnButtons();
 

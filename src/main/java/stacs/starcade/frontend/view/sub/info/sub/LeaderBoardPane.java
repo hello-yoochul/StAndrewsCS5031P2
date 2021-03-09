@@ -2,12 +2,14 @@ package stacs.starcade.frontend.view.sub.info.sub;
 
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.IClientModel;
+import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -15,20 +17,32 @@ import java.util.Observer;
 /**
  * Panel for the leader board.
  */
-public class LeaderBoardPane extends JPanel implements Observer {
+public class LeaderBoardPane extends JFrame implements Observer {
     private static final int AVG_TIME_COL = 2;
+    private static final int DEFAULT_FRAME_WIDTH = 800;
+    private static final int DEFAULT_FRAME_HEIGHT = 500;
     private IClientModel model;
     private IController controller;
+    private JFrame frame;
+    private JPanel panel;
     private JTable table;
     private TableRowSorter rowSorter;
     private DataModel dataModel;
+    private JButton closeButton;
 
     public LeaderBoardPane(IClientModel model, IController controller) {
+        super("Global Leaderboard");
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
+        setLocationRelativeTo(null);
+
+        this.frame = this;
         this.model = model;
         this.controller = controller;
         ((Observable) this.model).addObserver(this);
 
-        setTable();
+        setPanel();
     }
 
     /**
@@ -42,7 +56,7 @@ public class LeaderBoardPane extends JPanel implements Observer {
         private static final int cols = 3;
 
         public void setHeaders(String[] headers) {
-            headers = new String[cols];
+            this.headers = new String[cols];
             this.headers = new String[]{headers[0], headers[1], headers[2]};
         }
 
@@ -77,7 +91,10 @@ public class LeaderBoardPane extends JPanel implements Observer {
     /**
      * Initialises table and its properties.
      */
-    private void setTable() {
+    private void setPanel() {
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout(20,5));
+
         dataModel = new DataModel();
         String[] headers = {"Player", "Rounds", "AvgTime"};
         String[][] data = {{model.getPlayerName(), null, null}};
@@ -88,8 +105,8 @@ public class LeaderBoardPane extends JPanel implements Observer {
         this.table = new JTable(dataModel);
         this.table.setShowGrid(false);
         this.table.setShowHorizontalLines(true);
+        this.table.setShowVerticalLines(false);
         this.table.setGridColor(Color.BLACK);
-        this.table.setBorder(new LineBorder(Color.BLACK));
 
         // Create sorter for table
         rowSorter = new TableRowSorter(this.dataModel);
@@ -99,12 +116,47 @@ public class LeaderBoardPane extends JPanel implements Observer {
 
         // Add table to scroll pane, add scroll pane to pane
         JScrollPane jSP = new JScrollPane(this.table);
-        //this.table.setFillsViewportHeight(true);
+        this.table.setFillsViewportHeight(true);
         jSP.setVerticalScrollBar(new JScrollBar());
 
-        add(new JLabel("Global Leaderboard"));
+
+        JLabel lbLabel = new JLabel("Global Leaderboard: ");
+        add(lbLabel);
         add(jSP);
     }
+
+//    private JPanel button() {
+//        JPanel buttonPanel = new JPanel();
+//        closeButton = new JButton("Close Leaderboard");
+//        closeButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                Object evt = e.getSource();
+//                if (evt == closeButton) {
+//
+//                }
+//            }
+//        });
+//        buttonPanel.add(closeButton);
+//
+//    }
+
+//    /**
+//     * Mouse click event listener,
+//     */
+//    class MyButtonListener implements ActionListener {
+//        /**
+//         * When an event occurs, it will be executed.
+//         */
+//        @Override
+//        public void actionPerformed(ActionEvent actionEvent) {
+//            Object evt = actionEvent.getSource();
+//
+//            if (evt == closeButton) {
+//                ;
+//            }
+//        }
+//    }
 
     /**
      * If the {@link IClientModel} is updated, it will be invoked (observer notification)).
