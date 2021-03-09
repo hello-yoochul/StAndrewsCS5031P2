@@ -1,12 +1,11 @@
 package stacs.starcade.frontend.view.sub.info.sub;
 
 import stacs.starcade.frontend.controller.IController;
+import stacs.starcade.frontend.model.ClientModel;
 import stacs.starcade.frontend.model.IClientModel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -50,8 +49,14 @@ public class LeaderBoardPane extends JPanel implements Observer {
         add(jSP);
     }
 
+    /**
+     * If the {@link ClientModel} is updated, it will be invoked (observer notification)).
+     *
+     * @param arg0 the observable object.
+     * @param arg1 an argument passed to the {@code notifyObservers} method.
+     */
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable arg0, Object arg1) {
         repaint();
     }
 }
