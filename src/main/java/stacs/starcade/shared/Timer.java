@@ -61,7 +61,7 @@ public class Timer implements ITimer {
     /**
      * Format changer for Duration.
      */
-    // obtained from https://stackoverflow.com/questions/266825/how-to-format-a-duration-in-java-e-g-format-hmmss
+    // obtained from: https://stackoverflow.com/questions/266825/how-to-format-a-duration-in-java-e-g-format-hmmss
     public static String formatDuration(Duration duration) {
         long seconds = duration.getSeconds();
         long absSeconds = Math.abs(seconds);
