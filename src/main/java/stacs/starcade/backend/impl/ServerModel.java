@@ -2,22 +2,23 @@ package stacs.starcade.backend.impl;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
 
 import java.util.ArrayList;
 
-public class Model implements IModel {
+public class ServerModel implements IServerModel {
     private int nextPlayerID = 0;
     private ILeaderBoard leaderBoard;
 
-    ArrayList<ICard> allCards;
+    private ArrayList<ICard> allCards;
 
     private final static int NUM_TWELVE = 12;
     private final static int NUM_SETS = 5;
 
-    public Model() {
+    public ServerModel() {
         setCards();
         leaderBoard = new LeaderBoard();
     }
@@ -52,7 +53,7 @@ public class Model implements IModel {
      * @return IPlayer object that has ID playerID
      */
     @Override
-    public IPlayer getPlayer(int playerID) throws IllegalArgumentException {
+    public IPlayer getPlayer(int playerID) {
         for (IPlayer p : this.getLeaderboard().getPlayersList()) {
             if (p.getPlayerId() == playerID) {
                 return p;
@@ -127,12 +128,12 @@ public class Model implements IModel {
 
     @Override
     public void addPlayer(IPlayer newP) {
-        this.getLeaderboard().addPlayer(newP);
+        this.leaderBoard.addPlayer(newP);
     }
 
     @Override
     public void disconnectPlayer(IPlayer removedPlayer) {
-        getLeaderboard().removePlayer(removedPlayer);
+        this.leaderBoard.removePlayer(removedPlayer);
     }
 
     private ICard getRandomCard(){

@@ -2,7 +2,7 @@ package stacs.starcade.frontend;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.frontend.model.ClientModel;
 import stacs.starcade.frontend.view.sub.card.CardImageButton;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.ICard;
@@ -16,7 +16,7 @@ import static stacs.starcade.shared.ICard.Number;
 
 public class CardImageButtonTests {
     private CardImageButton cardImageButton;
-    private FrontendModel model;
+    private ClientModel model;
 
     @BeforeEach
     void setup() {
@@ -32,7 +32,7 @@ public class CardImageButtonTests {
         card.setNumber(Number.ONE);
         cardImageButton.setCard(card);
 
-        assertThat(cardImageButton.getImagePathStr(), is(equalTo("RED-ONE-TRIANGLE-DOTTED.png")));
+        assertThat(cardImageButton.getImagePathStr(), is(equalTo("/RED-ONE-TRIANGLE-DOTTED.png")));
     }
 
     @Test

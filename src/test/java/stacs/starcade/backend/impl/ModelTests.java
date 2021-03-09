@@ -5,17 +5,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class ModelTests {
 
-    private Model model;
+    private ServerModel model;
 
     @BeforeEach
     public void setup() {
-        model = new Model();
+        model = new ServerModel();
     }
 
     @Test

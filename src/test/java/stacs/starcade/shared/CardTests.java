@@ -2,12 +2,11 @@ package stacs.starcade.shared;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import stacs.starcade.backend.impl.Model;
+import stacs.starcade.backend.impl.ServerModel;
 import stacs.starcade.shared.ICard.Colour;
 import stacs.starcade.shared.ICard.LineStyle;
 import stacs.starcade.shared.ICard.Number;
@@ -28,7 +27,7 @@ public class CardTests {
 
     @Test
     void testEqualsOtherObject() {
-        assertFalse(new Model().equals(card));
+        assertFalse(new ServerModel().equals(card));
     }
 
     @Test

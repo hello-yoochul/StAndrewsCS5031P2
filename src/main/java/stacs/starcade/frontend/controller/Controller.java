@@ -7,11 +7,12 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import stacs.starcade.frontend.model.FrontendModel;
-import stacs.starcade.frontend.model.IFrontendModel;
+
+import stacs.starcade.frontend.model.IClientModel;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
@@ -20,8 +21,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
-import static javax.swing.SwingUtilities.getRoot;
-import static stacs.starcade.frontend.model.IFrontendModel.*;
+import static stacs.starcade.frontend.model.IClientModel.*;
 
 
 /**
@@ -30,38 +30,38 @@ import static stacs.starcade.frontend.model.IFrontendModel.*;
 public class Controller implements IController {
 
     private static final int MAX_NUM_SETS = 5;
-    private static final int NUM_COLS = 3;
-    private IFrontendModel model;
+    public static final int NUM_COLS = 3;
+    private IClientModel model;
     private HttpClient client;
-
-    HttpPost postRequest;
-    HttpResponse response;
 
     final static String basicServerAddress = "http://localhost:8080/";
     final static String registerPlayerParam = "/registerPlayer";
     final static String nextRoundParam = "/nextRound";
     final static String endRoundParam = "/endRound";
     final static String getLeaderboardParam = "/getLeaderboard";
+    final static String disconnectFromServer = "/disconnect";
 
     /**
      * FrontendController constructor.
      */
-    public Controller(IFrontendModel model) {
+    public Controller(IClientModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
-        register();
+        //register();
     }
 
-    private void register() {
-        System.out.println("name: " + model.getPlayerName());
-
-        postRequest = new HttpPost(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
+    /**
+     * Registers the client with the server and gets a unique player id.
+     */
+    @Override
+    public void register() {
+        HttpGet postRequest = new HttpGet(basicServerAddress + registerPlayerParam + "/" + model.getPlayerName());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
 
         try {
-            response = client.execute(postRequest);
+            HttpResponse response = client.execute(postRequest);
             if (response.getStatusLine().getStatusCode() == 200) {
                 ResponseHandler<String> handler = new BasicResponseHandler();
                 String body = handler.handleResponse(response);
@@ -72,11 +72,40 @@ public class Controller implements IController {
         } catch (IOException e) {
             throw new RuntimeException("error", e);
         }
+
+        // Initial request of leaderboard so that leaderboard table can be set up in view
+        requestLeaderBoard();
     }
 
-    public void getLeaderBoard() {
-        // Ignore the button event if the game has already started
+    /**
+     * Continuously polls for updates on leaderboard.
+     */
+    public void pollForLeaderBoard() {
+        /**
+         * Inner class for timer running in another Thread.
+         */
+        class LeaderBoardPoller implements Runnable {
+            @Override
+            public void run() {
+                do {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    requestLeaderBoard();
+                    System.out.println("Got LeaderBoard");
+                } while (true);
+            }
+        }
+        LeaderBoardPoller lbp = new LeaderBoardPoller();
+        lbp.run();
+    }
 
+    /**
+     * Requests current leaderboard from server.
+     */
+    private void requestLeaderBoard() {
         HttpGet getRequest = new HttpGet(basicServerAddress + getLeaderboardParam);
         getRequest.setHeader("Accept", "application/json");
         getRequest.setHeader("Connection", "keep-alive");
@@ -86,7 +115,6 @@ public class Controller implements IController {
             HttpResponse response = client.execute(getRequest);
             if (response.getStatusLine().getStatusCode() == 200) {
 
-                //TODO: get leaderboard from server and paint it on the right panel (infoPane)
                 ResponseHandler<String> handler = new BasicResponseHandler();
                 String body = handler.handleResponse(response);
                 JSONArray jsonArray = new JSONArray(body);
@@ -101,10 +129,12 @@ public class Controller implements IController {
                     entries[i][0] = jsonObject.getString("playerName");
                     entries[i][1] = ((Integer) jsonObject.getInt("round")).toString();
                     entries[i][2] = jsonObject.getString("avgTime");
+                    System.out.println(entries[i][0]);
+                    System.out.println(entries[i][1]);
+                    System.out.println(entries[i][2]);
                 }
 
                 model.setLeaderBoard(entries);
-                System.out.println(response);
             } else {
                 System.out.println("response is error : " + response.getStatusLine().getStatusCode());
             }
@@ -118,17 +148,11 @@ public class Controller implements IController {
      */
     @Override
     public void startGame() {
-        System.out.println("IS game running: " + model.getStatus());
         // Ignore the button event if the game has already started
         if (model.getStatus() != GameStatus.RUNNING) {
             model.setGameStatus(GameStatus.RUNNING);
             setUpCards();
         }
-    }
-
-    public static void main(String[] args) {
-        Controller controller = new Controller(new FrontendModel());
-        controller.setUpCards();
     }
 
     /**
@@ -138,14 +162,13 @@ public class Controller implements IController {
     public void setUpCards() {
         List<ICard> cards = new ArrayList<>();
 
-        postRequest = new HttpPost(basicServerAddress + nextRoundParam + "/" + model.getPlayerId());
+        HttpGet postRequest = new HttpGet(basicServerAddress + nextRoundParam + "/" + model.getPlayerId());
         postRequest.setHeader("Accept", "application/json");
         postRequest.setHeader("Connection", "keep-alive");
         postRequest.setHeader("Content-Type", "application/json");
 
-        HttpResponse response = null;
         try {
-            response = client.execute(postRequest);
+            HttpResponse response = client.execute(postRequest);
             if (response.getStatusLine().getStatusCode() == 200) {
                 // obtained from  https://stackoverflow.com/questions/39764621/parse-json-without-key/39764907
                 try {
@@ -181,24 +204,6 @@ public class Controller implements IController {
     }
 
     /**
-     * Select a card. Player will invoke this method 3 times to choose three cards.
-     *
-     * @param card a card to check if selected cards are set
-     */
-    @Override
-    public void selectCard(ICard card) {
-        model.selectCard(card);
-    }
-
-    /**
-     * Set the current unique player id.
-     */
-    @Override
-    public void setPlayerId() {
-        // TODO: Get player ID from Server and store it the Model, FrontendModel
-    }
-
-    /**
      * Validate the three cards if it is set.
      *
      * @param threeCards the three cards to be validated
@@ -211,25 +216,34 @@ public class Controller implements IController {
         if (threeCards.length != 3) {
             throw new IllegalArgumentException("A set can only consist of exactly three cards!");
         } else if (logSize > 0 && alreadyLogged(threeCards)) {
+            removeSelectedCards(threeCards);
             throw new IllegalArgumentException("Selected set has already been logged.");
         }
 
         (new JLabel("Set!!")).setHorizontalAlignment(SwingConstants.CENTER);
 
         if (Checks.isSet(threeCards)) {
-            JOptionPane.showMessageDialog(null, "Set!!", "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Set!!", "VALIDATION RESULT",
+                    JOptionPane.PLAIN_MESSAGE);
             // Check whether owner (player) of card objects has already logged this set of cards
             model.setSetsLog(threeCards); // Trigger model to log valid set of cards
             if (model.getSetsLog().size() == MAX_NUM_SETS) {
                 System.out.println("END ROUND");
                 endRound();
+                JOptionPane.showMessageDialog(null, "You found all sets. The round is over." +
+                        "Congratulations!! ", "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No Set...", "VALIDATION RESULT", JOptionPane.ERROR_MESSAGE);
-            model.removeSelectedCard(threeCards[0]);
-            model.removeSelectedCard(threeCards[1]);
-            model.removeSelectedCard(threeCards[2]);
+            JOptionPane.showMessageDialog(null, "No Set...", "VALIDATION RESULT",
+                    JOptionPane.ERROR_MESSAGE);
+            removeSelectedCards(threeCards);
         }
+    }
+
+    private void removeSelectedCards(ICard[] threeCards) {
+        model.removeSelectedCard(threeCards[0]);
+        model.removeSelectedCard(threeCards[1]);
+        model.removeSelectedCard(threeCards[2]);
     }
 
     /**
@@ -289,22 +303,45 @@ public class Controller implements IController {
         if (model.getStatus() != GameStatus.RUNNING) {
             model.setGameStatus(GameStatus.RUNNING);
 
-            // TODO: remove the "anyname" and get the input of client name
-            postRequest = new HttpPost(basicServerAddress + endRoundParam + "/" + model.getPlayerId());
+            HttpPost postRequest = new HttpPost(basicServerAddress + endRoundParam + "/" + model.getPlayerId());
             postRequest.setHeader("Accept", "application/json");
             postRequest.setHeader("Connection", "keep-alive");
             postRequest.setHeader("Content-Type", "application/json");
 
             try {
-                response = client.execute(postRequest);
+                HttpResponse response = client.execute(postRequest);
                 if (response.getStatusLine().getStatusCode() == 200) {
-                    //
+                    model.setUpCard(null);
+                    model.setGameStatus(GameStatus.PAUSED);
                 } else {
                     System.out.println("response is error : " + response.getStatusLine().getStatusCode());
                 }
             } catch (IOException e) {
                 throw new RuntimeException("error", e);
             }
+        }
+    }
+
+    /**
+     * Trigger disconnecting client from server.
+     */
+    @Override
+    public void disconnect() {
+
+        HttpPost postRequest = new HttpPost(basicServerAddress + disconnectFromServer + "/" + model.getPlayerId());
+        postRequest.setHeader("Accept", "application/json");
+        postRequest.setHeader("Connection", "keep-alive");
+        postRequest.setHeader("Content-Type", "application/json");
+
+        try {
+            HttpResponse response = client.execute(postRequest);
+            if (response.getStatusLine().getStatusCode() == 200) {
+                model.setGameStatus(GameStatus.PAUSED);
+            } else {
+                System.out.println("response is error : " + response.getStatusLine().getStatusCode());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("error", e);
         }
     }
 }

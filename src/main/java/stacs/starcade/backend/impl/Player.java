@@ -107,7 +107,5 @@ public class Player implements IPlayer {
         setTotalTime(timer.getTime());
         setAvgTime();
         timer.reset();
-
-        // TODO: Notify leaderboard to update list
     }
 }

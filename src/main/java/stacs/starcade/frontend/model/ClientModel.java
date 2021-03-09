@@ -1,6 +1,6 @@
 package stacs.starcade.frontend.model;
 
-
+import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.view.main.FrontendView;
 import stacs.starcade.shared.ICard;
 import stacs.starcade.shared.ITimer;
@@ -14,7 +14,7 @@ import java.util.*;
  * Once the data is updated, the {@link FrontendView} will be
  * invoked to repaint the panel.
  */
-public class FrontendModel extends Observable implements IFrontendModel {
+public class ClientModel extends Observable implements IClientModel {
     public final static int MAXIMUM_NUMBER_OF_SELECTED_CARDS = 3;
 
     private GameStatus status;
@@ -29,7 +29,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     /**
      * Construct FrontendModel.
      */
-    public FrontendModel() {
+    public ClientModel() {
         cardsOnBoard = new ArrayList<>();
         selectedCards = new ArrayList<>();
         setsLog = new ArrayList<>();
@@ -62,7 +62,16 @@ public class FrontendModel extends Observable implements IFrontendModel {
      */
     @Override
     public void setLeaderBoard(String[][] leaderBoard) {
-        this.leaderBoard = leaderBoard;
+        int lbSize = leaderBoard.length;
+        this.leaderBoard = new String[lbSize][Controller.NUM_COLS];
+
+        for (int i = 0; i < lbSize; i++) {
+            for (int j = 0; j < Controller.NUM_COLS; j++) {
+                this.leaderBoard[i][j] = leaderBoard[i][j];
+                System.out.println(this.leaderBoard[i][j]);
+            }
+        }
+        update();
     }
 
     /**
@@ -102,7 +111,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
      * @param status one of the {@link GameStatus}
      */
     @Override
-    public void setGameStatus(IFrontendModel.GameStatus status) {
+    public void setGameStatus(IClientModel.GameStatus status) {
         this.status = status;
     }
 
@@ -137,7 +146,10 @@ public class FrontendModel extends Observable implements IFrontendModel {
     }
 
     @Override
-    public void removeSelectedCard(ICard card) { selectedCards.remove(card); }
+    public void removeSelectedCard(ICard card) {
+        selectedCards.remove(card);
+        update();
+    }
 
     /**
      * Select card among the cards on board.
@@ -147,7 +159,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     @Override
     public void selectCard(ICard card) {
         if (!cardsOnBoard.contains(card)) {
-            throw new IllegalArgumentException("card does not exsit on the board");
+            throw new IllegalArgumentException("card does not exist on the board");
         }
         selectedCards.add(card);
     }

@@ -1,14 +1,16 @@
 package stacs.starcade.backend.api;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
 import stacs.starcade.backend.impl.IPlayer;
 import stacs.starcade.backend.impl.*;
 import stacs.starcade.backend.impl.Player;
-import stacs.starcade.shared.Card;
+import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
 
 /**
@@ -17,7 +19,7 @@ import stacs.starcade.shared.ICard;
 @RestController
 public class SetGameAPI implements ISetGameAPI {
 
-    private IModel model = new Model();
+    private IServerModel model = new ServerModel();
 
     /**
      * Registers a new player with a given playerName and generates a unique player ID.
@@ -26,7 +28,7 @@ public class SetGameAPI implements ISetGameAPI {
      *
      * @return newly generated player ID.
      */
-    @PostMapping("/registerPlayer/{playerName}")
+    @GetMapping("/registerPlayer/{playerName}")
     public Integer registerPlayer(@PathVariable String playerName) {
         int newPID = model.generatePlayerID();
         IPlayer newP = new Player(playerName, newPID);
@@ -39,10 +41,12 @@ public class SetGameAPI implements ISetGameAPI {
      *
      * @return returns an array with twelve cards that will be used for the new round.
      */
-    @PostMapping("/nextRound/{playerID}")
-    public ArrayList<ICard> startNextRound(@PathVariable int playerID) throws ResponseStatusException {
+    @GetMapping("/nextRound/{playerID}")
+    public ArrayList<ICard> startNextRound(@PathVariable int playerID)  {
+        final IPlayer player = model.getPlayer(playerID);
+
         ArrayList<ICard> twelveCards = model.getTwelveCards();
-        model.getPlayer(playerID).startRound(twelveCards);
+        player.startRound(twelveCards);
 
         return twelveCards;
     }
@@ -54,10 +58,25 @@ public class SetGameAPI implements ISetGameAPI {
      *
      * @param playerID the unique player ID
      */
-    // TODO: Pass in sets and verify them
-    @PostMapping("/endRound/{playerID}")
-    public void endRound(@PathVariable int playerID, @PathVariable ArrayList<ArrayList<ICard>> sets) throws ResponseStatusException {
-        model.getPlayer(playerID).endRound();
+    @PostMapping( value = {"/endRound/{playerID}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void endRound(@PathVariable int playerID, @RequestBody ArrayList<ArrayList<ICard>> sets) {
+        final IPlayer player = model.getPlayer(playerID);
+
+        for (ArrayList<ICard> cardList : sets) {
+            for (ICard card : cardList) {
+                if (!player.getStoredCards().contains(card)) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Stale cards.");
+                }
+            }
+
+            if (!Checks.isSet((ICard[]) cardList.toArray())){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not a set.");
+            }
+
+        }
+
+        player.endRound();
+        model.getLeaderboard().sortList();
     }
 
     /**
@@ -65,7 +84,7 @@ public class SetGameAPI implements ISetGameAPI {
      *
      * @param playerID ID of player that is removed
      */
-    @PostMapping("/disconnect/{playerID}")
+    @GetMapping("/disconnect/{playerID}")
     public void disconnect(@PathVariable int playerID) {
         IPlayer removedPlayer = model.getPlayer(playerID);
         model.disconnectPlayer(removedPlayer);

@@ -3,6 +3,17 @@ package stacs.starcade.frontend.controller;
 import stacs.starcade.shared.ICard;
 
 public interface IController {
+
+    /**
+     * Registers the client with the server and gets a unique player id.
+     */
+    void register();
+
+    /**
+     * Continuously polls for updates on leaderboard.
+     */
+    void pollForLeaderBoard();
+
     /**
      * Start a game.
      */
@@ -12,18 +23,6 @@ public interface IController {
      * Set up the 12 cards.
      */
     void setUpCards();
-
-    /**
-     * Select a card. Player will invoke this method 3 times to choose three cards.
-     *
-     * @param card a card to check if selected cards are set
-     */
-    void selectCard(ICard card);
-
-    /**
-     * Set the current unique player id.
-     */
-    void setPlayerId();
 
     /**
      * Validate the three cards if it is set.
@@ -36,4 +35,9 @@ public interface IController {
      * End the round.
      */
     void endRound();
+
+    /**
+     * Trigger disconnecting client from server.
+     */
+    void disconnect();
 }
