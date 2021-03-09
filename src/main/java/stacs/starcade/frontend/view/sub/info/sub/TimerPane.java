@@ -1,6 +1,7 @@
 package stacs.starcade.frontend.view.sub.info.sub;
 
 import stacs.starcade.frontend.controller.IController;
+import stacs.starcade.frontend.model.ClientModel;
 import stacs.starcade.frontend.model.IClientModel;
 
 import javax.swing.*;
@@ -22,6 +23,9 @@ public class TimerPane extends JPanel implements Observer {
     private Thread thread;
     private boolean isGameRunning;
 
+    /**
+     * Inner class for timer running in another Thread.
+     */
     public TimerPane(IClientModel model, IController controller) {
         this.model = model;
 
@@ -55,10 +59,13 @@ public class TimerPane extends JPanel implements Observer {
     }
 
     /**
-     * Once the game start, the timer thread will be started.
+     * If the {@link ClientModel} is updated, it will be invoked (observer notification)).
+     *
+     * @param arg0 the observable object.
+     * @param arg1 an argument passed to the {@code notifyObservers} method.
      */
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable arg0, Object arg1) {
         if (model.getStatus() == GameStatus.RUNNING) {
             if(!isGameRunning){
                 thread.start();

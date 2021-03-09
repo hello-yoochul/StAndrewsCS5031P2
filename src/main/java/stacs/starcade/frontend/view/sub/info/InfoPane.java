@@ -19,8 +19,7 @@ public class InfoPane extends JPanel implements Observer {
     private IClientModel model;
     private IController controller;
 
-    TimerPane timerPane;
-
+    private TimerPane timerPane;
     private PlayerInfoPane playerInfoPane;
     private CurrentSetPane currentSetPane;
     private LeaderBoardPane leaderBoardPane;

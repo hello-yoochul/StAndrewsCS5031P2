@@ -28,18 +28,42 @@ import static stacs.starcade.frontend.model.IClientModel.*;
  *
  */
 public class Controller implements IController {
-
+    /**
+     * Maximum number of sets.
+     */
     private static final int MAX_NUM_SETS = 5;
+    /**
+     * Number of column for leaderboard.
+     */
     public static final int NUM_COLS = 3;
+
+    /**
+     * Basic server address.
+     */
+    final static String basicServerAddress = "http://localhost:8080/";
+    /**
+     * Param for registering the player.
+     */
+    final static String registerPlayerParam = "/registerPlayer";
+    /**
+     * Param for next round.
+     */
+    final static String nextRoundParam = "/nextRound";
+    /**
+     * Param for end round.
+     */
+    final static String endRoundParam = "/endRound";
+    /**
+     * Param for getting leaderboard.
+     */
+    final static String getLeaderboardParam = "/getLeaderboard";
+    /**
+     * Param for disconnecting the play.
+     */
+    final static String disconnectFromServer = "/disconnect";
+
     private IClientModel model;
     private HttpClient client;
-
-    final static String basicServerAddress = "http://localhost:8080/";
-    final static String registerPlayerParam = "/registerPlayer";
-    final static String nextRoundParam = "/nextRound";
-    final static String endRoundParam = "/endRound";
-    final static String getLeaderboardParam = "/getLeaderboard";
-    final static String disconnectFromServer = "/disconnect";
 
     /**
      * FrontendController constructor.
