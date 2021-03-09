@@ -10,6 +10,8 @@ import stacs.starcade.frontend.view.sub.info.InfoPane;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -34,18 +36,40 @@ public class FrontendView extends JFrame implements Observer {
         this.model = model;
         this.controller = controller;
 
+        // when model changed, panels are updated.
+        ((Observable) this.model).addObserver(this);
+
         model.setPlayerName(JOptionPane.showInputDialog(this, "Enter your name:"));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);
         setLocationRelativeTo(null);
+        addExitListener();
 
-        // when model changed, panels become updated.
-        ((Observable) this.model).addObserver(this);
         setUpComponents();
         setVisible(true);
 
         controller.register();
+    }
+
+    /**
+     * Defines actions when window is closed.
+     * Client is disconnected from sever.
+     */
+    private void addExitListener() {
+        addWindowListener(new WindowAdapter() {
+            /**
+             * Invoked when a window is in the process of being closed.
+             * The close operation can be overridden at this point.
+             *
+             * @param e
+             */
+            @Override
+            public void windowClosing(WindowEvent e) {
+                controller.disconnect();
+                super.windowClosing(e);
+            }
+        });
     }
 
     /**
