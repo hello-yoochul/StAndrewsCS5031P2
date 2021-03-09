@@ -45,7 +45,6 @@ public class CardPane extends JPanel implements Observer {
         List<ICard> cards = model.getCards();
         if (cards.size() != 0) {
             for (int i = 0; i < cards.size(); i++) {
-                System.out.println("setCards");
                 cardImageButtons.get(i).setCard(cards.get(i));
             }
         }

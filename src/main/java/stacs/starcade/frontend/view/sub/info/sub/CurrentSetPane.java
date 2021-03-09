@@ -1,4 +1,4 @@
-package stacs.starcade.frontend.view.sub.info;
+package stacs.starcade.frontend.view.sub.info.sub;
 
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.IClientModel;

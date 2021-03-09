@@ -1,9 +1,10 @@
-package stacs.starcade.frontend.view.sub.info;
+package stacs.starcade.frontend.view.sub.info.sub;
 
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.IClientModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.time.Duration;
 import java.util.Observable;
 import java.util.Observer;
@@ -17,6 +18,7 @@ public class TimerPane extends JPanel implements Observer {
     private IClientModel model;
     private JLabel timerLabel;
     private TimerRunner timerRunner;
+    Thread thread;
 
     public TimerPane(IClientModel model, IController controller) {
         this.model = model;
@@ -25,8 +27,10 @@ public class TimerPane extends JPanel implements Observer {
 
         timerLabel = new JLabel("0:00:00");
         timerLabel.setBounds(0, 0, 100, 20);
+        timerLabel.setFont(new Font("Serif", Font.BOLD, 25));
 //        timerLabel.setHorizontalAlignment(JLabel.CENTER);
         timerRunner = new TimerRunner();
+        thread = new Thread(timerRunner);
         add(timerLabel);
     }
 
@@ -49,7 +53,6 @@ public class TimerPane extends JPanel implements Observer {
      * Inner class for timer running in another Thread.
      */
     class TimerRunner extends JPanel implements Runnable {
-
         @Override
         public void run() {
             do {
@@ -59,7 +62,6 @@ public class TimerPane extends JPanel implements Observer {
                     e.printStackTrace();
                 }
                 timerLabel.setText(formatDuration(model.getTime()));
-                //System.out.println("keeeppp");
             } while (true);
         }
     }
@@ -70,7 +72,7 @@ public class TimerPane extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (model.getStatus() == GameStatus.RUNNING) {
-            new Thread(timerRunner).start();
+            thread.start();
         }
     }
 }
