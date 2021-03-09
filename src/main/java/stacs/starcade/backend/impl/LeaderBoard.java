@@ -1,21 +1,25 @@
 package stacs.starcade.backend.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LeaderBoard implements ILeaderBoard {
+    private ArrayList<IPlayer> players;
 
-    ArrayList<IPlayer> players;
-
-    public LeaderBoard() { players = new ArrayList<>(); }
+    public LeaderBoard() {
+        players = new ArrayList<>();
+    }
 
     /**
      * Gets list of players that are currently playing.
      * Player objects contain information on individual performance: num of rounds played and average time per round.
      *
-     * @return
+     * @return the player list in leader board
      */
     @Override
-    public ArrayList<IPlayer> getPlayersList() { return this.players; }
+    public ArrayList<IPlayer> getPlayersList() {
+        return this.players;
+    }
 
     /**
      * Adds player to leaderboard.
