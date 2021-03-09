@@ -12,7 +12,7 @@ import java.util.List;
  * Once the data is updated, the {@link FrontendView} will be
  * invoked to repaint the panel.
  */
-public interface IFrontendModel {
+public interface IClientModel {
     /**
      * Status of game.
      */

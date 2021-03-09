@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.controller.IController;
-import stacs.starcade.frontend.model.FrontendModel;
-import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.frontend.model.ClientModel;
+import stacs.starcade.frontend.model.IClientModel;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.ICard;
 
@@ -19,7 +19,7 @@ import static stacs.starcade.shared.ICard.Shape.*;
 public class ControllerTests {
 
     private IController c;
-    private IFrontendModel model;
+    private IClientModel model;
     private ICard card1;
     private ICard card2;
     private ICard card3;
@@ -27,7 +27,7 @@ public class ControllerTests {
 
     @BeforeEach
     public void setup() {
-        model = new FrontendModel();
+        model = new ClientModel();
         c = new Controller(model);
 
         card1 = new Card();
@@ -58,7 +58,7 @@ public class ControllerTests {
     @Test
     void mustBeRunning() {
         c.startGame();
-        assertEquals(IFrontendModel.GameStatus.RUNNING, model.getStatus());
+        assertEquals(IClientModel.GameStatus.RUNNING, model.getStatus());
     }
 
     @Test

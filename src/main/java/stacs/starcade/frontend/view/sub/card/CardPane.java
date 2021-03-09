@@ -1,7 +1,7 @@
 package stacs.starcade.frontend.view.sub.card;
 
 import stacs.starcade.frontend.controller.IController;
-import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.frontend.model.IClientModel;
 import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
@@ -16,13 +16,13 @@ import java.util.Observer;
  */
 public class CardPane extends JPanel implements Observer {
     private final IController controller;
-    private final IFrontendModel model;
+    private final IClientModel model;
 
     private Toolkit toolkit;
 
     private ArrayList<CardImageButton> cardImageButtons;
 
-    public CardPane(IFrontendModel model, IController controller) {
+    public CardPane(IClientModel model, IController controller) {
         this.controller = controller;
         this.model = model;
 

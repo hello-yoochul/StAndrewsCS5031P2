@@ -12,7 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.frontend.model.IClientModel;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
@@ -21,7 +21,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
-import static stacs.starcade.frontend.model.IFrontendModel.*;
+import static stacs.starcade.frontend.model.IClientModel.*;
 
 
 /**
@@ -31,7 +31,7 @@ public class Controller implements IController {
 
     private static final int MAX_NUM_SETS = 5;
     public static final int NUM_COLS = 3;
-    private IFrontendModel model;
+    private IClientModel model;
     private HttpClient client;
 
     final static String basicServerAddress = "http://localhost:8080/";
@@ -44,7 +44,7 @@ public class Controller implements IController {
     /**
      * FrontendController constructor.
      */
-    public Controller(IFrontendModel model) {
+    public Controller(IClientModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
         //register();

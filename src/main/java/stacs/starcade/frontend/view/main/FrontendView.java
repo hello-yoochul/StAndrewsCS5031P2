@@ -1,8 +1,8 @@
 package stacs.starcade.frontend.view.main;
 
 import stacs.starcade.frontend.controller.IController;
-import stacs.starcade.frontend.model.FrontendModel;
-import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.frontend.model.ClientModel;
+import stacs.starcade.frontend.model.IClientModel;
 import stacs.starcade.frontend.view.sub.card.CardPane;
 import stacs.starcade.frontend.view.sub.control.ControlPane;
 import stacs.starcade.frontend.view.sub.info.InfoPane;
@@ -21,7 +21,7 @@ import java.util.Observer;
  */
 public class FrontendView extends JFrame implements Observer {
     private final IController controller;
-    private final IFrontendModel model;
+    private final IClientModel model;
 
     private ControlPane controlPanel;
     private CardPane cardPanel;
@@ -30,7 +30,7 @@ public class FrontendView extends JFrame implements Observer {
     private static final int DEFAULT_FRAME_WIDTH = 1600;
     private static final int DEFAULT_FRAME_HEIGHT = 900;
 
-    public FrontendView(IFrontendModel model, IController controller) {
+    public FrontendView(IClientModel model, IController controller) {
         super("Set Game");
         this.model = model;
         this.controller = controller;
@@ -104,7 +104,7 @@ public class FrontendView extends JFrame implements Observer {
     }
 
     /**
-     * If the {@link FrontendModel} is updated, it will be invoked (observer notification)).
+     * If the {@link ClientModel} is updated, it will be invoked (observer notification)).
      *
      * @param arg0 the observable object.
      * @param arg1 an argument passed to the {@code notifyObservers} method.

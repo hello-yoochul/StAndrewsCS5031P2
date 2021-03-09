@@ -1,7 +1,7 @@
 package stacs.starcade.frontend.view.sub.info;
 
 import stacs.starcade.frontend.controller.IController;
-import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.frontend.model.IClientModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,14 +12,14 @@ import java.util.Observer;
  * Info panel which consists of {@link CurrentSetPane}, {@link LeaderBoardPane} and {@link TimerPane}.
  */
 public class InfoPane extends JPanel implements Observer {
-    private IFrontendModel model;
+    private IClientModel model;
     private IController controller;
 
     TimerPane timerPane;
     private CurrentSetPane currentSetPane;
     private LeaderBoardPane leaderBoardPane;
 
-    public InfoPane(IFrontendModel model, IController controller) {
+    public InfoPane(IClientModel model, IController controller) {
         this.model = model;
         this.controller = controller;
 

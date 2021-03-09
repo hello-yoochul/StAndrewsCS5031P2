@@ -1,7 +1,7 @@
 package stacs.starcade.frontend.view.sub.info;
 
 import stacs.starcade.frontend.controller.IController;
-import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.frontend.model.IClientModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,11 +12,11 @@ import java.util.Observer;
  * Panel for the leader board.
  */
 public class LeaderBoardPane extends JPanel implements Observer {
-    private IFrontendModel model;
+    private IClientModel model;
     private IController controller;
     private JTable table;
 
-    public LeaderBoardPane(IFrontendModel model, IController controller) {
+    public LeaderBoardPane(IClientModel model, IController controller) {
         this.model = model;
         this.controller = controller;
         ((Observable) this.model).addObserver(this);

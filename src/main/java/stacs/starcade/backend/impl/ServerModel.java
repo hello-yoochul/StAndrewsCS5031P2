@@ -9,7 +9,7 @@ import stacs.starcade.shared.ICard;
 
 import java.util.ArrayList;
 
-public class Model implements IModel {
+public class ServerModel implements IServerModel {
     private int nextPlayerID = 0;
     private ILeaderBoard leaderBoard;
 
@@ -18,7 +18,7 @@ public class Model implements IModel {
     private final static int NUM_TWELVE = 12;
     private final static int NUM_SETS = 5;
 
-    public Model() {
+    public ServerModel() {
         setCards();
         leaderBoard = new LeaderBoard();
     }

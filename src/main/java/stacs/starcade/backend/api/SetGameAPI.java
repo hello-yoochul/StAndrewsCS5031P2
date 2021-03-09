@@ -19,7 +19,7 @@ import stacs.starcade.shared.ICard;
 @RestController
 public class SetGameAPI implements ISetGameAPI {
 
-    private IModel model = new Model();
+    private IServerModel model = new ServerModel();
 
     /**
      * Registers a new player with a given playerName and generates a unique player ID.
