@@ -20,15 +20,22 @@ import java.util.Observer;
  * and infoPane(current sets and leaderBoard).
  */
 public class FrontendView extends JFrame implements Observer {
-    private final IController controller;
-    private final IClientModel model;
+    /**
+     * Default frame width for the main view.
+     */
+    private static final int DEFAULT_FRAME_WIDTH = 1600;
+    /**
+     * Default frame height for the main view.
+     */
+    private static final int DEFAULT_FRAME_HEIGHT = 900;
+
+    private IController controller;
+    private IClientModel model;
 
     private ControlPane controlPanel;
     private CardPane cardPanel;
     private InfoPane infoPanel;
 
-    private static final int DEFAULT_FRAME_WIDTH = 1600;
-    private static final int DEFAULT_FRAME_HEIGHT = 900;
 
     public FrontendView(IClientModel model, IController controller) {
         super("Set Game");

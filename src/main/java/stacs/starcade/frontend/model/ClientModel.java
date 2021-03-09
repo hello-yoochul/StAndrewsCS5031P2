@@ -15,6 +15,9 @@ import java.util.*;
  * invoked to repaint the panel.
  */
 public class ClientModel extends Observable implements IClientModel {
+    /**
+     * Maximum number of selected cards.
+     */
     public final static int MAXIMUM_NUMBER_OF_SELECTED_CARDS = 3;
 
     private GameStatus status;

@@ -19,8 +19,7 @@ public class InfoPane extends JPanel implements Observer {
     private IClientModel model;
     private IController controller;
 
-    TimerPane timerPane;
-
+    private TimerPane timerPane;
     private PlayerInfoPane playerInfoPane;
     private CurrentSetPane currentSetPane;
     private LeaderBoardPane leaderBoardPane;
@@ -44,7 +43,7 @@ public class InfoPane extends JPanel implements Observer {
         add(timerPane);
         add(currentSetPane);
         add(leaderBoardPane);
-        this.setSize(200,800);
+        this.setSize(200, 800);
     }
 
     /**

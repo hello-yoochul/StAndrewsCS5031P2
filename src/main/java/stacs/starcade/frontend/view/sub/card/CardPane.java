@@ -15,11 +15,10 @@ import java.util.Observer;
  * The panel for 12 cards.
  */
 public class CardPane extends JPanel implements Observer {
-    private final IController controller;
-    private final IClientModel model;
+    private IController controller;
+    private IClientModel model;
 
     private Toolkit toolkit;
-
     private ArrayList<CardImageButton> cardImageButtons;
 
     public CardPane(IClientModel model, IController controller) {

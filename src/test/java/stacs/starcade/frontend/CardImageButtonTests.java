@@ -11,41 +11,31 @@ import stacs.starcade.shared.ICard.LineStyle;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 import static stacs.starcade.shared.ICard.*;
 import static stacs.starcade.shared.ICard.Number;
 
 public class CardImageButtonTests {
     private CardImageButton cardImageButton;
-    private ClientModel model;
 
     @BeforeEach
     void setup() {
-        cardImageButton = new CardImageButton(model);
+        cardImageButton = new CardImageButton(mock(ClientModel.class));
     }
 
     @Test
-    void mustStoreImagePath() {
-        ICard card = new Card();
-        card.setLineStyle(LineStyle.DOTTED);
-        card.setColour(Colour.RED);
-        card.setShape(Shape.TRIANGLE);
-        card.setNumber(Number.ONE);
+    void mustSetCard() {
+        ICard card = mock(Card.class);
         cardImageButton.setCard(card);
-
-        assertThat(cardImageButton.getImagePathStr(), is(equalTo("/RED-ONE-TRIANGLE-DOTTED.png")));
+        assertThat(cardImageButton.getCard(), is(equalTo(card)));
     }
 
     @Test
     void mustGetCard() {
-        ICard card = new Card();
-        card.setLineStyle(LineStyle.DOTTED);
-        card.setColour(Colour.RED);
-        card.setShape(Shape.TRIANGLE);
-        card.setNumber(Number.ONE);
+        ICard card = mock(Card.class);
         cardImageButton.setCard(card);
-
-        assertThat(cardImageButton.getCard(), is(equalTo(card)));
+        assertThat(cardImageButton.getIcon(), is(equalTo(cardImageButton.getImageIcon())));
     }
-
-
 }

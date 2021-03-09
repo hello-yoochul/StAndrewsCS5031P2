@@ -45,6 +45,11 @@ public class CardImageButton extends JButton implements Observer {
     private IClientModel model;
 
     /**
+     * Image icon on the button.
+     */
+    private ImageIcon imageIcon;
+
+    /**
      * Construct CardImageButton with addition of the mouse listener:
      * if client clicks the card image button, the button colour will
      * be changed to show their choice.
@@ -67,7 +72,17 @@ public class CardImageButton extends JButton implements Observer {
      */
     public void setCard(ICard card) {
         this.card = card;
-        setIcon(new ImageIcon(getImage(card)));
+        imageIcon = new ImageIcon(getImage(card));
+        setIcon(imageIcon);
+    }
+
+    /**
+     * Get the image icon on the button.
+     *
+     * @return the image icon on the button
+     */
+    public ImageIcon getImageIcon() {
+        return imageIcon;
     }
 
     /**
