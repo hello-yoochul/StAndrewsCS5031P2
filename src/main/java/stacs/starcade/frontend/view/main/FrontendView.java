@@ -39,9 +39,9 @@ public class FrontendView extends JFrame implements Observer {
         // when model changed, panels are updated.
         ((Observable) this.model).addObserver(this);
 
-        controller.register();
-
         model.setPlayerName(JOptionPane.showInputDialog(this, "Enter your name:"));
+
+        controller.register();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT);

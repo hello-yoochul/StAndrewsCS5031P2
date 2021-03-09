@@ -69,9 +69,9 @@ public class FrontendModel extends Observable implements IFrontendModel {
         for (int i = 0; i < lbSize; i++) {
             for (int j = 0; j < Controller.NUM_COLS; j++) {
                 this.leaderBoard[i][j] = leaderBoard[i][j];
+                System.out.println(this.leaderBoard[i][j]);
             }
         }
-        System.out.println("Set up LB");
         update();
     }
 
