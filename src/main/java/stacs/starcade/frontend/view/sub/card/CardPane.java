@@ -15,11 +15,10 @@ import java.util.Observer;
  * The panel for 12 cards.
  */
 public class CardPane extends JPanel implements Observer {
-    private final IController controller;
-    private final IClientModel model;
+    private IController controller;
+    private IClientModel model;
 
     private Toolkit toolkit;
-
     private ArrayList<CardImageButton> cardImageButtons;
 
     public CardPane(IClientModel model, IController controller) {
@@ -39,6 +38,8 @@ public class CardPane extends JPanel implements Observer {
         this.setLayout(new GridLayout(3, 4));
 
         setCardsOnButtons();
+
+        setBackground(new Color(146, 146, 146));
     }
 
     private void setCardsOnButtons() {

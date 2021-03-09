@@ -1,6 +1,7 @@
 package stacs.starcade.frontend.view.sub.control;
 
 import stacs.starcade.frontend.controller.IController;
+import stacs.starcade.frontend.model.ClientModel;
 import stacs.starcade.frontend.model.IClientModel;
 import stacs.starcade.shared.ICard;
 
@@ -24,9 +25,21 @@ public class ControlPane extends JPanel implements Observer {
     private JButton nextRoundButton;
     private JButton endGameButton;
 
-    public static final String START = "START GAME";
+    /**
+     * Button text of START GAME.
+     */
+    public static final String START_GAME = "START GAME";
+    /**
+     * Button text of CHECK SET.
+     */
     public static final String CHECK_SET = "CHECK SET";
+    /**
+     * Button text of NEXT ROUND.
+     */
     public static final String NEXT_ROUND = "NEXT ROUND";
+    /**
+     * Button text of END GAME.
+     */
     public static final String END_GAME = "END GAME";
 
     public ControlPane(IClientModel model, IController controller) {
@@ -35,20 +48,26 @@ public class ControlPane extends JPanel implements Observer {
 
         ((Observable) this.model).addObserver(this);
 
-        setBackground(Color.gray);
+        setBackground(new Color(255, 147, 0));
 
         generateButtons();
         generateButtonListener();
         addButtons();
     }
 
+    /**
+     * Generate buttons.
+     */
     private void generateButtons() {
-        startGameButton = new JButton(START);
+        startGameButton = new JButton(START_GAME);
         checkSetButton = new JButton(CHECK_SET);
         nextRoundButton = new JButton(NEXT_ROUND);
         endGameButton = new JButton(END_GAME);
     }
 
+    /**
+     * Generate buttons click listener.
+     */
     private void generateButtonListener() {
         ActionListener al = new MyButtonListener();
         startGameButton.addActionListener(al);
@@ -57,6 +76,9 @@ public class ControlPane extends JPanel implements Observer {
         endGameButton.addActionListener(al);
     }
 
+    /**
+     * Add button to the control panel.
+     */
     private void addButtons() {
         add(startGameButton);
         add(Box.createRigidArea(new Dimension(10, 0)));
@@ -65,8 +87,14 @@ public class ControlPane extends JPanel implements Observer {
         add(endGameButton);
     }
 
+    /**
+     * If the {@link ClientModel} is updated, it will be invoked (observer notification)).
+     *
+     * @param arg0 the observable object.
+     * @param arg1 an argument passed to the {@code notifyObservers} method.
+     */
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable arg0, Object arg1) {
         repaint();
     }
 
