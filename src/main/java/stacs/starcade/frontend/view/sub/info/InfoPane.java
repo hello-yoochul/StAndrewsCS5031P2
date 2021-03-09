@@ -38,7 +38,6 @@ public class InfoPane extends JPanel implements Observer {
         add(timerPane);
         add(currentSetPane);
         add(leaderBoardPane);
-        this.setSize(200,800);
     }
 
     /**

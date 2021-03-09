@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,9 +16,11 @@ import java.util.Observer;
  * Panel for the leader board.
  */
 public class LeaderBoardPane extends JPanel implements Observer {
+    private static final int AVG_TIME_COL = 2;
     private IClientModel model;
     private IController controller;
     private JTable table;
+    private TableRowSorter rowSorter;
     private DataModel dataModel;
 
     public LeaderBoardPane(IClientModel model, IController controller) {
@@ -73,6 +76,9 @@ public class LeaderBoardPane extends JPanel implements Observer {
         }
     }
 
+    /**
+     * Initialises table and its properties.
+     */
     private void setTable() {
         dataModel = new DataModel();
         String[] headers = {"Player", "Rounds", "AvgTime"};
@@ -85,7 +91,12 @@ public class LeaderBoardPane extends JPanel implements Observer {
         this.table.setShowGrid(true);
         this.table.setGridColor(Color.BLACK);
         this.table.setBorder(new LineBorder(Color.BLACK));
-        this.table.setAutoCreateRowSorter(true);
+
+        // Create sorter for table
+        rowSorter = new TableRowSorter(this.dataModel);
+        ArrayList<RowSorter.SortKey> keys = new ArrayList<>();
+        keys.add(new RowSorter.SortKey(AVG_TIME_COL, SortOrder.ASCENDING));
+        rowSorter.setSortKeys(keys);
 
         // Add table to scroll pane, add scroll pane to pane
         JScrollPane jSP = new JScrollPane(this.table);
@@ -97,16 +108,16 @@ public class LeaderBoardPane extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         resetTableData();
-        System.out.println("Reset data!");
         repaint();
     }
 
     /**
-     * Edits data s
+     * Updates data in leaderboard table when called.
      */
     private void resetTableData() {
         String[][] data = model.getLeaderBoard();
         dataModel.setData(data);
+        rowSorter.sort();
     }
 }
 
