@@ -50,6 +50,7 @@ public class FrontendView extends JFrame implements Observer {
         setVisible(true);
 
         controller.register();
+        controller.pollForLeaderBoard();
     }
 
     /**

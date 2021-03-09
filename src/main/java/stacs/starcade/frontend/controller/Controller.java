@@ -44,7 +44,7 @@ public class Controller implements IController {
     public Controller(IFrontendModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
-        register();
+        //register();
     }
 
     /**
@@ -70,6 +70,32 @@ public class Controller implements IController {
         } catch (IOException e) {
             throw new RuntimeException("error", e);
         }
+    }
+
+    /**
+     * Continuously polls for updates on leaderboard.
+     */
+    @Override
+    public void pollForLeaderBoard() {
+        /**
+         * Inner class for timer running in another Thread.
+         */
+        class LeaderBoardPoller implements Runnable {
+            @Override
+            public void run() {
+                do {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    getLeaderBoard();
+                    System.out.println("Got LeaderBoard");
+                } while (true);
+            }
+        }
+        LeaderBoardPoller lbp = new LeaderBoardPoller();
+        lbp.run();
     }
 
     public void getLeaderBoard() {

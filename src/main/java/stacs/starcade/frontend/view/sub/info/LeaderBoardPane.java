@@ -38,7 +38,6 @@ public class LeaderBoardPane extends JPanel implements Observer {
 
         this.table = new JTable(data, colNames);
         this.table.setShowGrid(true);
-//        this.table.setShowHorizontalLines(true);
         this.table.setGridColor(Color.BLACK);
         this.table.setVisible(true);
 
