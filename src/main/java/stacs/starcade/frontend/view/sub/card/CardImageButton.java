@@ -71,9 +71,17 @@ public class CardImageButton extends JButton implements Observer {
      * Set the card and Store the path of the corresponding card image.
      */
     public void setCard(ICard card) {
-        this.card = card;
-        imageIcon = new ImageIcon(getImage(card));
-        setIcon(imageIcon);
+        if (card == null) {
+            setContentAreaFilled(false);
+            setOpaque(true);
+            setBorderPainted(false);
+            setBackground(Color.WHITE);
+            setIcon(null);
+        } else {
+            this.card = card;
+            imageIcon = new ImageIcon(getImage(card));
+            setIcon(imageIcon);
+        }
     }
 
     /**
@@ -87,6 +95,7 @@ public class CardImageButton extends JButton implements Observer {
 
     /**
      * Gets image based on properties of given card object
+     *
      * @param card object
      * @return the image
      */
