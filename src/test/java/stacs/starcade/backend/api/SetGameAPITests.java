@@ -1,21 +1,27 @@
 package stacs.starcade.backend.api;
 
+import static org.springframework.http.HttpHeaders.ACCEPT;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.test.web.reactive.server.WebTestClient.bindToController;
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.BodyInserters;
 import stacs.starcade.backend.impl.LeaderBoard;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.springframework.test.web.reactive.server.WebTestClient.*;
-import static reactor.core.publisher.Mono.when;
+import stacs.starcade.shared.ICard.Colour;
+import stacs.starcade.shared.ICard.LineStyle;
+import stacs.starcade.shared.ICard.Number;
+import stacs.starcade.shared.ICard.Shape;
 
 /**
  * Tests for the {@link SetGameAPI} class.
@@ -130,15 +136,78 @@ public class SetGameAPITests {
 
     @Test
     void mustEndGame() {
-        SetGameAPI setGameAPI = new SetGameAPI();
-        int returnedPlayerId = setGameAPI.registerPlayer("anyName");
+        FluxExchangeResult<Integer> returnedPlayerId = client.get().
+          uri(registerPlayerParam + anyPlayerName).exchange().returnResult(Integer.class);
 
-        ArrayList<ICard> givenTwelveCards = setGameAPI.startNextRound(returnedPlayerId);
+        int playerID = returnedPlayerId.getResponseBody().blockFirst();
+
+
+        FluxExchangeResult<String> returnedTwelveCards = client.get().
+          uri(nextRoundParam + playerID).exchange()
+          .returnResult(String.class);
+
+        List<ICard> givenTwelveCards = new ArrayList<>();
+
+        String cards = returnedTwelveCards.getResponseBody().blockFirst();
+        cards = cards.substring(1, cards.length() - 1);
+        String[] cardsArray = cards.split("},\\{");
+        cardsArray[0] = cardsArray[0].substring(1);
+        cardsArray[cardsArray.length - 1] = cardsArray[cardsArray.length - 1]
+          .substring(0, cardsArray[cardsArray.length - 1].length() - 1);
+        for (String card : cardsArray){
+            String[] attributes = card.split(",");
+            Card c = new Card();
+            for (String attribute : attributes) {
+                String[] keyVal = attribute.split(":");
+                switch (keyVal[1]) {
+                    case "\"GREEN\"":
+                        c.setColour(Colour.GREEN);
+                        break;
+                    case "\"RED\"":
+                        c.setColour(Colour.RED);
+                        break;
+                    case "\"BLUE\"":
+                        c.setColour(Colour.BLUE);
+                        break;
+                    case "\"TRIANGLE\"":
+                        c.setShape(Shape.TRIANGLE);
+                        break;
+                    case "\"SQUARE\"":
+                        c.setShape(Shape.SQUARE);
+                        break;
+                    case "\"CIRCLE\"":
+                        c.setShape(Shape.CIRCLE);
+                        break;
+                    case "\"SOLID\"":
+                        c.setLineStyle(LineStyle.SOLID);
+                        break;
+                    case "\"DASHED\"":
+                        c.setLineStyle(LineStyle.DASHED);
+                        break;
+                    case "\"DOTTED\"":
+                        c.setLineStyle(LineStyle.DOTTED);
+                        break;
+                    case "\"ONE\"":
+                        c.setNumber(Number.ONE);
+                        break;
+                    case "\"TWO\"":
+                        c.setNumber(Number.TWO);
+                        break;
+                    default:
+                        c.setNumber(Number.THREE);
+                        break;
+                }
+            }
+            givenTwelveCards.add(c);
+        }
+
+
+
+
         List<List<Card>> sets = new ArrayList<>();
 
         // Find 5 set in the twelve cards and send it to server in order to end the Game
         // Then the server will verify if the 5 sets are selectable for the certain player
-        int setListSizeCount = 1;
         for (int i = 0; i < givenTwelveCards.size() - 2; i++) {
             for (int j = i; j < givenTwelveCards.size() - 1; j++) {
                 if (j == i) {
@@ -160,11 +229,15 @@ public class SetGameAPITests {
                         sets.add(setCards);
                     }
                 }
-
             }
         }
 
-//        System.out.println("sets list size: " + sets.size());
-        setGameAPI.endRound(returnedPlayerId, sets);
+        client.post().uri(endRoundParam + playerID)
+          .body(BodyInserters.fromObject(sets))
+          .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+          .header(ACCEPT, APPLICATION_JSON_VALUE)
+          .exchange()
+          .expectStatus()
+          .is2xxSuccessful();
     }
 }
