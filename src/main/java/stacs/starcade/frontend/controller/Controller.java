@@ -1,10 +1,12 @@
 package stacs.starcade.frontend.controller;
 
+import java.io.UnsupportedEncodingException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.HttpClient;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 
@@ -253,7 +255,7 @@ public class Controller implements IController {
             // Check whether owner (player) of card objects has already logged this set of cards
             model.setSetsLog(threeCards); // Trigger model to log valid set of cards
             if (model.getSetsLog().size() == MAX_NUM_SETS) {
-                endRound();
+                endRound(model.getSetsLog());
                 JOptionPane.showMessageDialog(null, "You found all sets. The round is over." +
                         "Congratulations!! ", "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
             }
@@ -323,14 +325,46 @@ public class Controller implements IController {
      * End the round.
      */
     @Override
-    public void endRound() {
+    public void endRound(ArrayList<ICard[]> sets) {
         if (model.getStatus() != GameStatus.RUNNING) {
             model.setGameStatus(GameStatus.RUNNING);
+
+            StringBuilder json = new StringBuilder("[");
+
+            for (ICard[] set : sets){
+                json.append("[");
+                for (ICard card : set){
+                    json.append("{");
+                    json.append("\"colour\": \"").append(card.getColour()).append("\",");
+                    json.append("\"shape\": \"").append(card.getShape()).append("\",");
+                    json.append("\"lineStyle\": \"").append(card.getLineStyle()).append("\",");
+                    json.append("\"number\": \"").append(card.getNumber()).append("\",");
+                    json.append("}");
+                    if (card != set[set.length - 1]){
+                        json.append(",");
+                    }
+                }
+
+                json.append("]");
+
+                if (set != sets.get(sets.size() - 1)){
+                    json.append(",");
+                }
+            }
+            json.append("]");
+
 
             HttpPost postRequest = new HttpPost(basicServerAddress + endRoundParam + "/" + model.getPlayerId());
             postRequest.setHeader("Accept", "application/json");
             postRequest.setHeader("Connection", "keep-alive");
             postRequest.setHeader("Content-Type", "application/json");
+            StringEntity entity = null;
+            try {
+                entity = new StringEntity(json.toString());
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            postRequest.setEntity(entity);
 
             try {
                 HttpResponse response = client.execute(postRequest);

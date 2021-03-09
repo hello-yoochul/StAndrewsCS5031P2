@@ -1,7 +1,11 @@
 package stacs.starcade.backend.api;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
 
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import stacs.starcade.backend.impl.IPlayer;
 import stacs.starcade.backend.impl.*;
 import stacs.starcade.backend.impl.Player;
+import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
 
@@ -58,11 +63,14 @@ public class SetGameAPI implements ISetGameAPI {
      *
      * @param playerID the unique player ID
      */
+    @JsonSubTypes({
+      @JsonSubTypes.Type(value = ICard.class),
+    })
     @PostMapping( value = {"/endRound/{playerID}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void endRound(@PathVariable int playerID, @RequestBody ArrayList<ArrayList<ICard>> sets) {
+    public void endRound(@PathVariable int playerID, @RequestBody List<List<Card>> sets) {
         final IPlayer player = model.getPlayer(playerID);
 
-        for (ArrayList<ICard> cardList : sets) {
+        for (List<Card> cardList : sets) {
             for (ICard card : cardList) {
                 if (!player.getStoredCards().contains(card)) {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Stale cards.");

@@ -1,7 +1,10 @@
 package stacs.starcade.backend.api;
 
 
+import java.util.List;
+import org.springframework.web.bind.annotation.RequestBody;
 import stacs.starcade.backend.impl.IPlayer;
+import stacs.starcade.shared.Card;
 import stacs.starcade.shared.ICard;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +39,7 @@ public interface ISetGameAPI {
      *
      * @param playerID the unique player ID
      */
-    void endRound(@PathVariable int playerID, @PathVariable ArrayList<ArrayList<ICard>> sets);
+    void endRound(@PathVariable int playerID, @RequestBody List<List<Card>> sets);
 
     /**
      * Removes player from leaderboard.
