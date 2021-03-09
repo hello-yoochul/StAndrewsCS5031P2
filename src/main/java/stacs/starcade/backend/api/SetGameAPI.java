@@ -3,9 +3,11 @@ package stacs.starcade.backend.api;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.util.ArrayList;
 
 import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,9 @@ import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
 
+import static stacs.starcade.backend.impl.ServerModel.CARD_NUM_IN_SET;
+import static stacs.starcade.backend.impl.ServerModel.NUM_SETS;
+
 /**
  * Spring Backend API for Set Game.
  */
@@ -28,7 +33,7 @@ public class SetGameAPI implements ISetGameAPI {
 
     /**
      * Registers a new player with a given playerName and generates a unique player ID.
-     *
+     * <p>
      * Creates a player instance and passes it to the model, from where it is added to the leaderboard.
      *
      * @return newly generated player ID.
@@ -47,7 +52,7 @@ public class SetGameAPI implements ISetGameAPI {
      * @return returns an array with twelve cards that will be used for the new round.
      */
     @GetMapping("/nextRound/{playerID}")
-    public ArrayList<ICard> startNextRound(@PathVariable int playerID)  {
+    public ArrayList<ICard> startNextRound(@PathVariable int playerID) {
         final IPlayer player = model.getPlayer(playerID);
 
         ArrayList<ICard> twelveCards = model.getTwelveCards();
@@ -58,15 +63,15 @@ public class SetGameAPI implements ISetGameAPI {
 
     /**
      * Ends round player with ID playerID is currently playing.
-     *
+     * <p>
      * This will stop the timer for the current round.
      *
      * @param playerID the unique player ID
      */
     @JsonSubTypes({
-      @JsonSubTypes.Type(value = ICard.class),
+            @JsonSubTypes.Type(value = ICard.class),
     })
-    @PostMapping( value = {"/endRound/{playerID}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = {"/endRound/{playerID}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void endRound(@PathVariable int playerID, @RequestBody List<List<Card>> sets) {
         final IPlayer player = model.getPlayer(playerID);
 
@@ -77,10 +82,11 @@ public class SetGameAPI implements ISetGameAPI {
                 }
             }
 
-            if (!Checks.isSet((ICard[]) cardList.toArray())){
+            if (!Checks.isSet((ICard[]) cardList.toArray(new ICard[CARD_NUM_IN_SET]))) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not a set.");
             }
 
+            System.out.println("SUCCESS");
         }
 
         player.endRound();
@@ -108,3 +114,4 @@ public class SetGameAPI implements ISetGameAPI {
         return model.getLeaderboard().getPlayersList();
     }
 }
+

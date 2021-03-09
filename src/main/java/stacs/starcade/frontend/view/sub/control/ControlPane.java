@@ -130,11 +130,23 @@ public class ControlPane extends JPanel implements Observer {
             }
 
             if (evt == nextRoundButton) {
-                controller.setUpCards();
+                if (model.getStatus() == IClientModel.GameStatus.RUNNING) {
+                    int result = JOptionPane.showConfirmDialog(null, "Do you really want to start a new round?", "Question", JOptionPane.YES_NO_OPTION);
+                    if (result == JOptionPane.YES_OPTION) {
+                        controller.setUpCards();
+                    }
+                } else {
+                    controller.setUpCards();
+                }
             }
 
             if (evt == endGameButton) {
-                controller.disconnect();
+                if (model.getStatus() == IClientModel.GameStatus.RUNNING) {
+                    int result = JOptionPane.showConfirmDialog(null, "Do you want to quit this game?", "Question", JOptionPane.YES_NO_OPTION);
+                    if (result == JOptionPane.YES_OPTION) {
+                        controller.disconnect();
+                    }
+                }
             }
 //
 //            if (evt == leaderBoardButton) {

@@ -401,6 +401,8 @@ public class Controller implements IController {
         }
         model.setGameStatus(GameStatus.PAUSED);
         model.resetTimer();
+        model.setUpCard(null);
+        model.resetTimer();
     }
 }
 

@@ -16,7 +16,8 @@ public class ServerModel implements IServerModel {
     private ArrayList<ICard> allCards;
 
     private final static int NUM_TWELVE = 12;
-    private final static int NUM_SETS = 5;
+    public final static int NUM_SETS = 5;
+    public final static int CARD_NUM_IN_SET = 3;
 
     public ServerModel() {
         setCards();
