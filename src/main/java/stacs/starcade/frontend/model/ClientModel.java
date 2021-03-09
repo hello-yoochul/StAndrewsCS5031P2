@@ -33,17 +33,31 @@ public class ClientModel extends Observable implements IClientModel {
         cardsOnBoard = new ArrayList<>();
         selectedCards = new ArrayList<>();
         setsLog = new ArrayList<>();
-//        leaderBoard = new LeaderBoard();
         timer = new Timer();
-//        status = GameStatus.PAUSED;
+        status = GameStatus.PAUSED;
     }
 
+    /**
+     * Start the timer.
+     */
     public void startTimer() {
         timer.start();
     }
 
+    /**
+     * Get the duration between start time and end time.
+     *
+     * @return the duration between start time and end time.
+     */
     public Duration getTime() {
         return timer.getTime();
+    }
+
+    /**
+     * Reset the timer.
+     */
+    public void resetTimer() {
+        timer.reset();
     }
 
     /**
@@ -68,7 +82,7 @@ public class ClientModel extends Observable implements IClientModel {
         for (int i = 0; i < lbSize; i++) {
             for (int j = 0; j < Controller.NUM_COLS; j++) {
                 this.leaderBoard[i][j] = leaderBoard[i][j];
-                System.out.println(this.leaderBoard[i][j]);
+//                System.out.println(this.leaderBoard[i][j]);
             }
         }
         update();
@@ -113,6 +127,7 @@ public class ClientModel extends Observable implements IClientModel {
     @Override
     public void setGameStatus(IClientModel.GameStatus status) {
         this.status = status;
+        update();
     }
 
     /**
@@ -180,7 +195,6 @@ public class ClientModel extends Observable implements IClientModel {
     @Override
     public void setSetsLog(ICard[] threeCards) {
         setsLog.add(threeCards);
-        System.out.println("SET SETS LOG - SIZE: " + setsLog.size());
         for (ICard card : threeCards) {
             selectedCards.remove(card);
         }
