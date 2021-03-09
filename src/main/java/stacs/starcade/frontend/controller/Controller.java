@@ -74,7 +74,6 @@ public class Controller implements IController {
     public Controller(IClientModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
-        //register();
     }
 
     /**
@@ -121,7 +120,6 @@ public class Controller implements IController {
                         e.printStackTrace();
                     }
                     requestLeaderBoard();
-//                    System.out.println("Got LeaderBoard");
                 } while (true);
             }
         }
@@ -233,7 +231,7 @@ public class Controller implements IController {
         try {
             HttpResponse response = client.execute(postRequest);
             if (response.getStatusLine().getStatusCode() == 200) {
-                // obtained from  https://stackoverflow.com/questions/39764621/parse-json-without-key/39764907
+                // obtained from:  https://stackoverflow.com/questions/39764621/parse-json-without-key/39764907
                 try {
                     ResponseHandler<String> handler = new BasicResponseHandler();
                     String body = handler.handleResponse(response);

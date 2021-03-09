@@ -83,6 +83,10 @@ public class ServerModel implements IServerModel {
         return this.leaderBoard;
     }
 
+    /**
+     * Generates random 12 cards that make 5 sets.
+     * @return array list of 12 cards
+     */
     public ArrayList<ICard> getTwelveCards() {
         ArrayList<ICard> twelveCards;
 
@@ -127,20 +131,37 @@ public class ServerModel implements IServerModel {
         }
     }
 
+    /**
+     * Adds a player to the leaderboard once connected.
+     * @param newP conencting player
+     */
     @Override
     public void addPlayer(IPlayer newP) {
         this.leaderBoard.addPlayer(newP);
     }
 
+    /**
+     * Disconnects player by removing him from leaderboard.
+     * @param removedPlayer
+     */
     @Override
     public void disconnectPlayer(IPlayer removedPlayer) {
         this.leaderBoard.removePlayer(removedPlayer);
     }
 
+    /**
+     * Generates a random card.
+     * @return the random card.
+     */
     private ICard getRandomCard(){
         return allCards.get((int) (Math.random() * allCards.size()));
     }
 
+    /**
+     * Gets a random card that is not included in the given list.
+     * @param list given list of cards
+     * @return generated card
+     */
     private ICard getRandomCardNotInList(ArrayList<ICard> list) {
         while (true) {
             ICard c = getRandomCard();
