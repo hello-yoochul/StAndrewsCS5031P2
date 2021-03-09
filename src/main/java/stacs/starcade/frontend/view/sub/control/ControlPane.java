@@ -134,9 +134,11 @@ public class ControlPane extends JPanel implements Observer {
             }
 
             if (evt == endGameButton) {
-                int result = JOptionPane.showConfirmDialog(null, "Do you want to quit this game?", "Question", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    controller.disconnect();
+                if (model.getStatus() == IClientModel.GameStatus.RUNNING) {
+                    int result = JOptionPane.showConfirmDialog(null, "Do you want to quit this game?", "Question", JOptionPane.YES_NO_OPTION);
+                    if (result == JOptionPane.YES_OPTION) {
+                        controller.disconnect();
+                    }
                 }
             }
         }
