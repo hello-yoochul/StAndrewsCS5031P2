@@ -201,6 +201,7 @@ public class Controller implements IController {
 
         model.setUpCard(cards);
         model.setGameStatus(GameStatus.RUNNING);
+        model.startTimer();
     }
 
     /**
