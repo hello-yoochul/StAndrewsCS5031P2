@@ -1,8 +1,10 @@
 package stacs.starcade.frontend.view.sub.control;
 
+import stacs.starcade.backend.impl.LeaderBoard;
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.ClientModel;
 import stacs.starcade.frontend.model.IClientModel;
+import stacs.starcade.frontend.view.sub.info.sub.LeaderBoardPane;
 import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
@@ -24,6 +26,8 @@ public class ControlPane extends JPanel implements Observer {
     private JButton checkSetButton;
     private JButton nextRoundButton;
     private JButton endGameButton;
+
+    private JButton leaderBoardButton;
 
     /**
      * Button text of START GAME.
@@ -63,6 +67,7 @@ public class ControlPane extends JPanel implements Observer {
         checkSetButton = new JButton(CHECK_SET);
         nextRoundButton = new JButton(NEXT_ROUND);
         endGameButton = new JButton(END_GAME);
+        leaderBoardButton = new JButton("Leader Board");
     }
 
     /**
@@ -74,6 +79,7 @@ public class ControlPane extends JPanel implements Observer {
         checkSetButton.addActionListener(al);
         nextRoundButton.addActionListener(al);
         endGameButton.addActionListener(al);
+//        leaderBoardButton.addActionListener(al);
     }
 
     /**
@@ -85,6 +91,7 @@ public class ControlPane extends JPanel implements Observer {
         add(checkSetButton);
         add(nextRoundButton);
         add(endGameButton);
+//        add(leaderBoardButton);
     }
 
     /**
@@ -141,6 +148,11 @@ public class ControlPane extends JPanel implements Observer {
                     }
                 }
             }
+//
+//            if (evt == leaderBoardButton) {
+//                JDialog dialog = new JDialog();
+//                dialog
+//            }
         }
     }
 

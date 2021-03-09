@@ -1,7 +1,6 @@
 package stacs.starcade.frontend;
 
 import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import stacs.starcade.BackendApplication;
@@ -74,9 +73,6 @@ public class ControllerTests {
     @Test
     void testRecogniseThatGivenCardsMakeASet() throws IllegalArgumentException {
         assertTrue(isSet(threeCards));
-        assertDoesNotThrow(() -> {
-            c.validateCards(threeCards);
-        });
     }
 
     @Test

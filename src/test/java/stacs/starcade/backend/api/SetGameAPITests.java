@@ -127,11 +127,13 @@ public class SetGameAPITests {
     @Test
     void ClientMustSendSetsListWhichTheyAreGiven() {
         int returnedPlayerId = 1;
+        int expectedNumberOfCardObjects = 12;
         client.get().uri(registerPlayerParam + anyPlayerName)
                 .exchange().expectStatus().isOk().expectBody(Integer.class).isEqualTo(returnedPlayerId);
 
 
-        client.get().uri(nextRoundParam + returnedPlayerId).exchange().expectBodyList(LeaderBoard.class).hasSize(1);
+        client.get().uri(nextRoundParam + returnedPlayerId)
+                .exchange().expectBodyList(LeaderBoard.class).hasSize(expectedNumberOfCardObjects);
     }
 
     @Test

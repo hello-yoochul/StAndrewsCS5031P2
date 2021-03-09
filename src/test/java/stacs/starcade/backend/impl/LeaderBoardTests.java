@@ -77,9 +77,9 @@ public class LeaderBoardTests {
         leaderBoard.addPlayer(p2);
         leaderBoard.addPlayer(p3);
 
-        when(p1.getAvgTime()).thenReturn(Duration.ofSeconds(90));
-        when(p2.getAvgTime()).thenReturn(Duration.ofSeconds(60));
-        when(p3.getAvgTime()).thenReturn(Duration.ofSeconds(120));
+        when(p1.getAvgTime()).thenReturn((long) 90);
+        when(p2.getAvgTime()).thenReturn((long) 60);
+        when(p3.getAvgTime()).thenReturn((long) 120);
 
         leaderBoard.sortList();
 
