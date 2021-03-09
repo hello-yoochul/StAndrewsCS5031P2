@@ -44,8 +44,8 @@ public class FrontendView extends JFrame implements Observer {
 
         // when model changed, panels are updated.
         ((Observable) this.model).addObserver(this);
-
-        model.setPlayerName(JOptionPane.showInputDialog(this, "Enter your name:"));
+        String name = JOptionPane.showInputDialog(this, "Enter your name:");
+        model.setPlayerName(name.replace(" ","_"));
 
         controller.register();
 
@@ -85,7 +85,7 @@ public class FrontendView extends JFrame implements Observer {
      * and infoPane(current sets and leaderBoard).
      */
     private void setUpComponents() {
-        setLayout(new BorderLayout(10,10));
+        setLayout(new BorderLayout(10, 10));
 
         add((controlPanel = new ControlPane(this.model, this.controller)), BorderLayout.NORTH);
         add((cardPanel = new CardPane(this.model, this.controller)), BorderLayout.CENTER);

@@ -13,7 +13,6 @@ import static org.springframework.test.web.reactive.server.WebTestClient.*;
 /**
  * Tests for the {@link SetGameAPI} class.
  */
-
 @SpringBootTest
 public class SetGameAPITests {
     private String registerPlayerParam = "/registerPlayer/";
