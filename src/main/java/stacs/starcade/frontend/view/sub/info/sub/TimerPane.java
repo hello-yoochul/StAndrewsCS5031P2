@@ -11,6 +11,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import stacs.starcade.shared.Timer;
+
 import static stacs.starcade.frontend.model.IClientModel.*;
 
 /**
@@ -67,14 +68,17 @@ public class TimerPane extends JPanel implements Observer {
     @Override
     public void update(Observable arg0, Object arg1) {
         if (model.getStatus() == GameStatus.RUNNING) {
-            if(!isGameRunning){
-                thread.start();
+            if (!isGameRunning) {
+                if (thread.getState() == Thread.State.NEW) {
+                    thread.start();
+                }
             }
             isGameRunning = true;
         } else {
             isGameRunning = false;
-            Timer.formatDuration(model.getTime());
             thread.stop();
+            thread = new Thread(timerRunner);
+            timerLabel.setText("0:00:00");
         }
     }
 }
