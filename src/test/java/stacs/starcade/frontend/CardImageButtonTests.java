@@ -1,21 +1,17 @@
 package stacs.starcade.frontend;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.mock;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import stacs.starcade.frontend.model.ClientModel;
 import stacs.starcade.frontend.view.sub.card.CardImageButton;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.ICard;
-import stacs.starcade.shared.ICard.LineStyle;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static stacs.starcade.shared.ICard.*;
-import static stacs.starcade.shared.ICard.Number;
 
 public class CardImageButtonTests {
     private CardImageButton cardImageButton;
@@ -38,4 +34,11 @@ public class CardImageButtonTests {
         cardImageButton.setCard(card);
         assertThat(cardImageButton.getIcon(), is(equalTo(cardImageButton.getImageIcon())));
     }
+
+    @Test
+    void mustSetNullCard() {
+        cardImageButton.setCard(null);
+        assertNull(cardImageButton.getCard());
+    }
+
 }
