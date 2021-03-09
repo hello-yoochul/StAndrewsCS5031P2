@@ -1,12 +1,18 @@
 package stacs.starcade.backend.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LeaderBoard implements ILeaderBoard {
 
+    static List<IPlayer> dummyPlayerData;
+
     ArrayList<IPlayer> players;
 
-    public LeaderBoard() { players = new ArrayList<>(); }
+    public LeaderBoard() {
+        players = new ArrayList<>();
+        dummyPlayerData = new ArrayList<>();
+    }
 
     /**
      * Gets list of players that are currently playing.
@@ -15,7 +21,9 @@ public class LeaderBoard implements ILeaderBoard {
      * @return
      */
     @Override
-    public ArrayList<IPlayer> getPlayersList() { return this.players; }
+    public ArrayList<IPlayer> getPlayersList() {
+        return this.players;
+    }
 
     /**
      * Adds player to leaderboard.
