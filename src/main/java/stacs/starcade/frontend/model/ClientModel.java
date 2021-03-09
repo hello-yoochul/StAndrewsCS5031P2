@@ -197,10 +197,15 @@ public class ClientModel extends Observable implements IClientModel {
      */
     @Override
     public void setSetsLog(ICard[] threeCards) {
-        setsLog.add(threeCards);
-        for (ICard card : threeCards) {
-            selectedCards.remove(card);
+        if (threeCards != null) {
+            setsLog.add(threeCards);
+            for (ICard card : threeCards) {
+                selectedCards.remove(card);
+            }
+        } else {
+            setsLog = null;
         }
+
         update();
     }
 

@@ -54,19 +54,32 @@ public class CurrentSetPane extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         ArrayList<ICard[]> loggedSets = model.getSetsLog();
-        int numSets = loggedSets.size();
 
-        if (numSets > this.numberSets) {
-            int newSetIndex = numSets - 1;
-            for (int i = 0; i < CARDS_PER_SET; i++) {
-                ICard card = loggedSets.get(newSetIndex)[i];
-                Image img = getImage(card);
-                ImageIcon icon = new ImageIcon(img);
-                this.labels.get(counter).setIcon(icon);
-                counter++;
+        if (loggedSets != null) {
+
+            int numSets = loggedSets.size();
+            if (numSets > this.numberSets) {
+                int newSetIndex = numSets - 1;
+                for (int i = 0; i < CARDS_PER_SET; i++) {
+                    ICard card = loggedSets.get(newSetIndex)[i];
+                    Image img = getImage(card);
+                    ImageIcon icon = new ImageIcon(img);
+                    this.labels.get(counter).setIcon(icon);
+                    counter++;
+                }
+                this.numberSets++;
+                repaint();
             }
-            this.numberSets++;
+
+        } else {
+
+            for (int i = 0; i < this.labels.size(); i++) {
+                this.labels.get(i).setIcon(null);
+            }
+            counter = 0;
+            this.numberSets = 0;
             repaint();
+
         }
     }
 }

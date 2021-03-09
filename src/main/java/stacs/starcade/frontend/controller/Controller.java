@@ -255,6 +255,7 @@ public class Controller implements IController {
                 endRound(model.getSetsLog());
                 JOptionPane.showMessageDialog(null, "You found all sets. The round is over." +
                         "Congratulations!! ", "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
+                model.setSetsLog(null);
             }
         } else {
             JOptionPane.showMessageDialog(null, "No Set...", "VALIDATION RESULT",
