@@ -1,8 +1,6 @@
 package stacs.starcade.backend.impl;
 
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Interface for the representation of an entry in the player leaderboard.

@@ -7,13 +7,16 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
+
 import javax.swing.*;
 import java.io.IOException;
 import java.util.*;

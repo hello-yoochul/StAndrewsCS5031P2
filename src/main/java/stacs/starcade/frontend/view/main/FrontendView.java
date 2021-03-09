@@ -1,6 +1,5 @@
 package stacs.starcade.frontend.view.main;
 
-import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;

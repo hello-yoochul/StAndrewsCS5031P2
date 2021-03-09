@@ -1,16 +1,15 @@
 package stacs.starcade.backend.api;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
 import stacs.starcade.backend.impl.IPlayer;
 import stacs.starcade.backend.impl.*;
 import stacs.starcade.backend.impl.Player;
-import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
 

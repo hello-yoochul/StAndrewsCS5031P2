@@ -1,7 +1,6 @@
 package stacs.starcade.backend.impl;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class LeaderBoard implements ILeaderBoard {
 

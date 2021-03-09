@@ -1,8 +1,6 @@
 package stacs.starcade.frontend.view.sub.control;
 
-import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.controller.IController;
-import stacs.starcade.frontend.model.FrontendModel;
 import stacs.starcade.frontend.model.IFrontendModel;
 import stacs.starcade.shared.ICard;
 

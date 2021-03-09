@@ -2,6 +2,7 @@ package stacs.starcade.backend.impl;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
