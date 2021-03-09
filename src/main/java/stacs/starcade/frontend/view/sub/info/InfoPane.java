@@ -38,6 +38,8 @@ public class InfoPane extends JPanel implements Observer {
         add(timerPane);
         add(currentSetPane);
         add(leaderBoardPane);
+
+        setBackground(new Color(146, 146, 146));
     }
 
     /**

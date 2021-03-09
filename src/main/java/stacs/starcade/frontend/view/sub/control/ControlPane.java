@@ -35,7 +35,7 @@ public class ControlPane extends JPanel implements Observer {
 
         ((Observable) this.model).addObserver(this);
 
-        setBackground(Color.gray);
+        setBackground(new Color(255, 147, 0));
 
         generateButtons();
         generateButtonListener();

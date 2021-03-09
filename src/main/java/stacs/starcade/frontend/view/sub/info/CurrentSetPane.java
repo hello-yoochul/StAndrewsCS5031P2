@@ -30,8 +30,6 @@ public class CurrentSetPane extends JPanel implements Observer {
         ((Observable) this.model).addObserver(this);
 
         setGrid();
-
-        setBackground(Color.GREEN);
     }
 
     private void setGrid() {

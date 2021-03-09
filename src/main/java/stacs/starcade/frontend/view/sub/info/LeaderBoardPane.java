@@ -29,8 +29,6 @@ public class LeaderBoardPane extends JPanel implements Observer {
         ((Observable) this.model).addObserver(this);
 
         setTable();
-
-        setBackground(Color.PINK);
     }
 
     /**
