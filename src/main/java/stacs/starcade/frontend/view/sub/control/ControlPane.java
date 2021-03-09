@@ -124,7 +124,7 @@ public class ControlPane extends JPanel implements Observer {
 
             if (evt == nextRoundButton) {
                 if (model.getStatus() == IClientModel.GameStatus.RUNNING) {
-                    int result = JOptionPane.showConfirmDialog(null, "Do you want to quit this game and start new game?", "Question", JOptionPane.YES_NO_OPTION);
+                    int result = JOptionPane.showConfirmDialog(null, "Do you really want to start a new round?", "Question", JOptionPane.YES_NO_OPTION);
                     if (result == JOptionPane.YES_OPTION) {
                         controller.setUpCards();
                     }
