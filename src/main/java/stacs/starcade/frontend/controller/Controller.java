@@ -66,16 +66,17 @@ public class Controller implements IController {
             } else {
                 System.out.println("response is error : " + response.getStatusLine().getStatusCode());
             }
-            getLeaderBoard();
         } catch (IOException e) {
             throw new RuntimeException("error", e);
         }
+
+        // Initial request of leaderboard so that leaderboard table can be set up in view
+        requestLeaderBoard();
     }
 
     /**
      * Continuously polls for updates on leaderboard.
      */
-    @Override
     public void pollForLeaderBoard() {
         /**
          * Inner class for timer running in another Thread.
@@ -89,7 +90,7 @@ public class Controller implements IController {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    getLeaderBoard();
+                    requestLeaderBoard();
                     System.out.println("Got LeaderBoard");
                 } while (true);
             }
@@ -98,7 +99,10 @@ public class Controller implements IController {
         lbp.run();
     }
 
-    public void getLeaderBoard() {
+    /**
+     * Requests current leaderboard from server.
+     */
+    private void requestLeaderBoard() {
         HttpGet getRequest = new HttpGet(basicServerAddress + getLeaderboardParam);
         getRequest.setHeader("Accept", "application/json");
         getRequest.setHeader("Connection", "keep-alive");
@@ -108,7 +112,6 @@ public class Controller implements IController {
             HttpResponse response = client.execute(getRequest);
             if (response.getStatusLine().getStatusCode() == 200) {
 
-                //TODO: get leaderboard from server and paint it on the right panel (infoPane)
                 ResponseHandler<String> handler = new BasicResponseHandler();
                 String body = handler.handleResponse(response);
                 JSONArray jsonArray = new JSONArray(body);

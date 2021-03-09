@@ -15,11 +15,6 @@ public interface IController {
     void pollForLeaderBoard();
 
     /**
-     * Gets the leaderboard from the model.
-     */
-    void getLeaderBoard();
-
-    /**
      * Start a game.
      */
     void startGame();

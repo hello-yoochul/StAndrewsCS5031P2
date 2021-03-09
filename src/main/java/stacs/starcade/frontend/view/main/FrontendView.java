@@ -39,6 +39,8 @@ public class FrontendView extends JFrame implements Observer {
         // when model changed, panels are updated.
         ((Observable) this.model).addObserver(this);
 
+        controller.register();
+
         model.setPlayerName(JOptionPane.showInputDialog(this, "Enter your name:"));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +51,6 @@ public class FrontendView extends JFrame implements Observer {
         setUpComponents();
         setVisible(true);
 
-        controller.register();
         controller.pollForLeaderBoard();
     }
 
