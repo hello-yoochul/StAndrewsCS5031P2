@@ -35,8 +35,8 @@ public class PlayerTests {
 
     @Test
     void testGetAverageDuration() {
-        when(mockPlayer.getAvgTime()).thenReturn(Duration.ofSeconds(60));
-        assertEquals(Duration.ofSeconds(60), mockPlayer.getAvgTime());
+        when(mockPlayer.getAvgTime()).thenReturn((long) 60);
+        assertEquals(60, mockPlayer.getAvgTime());
     }
 
     @Test
@@ -46,16 +46,19 @@ public class PlayerTests {
     }
 
     @Test
-    void testEndingARound() {
-        Duration avgTime1 = player.getAvgTime(); // Get average time before starting round (this should be 0)
+    void testEndingARound() throws InterruptedException {
+        long avgTime1 = player.getAvgTime(); // Get average time before starting round (this should be 0)
         player.startRound(mockCardList);// Start round
+
+        // this will allow the timer inside of player to run for a bit
+        Thread.sleep(2000);
 
         // End round
         // This should set average time for round that just ended.
         player.endRound();
-        Duration avgTime2 = player.getAvgTime(); // Get updated average time
+        long avgTime2 = player.getAvgTime(); // Get updated average time
 
-        assertTrue(avgTime1.compareTo(avgTime2) < 0);
+        assertTrue(avgTime1 < avgTime2);
     }
 
 }

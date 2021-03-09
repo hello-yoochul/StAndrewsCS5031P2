@@ -75,8 +75,8 @@ public class Player implements IPlayer {
      * @return average round duration
      */
     @Override
-    public Duration getAvgTime() {
-        return this.averageTime;
+    public long getAvgTime() {
+        return this.averageTime.getSeconds();
     }
 
     /**
