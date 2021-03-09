@@ -1,7 +1,7 @@
 package stacs.starcade;
 
 import stacs.starcade.frontend.controller.Controller;
-import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.frontend.model.ClientModel;
 import stacs.starcade.frontend.view.main.FrontendView;
 
 /**
@@ -9,7 +9,7 @@ import stacs.starcade.frontend.view.main.FrontendView;
  */
 public class FrontendApplication {
     public static void main(String[] args) {
-        FrontendModel setGameModel = new FrontendModel();
+        ClientModel setGameModel = new ClientModel();
         Controller controller = new Controller(setGameModel);
         new FrontendView(setGameModel, controller);
     }

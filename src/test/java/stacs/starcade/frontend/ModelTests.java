@@ -2,7 +2,7 @@ package stacs.starcade.frontend;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import stacs.starcade.frontend.model.FrontendModel;
+import stacs.starcade.frontend.model.ClientModel;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.ICard;
 
@@ -16,15 +16,15 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
-import static stacs.starcade.frontend.model.IFrontendModel.*;
+import static stacs.starcade.frontend.model.IClientModel.*;
 
 public class ModelTests {
-    private FrontendModel model;
+    private ClientModel model;
     private Random random = new Random();
 
     @BeforeEach
     void setup() {
-        model = new FrontendModel();
+        model = new ClientModel();
 //        model = mock(FrontendModel.class);
     }
 
@@ -79,7 +79,7 @@ public class ModelTests {
     @Test
     void mustSelectCard() {
         List<ICard> cardsForSetUp = new ArrayList<>();
-        FrontendModel model = mock(FrontendModel.class);
+        ClientModel model = mock(ClientModel.class);
 
         int anyNumberOfCards = random.nextInt(100);
         for (int i = 0; i < anyNumberOfCards; i++) {

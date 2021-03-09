@@ -10,9 +10,9 @@ public interface IController {
     void register();
 
     /**
-     * Gets the leaderboard from the model.
+     * Continuously polls for updates on leaderboard.
      */
-    void getLeaderBoard();
+    void pollForLeaderBoard();
 
     /**
      * Start a game.

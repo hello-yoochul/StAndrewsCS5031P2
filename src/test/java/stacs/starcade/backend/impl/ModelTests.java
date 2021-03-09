@@ -10,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class ModelTests {
 
-    private Model model;
+    private ServerModel model;
 
     @BeforeEach
     public void setup() {
-        model = new Model();
+        model = new ServerModel();
     }
 
     @Test

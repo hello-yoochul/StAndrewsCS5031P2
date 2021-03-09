@@ -1,6 +1,6 @@
 package stacs.starcade.frontend.view.sub.card;
 
-import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.frontend.model.IClientModel;
 import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
-import static stacs.starcade.frontend.model.FrontendModel.MAXIMUM_NUMBER_OF_SELECTED_CARDS;
+import static stacs.starcade.frontend.model.ClientModel.MAXIMUM_NUMBER_OF_SELECTED_CARDS;
 
 /**
  * Needed to know which card object is clicked.
@@ -38,31 +38,23 @@ public class CardImageButton extends JButton implements Observer {
      * Card to be correspondent to one of Model card, to show on the button.
      */
     private ICard card;
-    /**
-     * The card image path.
-     */
-    private String imagePathStr;
-    /**
-     * To get images from the directory.
-     */
-    private Toolkit toolkit;
+
     /**
      * Needed to send message to Model to remove or add the selected card image button.
      */
-    private IFrontendModel model;
+    private IClientModel model;
 
     /**
      * Construct CardImageButton with addition of the mouse listener:
      * if client clicks the card image button, the button colour will
      * be changed to show their choice.
      */
-    public CardImageButton(IFrontendModel model) {
+    public CardImageButton(IClientModel model) {
         this.model = model;
 
         ((Observable) this.model).addObserver(this);
 
         this.addMouseListener(new MyMouseListener());
-        toolkit = Toolkit.getDefaultToolkit();
 
         setContentAreaFilled(false);
         setOpaque(true);
@@ -71,22 +63,24 @@ public class CardImageButton extends JButton implements Observer {
     }
 
     /**
-     * Get Image path string of the card.
-     */
-    public String getImagePathStr() {
-        return this.imagePathStr;
-    }
-
-    /**
      * Set the card and Store the path of the corresponding card image.
      */
     public void setCard(ICard card) {
-        imagePathStr = "/" + card.getColour() + "-" + card.getNumber() + "-" + card.getShape() + "-" +
-                card.getLineStyle() + ".png";
         this.card = card;
-        Image cardImage = toolkit.getImage(BASIC_IMAGE_PATH + imagePathStr)
+        setIcon(new ImageIcon(getImage(card)));
+    }
+
+    /**
+     * Gets image based on properties of given card object
+     * @param card object
+     * @return the image
+     */
+    public static Image getImage(ICard card) {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        String imagePathStr = "/" + card.getColour() + "-" + card.getNumber() + "-" + card.getShape() + "-" +
+                card.getLineStyle() + ".png";
+        return toolkit.getImage(BASIC_IMAGE_PATH + imagePathStr)
                 .getScaledInstance(IMAGE_WIDTH, IMAGE_HEIGHT, Image.SCALE_DEFAULT);
-        setIcon(new ImageIcon(cardImage));
     }
 
     /**
@@ -120,7 +114,7 @@ public class CardImageButton extends JButton implements Observer {
      */
     class MyMouseListener extends MouseAdapter {
         public void mouseClicked(MouseEvent e) {
-            if (model.getStatus() == IFrontendModel.GameStatus.RUNNING) {
+            if (model.getStatus() == IClientModel.GameStatus.RUNNING) {
                 JButton clickedButton = (JButton) e.getSource();
                 if (!isClicked) {
                     if (model.getSelectedCards().size() < MAXIMUM_NUMBER_OF_SELECTED_CARDS) {

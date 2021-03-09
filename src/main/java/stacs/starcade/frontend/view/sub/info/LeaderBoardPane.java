@@ -1,11 +1,12 @@
 package stacs.starcade.frontend.view.sub.info;
 
-import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.controller.IController;
-import stacs.starcade.frontend.model.FrontendModel;
-import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.frontend.model.IClientModel;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -14,16 +15,14 @@ import java.util.Observer;
  * Panel for the leader board.
  */
 public class LeaderBoardPane extends JPanel implements Observer {
-    private IFrontendModel model;
+    private IClientModel model;
     private IController controller;
     private JTable table;
 
-    public LeaderBoardPane(IFrontendModel model, IController controller) {
+    public LeaderBoardPane(IClientModel model, IController controller) {
         this.model = model;
         this.controller = controller;
         ((Observable) this.model).addObserver(this);
-
-//        this.setLayout(new BorderLayout());
 
         setTable();
 
@@ -31,14 +30,16 @@ public class LeaderBoardPane extends JPanel implements Observer {
     }
 
     private void setTable() {
-        controller.getLeaderBoard();
-
         String[] colNames = {"Player", "Rounds", "AvgTime"};
         String[][] data = model.getLeaderBoard();
 
+        // Instantiate table and set auto size
         this.table = new JTable(data, colNames);
+
+        this.table.setShowVerticalLines(true);
+        this.table.setShowHorizontalLines(true);
+        this.table.setBorder(new LineBorder(Color.BLACK));
         this.table.setShowGrid(true);
-//        this.table.setShowHorizontalLines(true);
         this.table.setGridColor(Color.BLACK);
         this.table.setVisible(true);
 

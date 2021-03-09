@@ -1,6 +1,5 @@
 package stacs.starcade.frontend.model;
 
-import stacs.starcade.backend.impl.ILeaderBoard;
 import stacs.starcade.frontend.view.main.FrontendView;
 import stacs.starcade.shared.ICard;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * Once the data is updated, the {@link FrontendView} will be
  * invoked to repaint the panel.
  */
-public interface IFrontendModel {
+public interface IClientModel {
     /**
      * Status of game.
      */

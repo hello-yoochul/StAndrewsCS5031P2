@@ -1,6 +1,5 @@
 package stacs.starcade.frontend.model;
 
-
 import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.view.main.FrontendView;
 import stacs.starcade.shared.ICard;
@@ -15,7 +14,7 @@ import java.util.*;
  * Once the data is updated, the {@link FrontendView} will be
  * invoked to repaint the panel.
  */
-public class FrontendModel extends Observable implements IFrontendModel {
+public class ClientModel extends Observable implements IClientModel {
     public final static int MAXIMUM_NUMBER_OF_SELECTED_CARDS = 3;
 
     private GameStatus status;
@@ -30,7 +29,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
     /**
      * Construct FrontendModel.
      */
-    public FrontendModel() {
+    public ClientModel() {
         cardsOnBoard = new ArrayList<>();
         selectedCards = new ArrayList<>();
         setsLog = new ArrayList<>();
@@ -69,9 +68,9 @@ public class FrontendModel extends Observable implements IFrontendModel {
         for (int i = 0; i < lbSize; i++) {
             for (int j = 0; j < Controller.NUM_COLS; j++) {
                 this.leaderBoard[i][j] = leaderBoard[i][j];
+                System.out.println(this.leaderBoard[i][j]);
             }
         }
-        System.out.println("Set up LB");
         update();
     }
 
@@ -112,7 +111,7 @@ public class FrontendModel extends Observable implements IFrontendModel {
      * @param status one of the {@link GameStatus}
      */
     @Override
-    public void setGameStatus(IFrontendModel.GameStatus status) {
+    public void setGameStatus(IClientModel.GameStatus status) {
         this.status = status;
     }
 

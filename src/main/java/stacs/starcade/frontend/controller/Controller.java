@@ -7,18 +7,21 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import stacs.starcade.frontend.model.IFrontendModel;
+
+import stacs.starcade.frontend.model.IClientModel;
 import stacs.starcade.shared.Card;
 import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
+
 import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
-import static stacs.starcade.frontend.model.IFrontendModel.*;
+import static stacs.starcade.frontend.model.IClientModel.*;
 
 
 /**
@@ -28,7 +31,7 @@ public class Controller implements IController {
 
     private static final int MAX_NUM_SETS = 5;
     public static final int NUM_COLS = 3;
-    private IFrontendModel model;
+    private IClientModel model;
     private HttpClient client;
 
     final static String basicServerAddress = "http://localhost:8080/";
@@ -41,10 +44,10 @@ public class Controller implements IController {
     /**
      * FrontendController constructor.
      */
-    public Controller(IFrontendModel model) {
+    public Controller(IClientModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
-        register();
+        //register();
     }
 
     /**
@@ -66,13 +69,43 @@ public class Controller implements IController {
             } else {
                 System.out.println("response is error : " + response.getStatusLine().getStatusCode());
             }
-            getLeaderBoard();
         } catch (IOException e) {
             throw new RuntimeException("error", e);
         }
+
+        // Initial request of leaderboard so that leaderboard table can be set up in view
+        requestLeaderBoard();
     }
 
-    public void getLeaderBoard() {
+    /**
+     * Continuously polls for updates on leaderboard.
+     */
+    public void pollForLeaderBoard() {
+        /**
+         * Inner class for timer running in another Thread.
+         */
+        class LeaderBoardPoller implements Runnable {
+            @Override
+            public void run() {
+                do {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    requestLeaderBoard();
+                    System.out.println("Got LeaderBoard");
+                } while (true);
+            }
+        }
+        LeaderBoardPoller lbp = new LeaderBoardPoller();
+        lbp.run();
+    }
+
+    /**
+     * Requests current leaderboard from server.
+     */
+    private void requestLeaderBoard() {
         HttpGet getRequest = new HttpGet(basicServerAddress + getLeaderboardParam);
         getRequest.setHeader("Accept", "application/json");
         getRequest.setHeader("Connection", "keep-alive");
@@ -82,7 +115,6 @@ public class Controller implements IController {
             HttpResponse response = client.execute(getRequest);
             if (response.getStatusLine().getStatusCode() == 200) {
 
-                //TODO: get leaderboard from server and paint it on the right panel (infoPane)
                 ResponseHandler<String> handler = new BasicResponseHandler();
                 String body = handler.handleResponse(response);
                 JSONArray jsonArray = new JSONArray(body);
@@ -97,6 +129,9 @@ public class Controller implements IController {
                     entries[i][0] = jsonObject.getString("playerName");
                     entries[i][1] = ((Integer) jsonObject.getInt("round")).toString();
                     entries[i][2] = jsonObject.getString("avgTime");
+                    System.out.println(entries[i][0]);
+                    System.out.println(entries[i][1]);
+                    System.out.println(entries[i][2]);
                 }
 
                 model.setLeaderBoard(entries);

@@ -1,26 +1,24 @@
 package stacs.starcade.frontend.view.sub.info;
 
-import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.controller.IController;
-import stacs.starcade.frontend.model.FrontendModel;
-import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.frontend.model.IClientModel;
 
 import javax.swing.*;
 import java.time.Duration;
 import java.util.Observable;
 import java.util.Observer;
 
-import static stacs.starcade.frontend.model.IFrontendModel.*;
+import static stacs.starcade.frontend.model.IClientModel.*;
 
 /**
  * Panel for Timer.
  */
 public class TimerPane extends JPanel implements Observer {
-    private IFrontendModel model;
+    private IClientModel model;
     private JLabel timerLabel;
     private TimerRunner timerRunner;
 
-    public TimerPane(IFrontendModel model, IController controller) {
+    public TimerPane(IClientModel model, IController controller) {
         this.model = model;
 
         ((Observable) this.model).addObserver(this);

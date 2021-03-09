@@ -1,38 +1,28 @@
 package stacs.starcade.frontend.view.sub.card;
 
-import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.controller.IController;
-import stacs.starcade.frontend.model.FrontendModel;
-import stacs.starcade.frontend.model.IFrontendModel;
-import stacs.starcade.frontend.view.sub.control.ControlPane;
-import stacs.starcade.frontend.view.sub.info.InfoPane;
-import stacs.starcade.shared.Card;
+import stacs.starcade.frontend.model.IClientModel;
 import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-
-import static stacs.starcade.frontend.model.IFrontendModel.*;
 
 /**
  * The panel for 12 cards.
  */
 public class CardPane extends JPanel implements Observer {
     private final IController controller;
-    private final IFrontendModel model;
+    private final IClientModel model;
 
     private Toolkit toolkit;
 
     private ArrayList<CardImageButton> cardImageButtons;
 
-    public CardPane(IFrontendModel model, IController controller) {
+    public CardPane(IClientModel model, IController controller) {
         this.controller = controller;
         this.model = model;
 

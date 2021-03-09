@@ -4,7 +4,7 @@ import stacs.starcade.shared.ICard;
 
 import java.util.ArrayList;
 
-public interface IModel {
+public interface IServerModel {
 
     /**
      * Gets player with given playerID.

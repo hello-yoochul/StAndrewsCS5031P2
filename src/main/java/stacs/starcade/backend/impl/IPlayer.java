@@ -2,7 +2,6 @@ package stacs.starcade.backend.impl;
 
 import stacs.starcade.shared.ICard;
 
-import javax.imageio.event.IIOReadProgressListener;
 import java.time.Duration;
 import java.util.ArrayList;
 

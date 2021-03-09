@@ -1,9 +1,7 @@
 package stacs.starcade.frontend.view.sub.control;
 
-import stacs.starcade.frontend.controller.Controller;
 import stacs.starcade.frontend.controller.IController;
-import stacs.starcade.frontend.model.FrontendModel;
-import stacs.starcade.frontend.model.IFrontendModel;
+import stacs.starcade.frontend.model.IClientModel;
 import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
@@ -18,7 +16,7 @@ import java.util.Observer;
  */
 // TODO: start game, end game, start nextround, validate set. -> 4 buttons should be implemented
 public class ControlPane extends JPanel implements Observer {
-    private IFrontendModel model;
+    private IClientModel model;
     private IController controller;
 
     private JButton startGameButton;
@@ -31,7 +29,7 @@ public class ControlPane extends JPanel implements Observer {
     public static final String NEXT_ROUND = "NEXT ROUND";
     public static final String END_GAME = "END GAME";
 
-    public ControlPane(IFrontendModel model, IController controller) {
+    public ControlPane(IClientModel model, IController controller) {
         this.model = model;
         this.controller = controller;
 
