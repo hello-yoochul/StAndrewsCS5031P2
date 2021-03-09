@@ -85,7 +85,6 @@ public class ClientModel extends Observable implements IClientModel {
         for (int i = 0; i < lbSize; i++) {
             for (int j = 0; j < Controller.NUM_COLS; j++) {
                 this.leaderBoard[i][j] = leaderBoard[i][j];
-//                System.out.println(this.leaderBoard[i][j]);
             }
         }
         update();
@@ -197,10 +196,15 @@ public class ClientModel extends Observable implements IClientModel {
      */
     @Override
     public void setSetsLog(ICard[] threeCards) {
-        setsLog.add(threeCards);
-        for (ICard card : threeCards) {
-            selectedCards.remove(card);
+        if (threeCards != null) {
+            setsLog.add(threeCards);
+            for (ICard card : threeCards) {
+                selectedCards.remove(card);
+            }
+        } else {
+            setsLog = null;
         }
+
         update();
     }
 

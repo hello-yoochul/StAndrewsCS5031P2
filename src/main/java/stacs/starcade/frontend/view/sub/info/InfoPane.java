@@ -43,6 +43,7 @@ public class InfoPane extends JPanel implements Observer {
         currentSetPane = new CurrentSetPane(this.model, this.controller);
         leaderBoardPane = new LeaderBoardPane(this.model, this.controller);
 
+
         class GameInfoPane extends JPanel {
             public GameInfoPane(PlayerInfoPane pip, TimerPane tp) {
                 add(pip);

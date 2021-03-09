@@ -1,7 +1,6 @@
 package stacs.starcade.backend.impl;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class LeaderBoard implements ILeaderBoard {
     private ArrayList<IPlayer> players;
@@ -55,9 +54,9 @@ public class LeaderBoard implements ILeaderBoard {
     public void sortList() {
         if (players.size() > 1) {
             players.sort((p1, p2) -> {
-                if (p1.getAvgTime().compareTo(p2.getAvgTime()) == 0) {
+                if (p1.getAvgTime() == p2.getAvgTime()) {
                     return 0;
-                } else if (p1.getAvgTime().compareTo(p2.getAvgTime()) < 0) {
+                } else if (p1.getAvgTime() < p2.getAvgTime()) {
                     return -1;
                 } else {
                     return 1;

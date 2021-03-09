@@ -21,6 +21,7 @@ import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 import static stacs.starcade.frontend.model.IClientModel.*;
@@ -73,7 +74,6 @@ public class Controller implements IController {
     public Controller(IClientModel model) {
         this.model = model;
         client = HttpClientBuilder.create().build();
-        //register();
     }
 
     /**
@@ -120,7 +120,6 @@ public class Controller implements IController {
                         e.printStackTrace();
                     }
                     requestLeaderBoard();
-//                    System.out.println("Got LeaderBoard");
                 } while (true);
             }
         }
@@ -154,10 +153,10 @@ public class Controller implements IController {
 
                     entries[i][0] = jsonObject.getString("playerName");
                     entries[i][1] = ((Integer) jsonObject.getInt("round")).toString();
-                    entries[i][2] = jsonObject.getString("avgTime");
-//                    System.out.println(entries[i][0]);
-//                    System.out.println(entries[i][1]);
-//                    System.out.println(entries[i][2]);
+
+                    long sec = jsonObject.getLong("avgTime");
+                    BigDecimal seconds = new BigDecimal(sec);
+                    entries[i][2] = parseSeconds(seconds);
                 }
 
                 model.setLeaderBoard(entries);
@@ -166,6 +165,42 @@ public class Controller implements IController {
             }
         } catch (IOException e) {
             throw new RuntimeException("error", e);
+        }
+    }
+
+    /**
+     * Parses a number that represents seconds into a "hh : mm : ss" format
+     *
+     * @param seconds given number of seconds.
+     *
+     * @return the formatted number as String
+     */
+    private String parseSeconds(BigDecimal seconds) {
+        long givenSec = seconds.longValue();
+        int hrs = (int) givenSec / 3600;
+        int remainder = (int) givenSec - hrs * 3600;
+        int min = remainder / 60;
+        remainder = remainder - min * 60;
+        int sec = remainder;
+
+        String formattedTime = format(hrs) + " : " + format(min) + " : " + format(sec);
+        return formattedTime;
+    }
+
+    /**
+     * Parses given number into a 00 number format.
+     *
+     * @param number any given int
+     *
+     * @return formatted number as String
+     */
+    private String format(int number) {
+        if (number == 0) {
+            return "00";
+        } else if (number > 9) {
+            return ((Integer) number).toString();
+        } else {
+            return "0" + number;
         }
     }
 
@@ -196,7 +231,7 @@ public class Controller implements IController {
         try {
             HttpResponse response = client.execute(postRequest);
             if (response.getStatusLine().getStatusCode() == 200) {
-                // obtained from  https://stackoverflow.com/questions/39764621/parse-json-without-key/39764907
+                // obtained from:  https://stackoverflow.com/questions/39764621/parse-json-without-key/39764907
                 try {
                     ResponseHandler<String> handler = new BasicResponseHandler();
                     String body = handler.handleResponse(response);
@@ -258,6 +293,7 @@ public class Controller implements IController {
                 endRound(model.getSetsLog());
                 JOptionPane.showMessageDialog(null, "You found all sets. The round is over." +
                         "Congratulations!! ", "VALIDATION RESULT", JOptionPane.PLAIN_MESSAGE);
+                model.setSetsLog(null);
             }
         } else {
             JOptionPane.showMessageDialog(null, "No Set...", "VALIDATION RESULT",

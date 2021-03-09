@@ -2,7 +2,6 @@ package stacs.starcade.backend.impl;
 
 import stacs.starcade.shared.ICard;
 
-import java.time.Duration;
 import java.util.ArrayList;
 
 /**
@@ -32,7 +31,7 @@ public interface IPlayer {
      * Gets duration player has needed for previously played rounds on average.
      * @return average round duration
      */
-    Duration getAvgTime();
+    long getAvgTime();
 
     /**
      * Gets the round the player is currently playing.

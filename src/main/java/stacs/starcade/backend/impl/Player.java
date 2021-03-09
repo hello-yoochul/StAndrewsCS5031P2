@@ -4,27 +4,27 @@ import stacs.starcade.shared.ICard;
 import stacs.starcade.shared.ITimer;
 import stacs.starcade.shared.Timer;
 
-import java.time.Duration;
 import java.util.ArrayList;
 
 public class Player implements IPlayer {
 
     private String name;
     private Integer id;
-    private Integer round = 0;
+    private Integer round;
 
     private ITimer timer;
-    private Duration totalTime;
-    private Duration averageTime;
+    private long totalTime;
+    private long averageTime;
     private ArrayList<ICard> twelveCards;
 
     public Player(String name, Integer id) {
         this.name = name;
         this.id = id;
-        this.totalTime = Duration.ZERO;
-        this.averageTime = Duration.ZERO;
+        this.totalTime = 0;
+        this.averageTime = 0;
         this.twelveCards = new ArrayList<>();
         this.timer = new Timer();
+        this.round = 0;
     }
 
     /**
@@ -60,14 +60,14 @@ public class Player implements IPlayer {
      *
      * @param currentTime is the previously recorded time
      */
-    private void setTotalTime(Duration currentTime) { this.totalTime = totalTime.plus(currentTime); }
+    private void setTotalTime(long currentTime) { this.totalTime = this.totalTime + currentTime; }
 
     /**
      * Gets duration player has needed for previously played rounds on avergade.
      *
      * @return average round duration
      */
-    private void setAvgTime() { this.averageTime = this.totalTime.dividedBy(this.round); }
+    private void setAvgTime() { this.averageTime = this.totalTime / this.round; }
 
     /**
      * Gets duration player has needed for previously played rounds on avergade.
@@ -75,7 +75,7 @@ public class Player implements IPlayer {
      * @return average round duration
      */
     @Override
-    public Duration getAvgTime() {
+    public long getAvgTime() {
         return this.averageTime;
     }
 
@@ -104,7 +104,7 @@ public class Player implements IPlayer {
      */
     @Override
     public void endRound() {
-        setTotalTime(timer.getTime());
+        setTotalTime(timer.getTime().getSeconds());
         setAvgTime();
         timer.reset();
     }

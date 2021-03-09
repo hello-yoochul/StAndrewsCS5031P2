@@ -21,7 +21,6 @@ import stacs.starcade.shared.Checks;
 import stacs.starcade.shared.ICard;
 
 import static stacs.starcade.backend.impl.ServerModel.CARD_NUM_IN_SET;
-import static stacs.starcade.backend.impl.ServerModel.NUM_SETS;
 
 /**
  * Spring Backend API for Set Game.

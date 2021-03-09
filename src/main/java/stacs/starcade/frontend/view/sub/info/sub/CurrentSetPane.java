@@ -6,6 +6,7 @@ import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -22,6 +23,8 @@ public class CurrentSetPane extends JPanel implements Observer {
     private IClientModel model;
     private IController controller;
     private ArrayList<JLabel> labels;
+    private int numberSets = 0;
+    private int counter = 0;
 
     public CurrentSetPane(IClientModel model, IController controller) {
         this.model = model;
@@ -32,8 +35,11 @@ public class CurrentSetPane extends JPanel implements Observer {
         setGrid();
     }
 
+    /**
+     * Sets the grid for the current_pane.
+     */
     private void setGrid() {
-        this.setLayout(new GridLayout(5, 3));
+        setLayout(new GridLayout(5, 3));
 
         // Generate labels and put them into grid
         this.labels = new ArrayList<>();
@@ -44,21 +50,36 @@ public class CurrentSetPane extends JPanel implements Observer {
         }
     }
 
+
     @Override
     public void update(Observable o, Object arg) {
         ArrayList<ICard[]> loggedSets = model.getSetsLog();
-        int numSets = loggedSets.size();
-        int counter = 0;
-        if (numSets > 0) {
-            for (int i = 0; i < numSets; i++) {
-                for (int j = 0; j < CARDS_PER_SET; j++) {
-                    ICard card = loggedSets.get(i)[j];
+
+        if (loggedSets != null) {
+
+            int numSets = loggedSets.size();
+            if (numSets > this.numberSets) {
+                int newSetIndex = numSets - 1;
+                for (int i = 0; i < CARDS_PER_SET; i++) {
+                    ICard card = loggedSets.get(newSetIndex)[i];
                     Image img = getImage(card);
-                    this.labels.get(counter).setIcon(new ImageIcon(img));
+                    ImageIcon icon = new ImageIcon(img);
+                    this.labels.get(counter).setIcon(icon);
                     counter++;
                 }
+                this.numberSets++;
+                repaint();
             }
+
+        } else {
+
+            for (int i = 0; i < this.labels.size(); i++) {
+                this.labels.get(i).setIcon(null);
+            }
+            counter = 0;
+            this.numberSets = 0;
+            repaint();
+
         }
-        repaint();
     }
 }

@@ -1,8 +1,10 @@
 package stacs.starcade.frontend.view.sub.control;
 
+import stacs.starcade.backend.impl.LeaderBoard;
 import stacs.starcade.frontend.controller.IController;
 import stacs.starcade.frontend.model.ClientModel;
 import stacs.starcade.frontend.model.IClientModel;
+import stacs.starcade.frontend.view.sub.info.sub.LeaderBoardPane;
 import stacs.starcade.shared.ICard;
 
 import javax.swing.*;
