@@ -31,7 +31,11 @@ public class InfoPane extends JPanel implements Observer {
 
         ((Observable) this.model).addObserver(this);
 
-        setLayout(new GridLayout(4, 1));
+        setupInfoPane();
+    }
+
+    private void setupInfoPane() {
+        setLayout(new BorderLayout(5,5));
 
         // Add single panes to info pane
         playerInfoPane = new PlayerInfoPane(this.model, this.controller);
@@ -39,11 +43,18 @@ public class InfoPane extends JPanel implements Observer {
         currentSetPane = new CurrentSetPane(this.model, this.controller);
         leaderBoardPane = new LeaderBoardPane(this.model, this.controller);
 
-        add(playerInfoPane);
-        add(timerPane);
-        add(currentSetPane);
-        add(leaderBoardPane);
-        this.setSize(200, 800);
+        class GameInfoPane extends JPanel {
+            public GameInfoPane(PlayerInfoPane pip, TimerPane tp) {
+                add(pip);
+                add(tp);
+            }
+        }
+
+        add(new GameInfoPane(playerInfoPane, timerPane), BorderLayout.NORTH);
+        add(currentSetPane, BorderLayout.CENTER);
+        add(leaderBoardPane, BorderLayout.SOUTH);
+
+        setBackground(new Color(146, 146, 146));
     }
 
     /**
