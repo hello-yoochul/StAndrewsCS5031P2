@@ -143,7 +143,6 @@ public class SetGameAPITests {
 
         int playerID = returnedPlayerId.getResponseBody().blockFirst();
 
-
         FluxExchangeResult<String> returnedTwelveCards = client.get().
           uri(nextRoundParam + playerID).exchange()
           .returnResult(String.class);
